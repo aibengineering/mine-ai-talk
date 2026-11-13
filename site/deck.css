@@ -1,0 +1,1154 @@
+/* Mine AI talk deck. A fixed 1600x900 stage scaled to fit; every size below is in stage pixels.
+   The look: the End (near-black with a purple cast), Minecraft-style pixel type for the few big title lines,
+   terminal type for headings, numbers and anything the model reads or writes. Body text, small labels and
+   charts stay in the plain system font.
+   Fonts and icons are local files under vendor/ (licences alongside); nothing is fetched from another site. */
+@font-face { font-family: "Monocraft"; src: url(vendor/fonts/Monocraft.ttf) format("truetype"); font-weight: 400; font-display: block; }
+@font-face { font-family: "Monocraft"; src: url(vendor/fonts/Monocraft-Bold.ttf) format("truetype"); font-weight: 700; font-display: block; }
+@font-face { font-family: "Departure Mono"; src: url(vendor/fonts/DepartureMono-Regular.woff2) format("woff2"); font-weight: 400; font-display: block; }
+
+:root {
+  color-scheme: dark;
+  --surface: #15121c;
+  --surface-2: #211c2d;
+  --inset: #0b0910;
+  --line: #3b3450;
+  --edge-light: #4f4669;
+  --edge-dark: #07060a;
+  --text: #f0efec;
+  --text-2: #c3c2b7;
+  --text-3: #918f9a;
+  --shadow: #322c44;
+  --accent: #7ee2a0;
+  --accent-dim: #2b5a41;
+  --warn: #f2c14e;
+  --warn-dim: #3a2d10;
+  /* The three assistants, as the ChatKcal site colours them on dark. Only on their names and marks. */
+  --claude: #e48b6d;
+  --chatgpt: #3ccf9f;
+  --gemini-start: #78aef2;
+  --gemini-mid: #ad92e6;
+  --gemini-end: #ec8b98;
+  /* A layer that had a gap. Always shown with a cross and a word as well. */
+  --gap: #f0524f;
+  --gap-dim: #3b1a24;
+  --ok-dim: #183329;
+  /* Chart slots, dark steps, fixed order (validated on --surface). */
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --series-5: #d55181;
+  /* Not a slot: the grey for bars that are only there for scale, or that are neither good nor bad. */
+  --series-mute: #6e6a80;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  --pixel: "Monocraft", var(--mono);
+  --term: "Departure Mono", var(--mono);
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; background: #09070c; color: var(--text); font-family: var(--sans); overflow: hidden; }
+
+#viewport { position: fixed; inset: 0; overflow: hidden; touch-action: pan-y; }
+#stage {
+  position: absolute; left: 50%; top: 50%; width: 1600px; height: 900px;
+  transform: translate(-50%, -50%) scale(var(--scale, 1)); transform-origin: center;
+  background: var(--surface); overflow: hidden;
+}
+
+/* ---------- slides ---------- */
+.slide {
+  position: absolute; inset: 0; padding: 84px 100px 96px; display: flex; flex-direction: column; justify-content: center;
+  gap: 34px; opacity: 0; visibility: hidden; transition: opacity .18s ease;
+  font-size: 36px; line-height: 1.35; isolation: isolate;
+}
+.slide.active { opacity: 1; visibility: visible; }
+.slide.top { justify-content: flex-start; }
+.slide.center { align-items: center; text-align: center; }
+
+h1, h2, h3, p, ul, ol, figure, blockquote { margin: 0; }
+/* Pixel type. Monocraft is drawn on a 9-pixel grid and Departure Mono on an 11-pixel one, so their sizes are
+   multiples of 9 and 11 to keep the pixels square. The drop shadow is the game's own: one font pixel down and right.
+   Monocraft is only for h1: at heading size and below its letters get hard to tell apart (A and R, K and H). */
+h1 { font: 400 90px/1.15 var(--pixel); text-shadow: .1111em .1111em 0 var(--shadow); }
+h1.long { font-size: 72px; line-height: 1.35; }
+h2 { font: 400 55px/1.25 var(--term); text-shadow: .0909em .0909em 0 var(--shadow); }
+/* A name in a heading that takes turns, as on the ChatKcal site: the names ride a strip that slides up a row every
+   2.4 s. The strip ends with a copy of the first name, so the loop has no jump. The window is one fixed width, the
+   mark plus the longest name (seven letters; the heading font is monospaced, so that is 7ch), and each name sits in
+   the middle of it, so the words after it never move. The bit on the right is room for the shadow. It only runs on
+   the slide that is up, so it always starts on the first name, and it holds still with reduced motion and in print. */
+.rotator { display: inline-block; box-sizing: content-box; width: calc(1.08em + 7ch); height: 1.25em; padding-right: .1em; margin-right: -.1em; overflow: hidden; vertical-align: bottom; }
+.rotator-track { display: flex; flex-direction: column; }
+.rotator-track > span { display: flex; align-items: center; justify-content: center; gap: .28em; height: 1.25em; line-height: 1.25em; white-space: nowrap; }
+.llm svg { flex: none; width: .8em; height: .8em; filter: drop-shadow(.0909em .0909em 0 var(--shadow)); }
+.llm.claude { color: var(--claude); }
+.llm.gemini { color: var(--gemini-start); }
+.llm.chatgpt { color: var(--chatgpt); }
+.slide.active .rotator-track { animation: rotator-names 7.2s cubic-bezier(.65, 0, .35, 1) infinite; }
+@keyframes rotator-names { 0%, 25% { transform: translateY(0); } 33.333%, 58.333% { transform: translateY(-1.25em); } 66.667%, 91.667% { transform: translateY(-2.5em); } 100% { transform: translateY(-3.75em); } }
+@media (prefers-reduced-motion: reduce), print { .slide .rotator-track { animation: none !important; } }
+h3 { font: 400 33px/1.25 var(--term); }
+.kicker { font: 400 33px/1.2 var(--term); letter-spacing: .06em; text-transform: uppercase; color: var(--accent); display: flex; align-items: center; gap: 22px; }
+.kicker::before { content: ">"; }
+.lede { font-size: 42px; color: var(--text-2); max-width: 1250px; }
+.muted { color: var(--text-2); }
+.small { font-size: 26px; color: var(--text-3); }
+.mono { font-family: var(--term); }
+strong { font-weight: 700; color: var(--text); }
+ul.points { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 22px; }
+ul.points li { padding-left: 44px; position: relative; }
+ul.points li::before { content: ""; position: absolute; left: 4px; top: .48em; width: 18px; height: 18px; background: var(--accent); }
+
+.step { opacity: 0; transition: opacity .2s ease; }
+.step.shown { opacity: 1; }
+/* A step with nothing in it: a click that changes something else on the slide (see the :has rules). */
+.slide > i.step { display: none; }
+
+.todo {
+  display: inline-block; font: 600 22px/1.3 var(--sans); padding: 6px 14px; border: 2px dashed var(--warn); color: var(--warn);
+  letter-spacing: 0; text-transform: none; text-shadow: none; max-width: 100%;
+}
+body.hide-todo .todo { display: none; }
+.todo.loose, .fact .todo { align-self: flex-start; }
+
+/* ---------- layout helpers ---------- */
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: stretch; }
+.cols.wide-left { grid-template-columns: 1.25fr 1fr; }
+.card { background: var(--surface-2); border: 4px solid; border-color: var(--edge-light) var(--edge-dark) var(--edge-dark) var(--edge-light); box-shadow: 0 0 0 4px var(--edge-dark); padding: 32px 36px; display: flex; flex-direction: column; gap: 18px; }
+.card h3 { color: var(--accent); }
+
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+.tiles.three { grid-template-columns: repeat(3, 1fr); }
+.tile { background: var(--surface-2); border: 4px solid; border-color: var(--edge-light) var(--edge-dark) var(--edge-dark) var(--edge-light); box-shadow: 0 0 0 4px var(--edge-dark); padding: 24px 28px; display: flex; flex-direction: column; gap: 10px; }
+.tile .value { font: 400 55px/1.1 var(--term); word-spacing: -.25em; text-shadow: .0909em .0909em 0 var(--shadow); }
+/* A tile with an icon puts it beside the number. */
+.tile:has(> .px, > .creeper) { display: grid; grid-template-columns: auto 1fr; column-gap: 16px; row-gap: 10px; align-items: center; align-content: start; }
+.tile > .px { width: 48px; height: 48px; }
+.tile > .creeper { --s: 48px; }
+.tile:has(> .px, > .creeper) .label { grid-column: 1 / -1; }
+.tile .label { font-size: 26px; color: var(--text-2); line-height: 1.3; }
+
+/* Terminal panels: what the model was sent, and what it said. */
+blockquote.quote {
+  font: 400 33px/1.4 var(--term); padding: 30px 36px; background: var(--inset); border: 2px solid var(--accent-dim); border-left: 8px solid var(--accent);
+}
+blockquote.quote.after { color: var(--text-2); border-left-color: var(--accent-dim); }
+blockquote.quote footer { font: 400 26px/1.3 var(--sans); color: var(--text-3); margin-top: 20px; }
+
+pre.prompt {
+  margin: 0; font: 400 33px/1.45 var(--term); white-space: pre-wrap; background: var(--inset);
+  border: 2px solid var(--accent-dim); padding: 28px 34px; color: var(--text);
+}
+pre.prompt::before { content: "> "; color: var(--accent); }
+.receipt { font: 400 33px/1.35 var(--term); background: var(--inset); border: 2px solid var(--accent-dim); padding: 30px 36px; display: flex; flex-direction: column; gap: 10px; }
+.receipt .small { font-family: var(--sans); }
+.receipt .ok { color: var(--accent); }
+/* Before and after: a badge on each row, a cross or a tick with its word. The after row waits for the fix. */
+.receipt .reply { display: flex; align-items: center; gap: 22px; margin-top: 8px; }
+.tag { flex: none; display: inline-flex; align-items: center; gap: 10px; width: 152px; padding: 6px 12px; font: 400 22px/1.15 var(--term); text-transform: uppercase;
+  color: var(--text); border: 4px solid; box-shadow: 0 0 0 4px var(--edge-dark); }
+.tag::before { font: 700 24px/1 var(--sans); }
+.tag.bad { background: var(--gap-dim); border-color: var(--gap); }
+.tag.bad::before { content: "✗"; color: var(--gap); }
+.tag.good { background: var(--ok-dim); border-color: var(--accent); }
+.tag.good::before { content: "✓"; color: var(--accent); }
+.receipt .fixed { opacity: 0; transition: opacity .2s ease; }
+.slide:has(.key-fix.shown) .receipt .fixed { opacity: 1; }
+
+.versus { display: grid; grid-template-columns: 1fr auto 1fr; gap: 40px; align-items: start; }
+.versus .big { font: 400 110px/1 var(--term); word-spacing: -.25em; text-shadow: .0909em .0909em 0 var(--shadow); margin-bottom: 24px; }
+.versus .vs { font-size: 34px; color: var(--text-3); line-height: 120px; }
+
+.loopflow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; counter-reset: flow; }
+.loopflow > div { background: var(--surface-2); border: 4px solid; border-color: var(--edge-light) var(--edge-dark) var(--edge-dark) var(--edge-light); box-shadow: 0 0 0 4px var(--edge-dark); padding: 24px 26px; display: flex; flex-direction: column; gap: 12px; font-size: 30px; }
+.loopflow > div::before { counter-increment: flow; content: "0" counter(flow); font: 400 22px/1 var(--term); color: var(--accent); }
+.loopflow b { font-size: 34px; line-height: 1.2; color: var(--text); }
+/* One long call from the run, to scale: the bar is the 7 min 07 s it took and each tick is a reply the model got.
+   --at is how far along a reply came, in percent. The bar fills while the slide is up, a second a minute, and each
+   reply lights as the fill reaches it. With reduced motion and in print it is simply full. */
+.longrun { display: flex; flex-direction: column; gap: 14px; margin-top: 10px; }
+.longrun-head { display: flex; justify-content: space-between; align-items: center; font: 400 33px/1.2 var(--term); }
+.longrun-head .cube.inline { margin-right: 6px; }
+.longrun-head .done { --at: 100; }
+.longrun-head .done::before { content: "✓"; font: 700 30px/1 var(--sans); color: var(--accent); margin-right: 14px; }
+.longrun-bar { height: 40px; background: var(--inset); border: 4px solid; border-color: var(--edge-dark) var(--edge-light) var(--edge-light) var(--edge-dark); }
+.longrun-bar i { display: block; height: 100%; background: repeating-linear-gradient(90deg, var(--accent) 0 28px, var(--accent-dim) 28px 32px); }
+.longrun-ticks { list-style: none; margin: 0; padding: 0; position: relative; height: 98px; }
+.longrun-ticks li { position: absolute; top: 0; left: calc(var(--at) * 1%); display: flex; flex-direction: column; padding: 12px 0 0 14px; border-left: 4px solid var(--text-3);
+  font-size: 22px; line-height: 1.25; color: var(--text-2); white-space: nowrap; }
+.longrun-ticks li b { font: 400 22px/1.25 var(--term); color: var(--text); }
+.longrun-ticks li span { color: var(--text); }
+.longrun-ticks li.flip { left: auto; right: calc(100% - var(--at) * 1%); padding: 12px 14px 0 0; border-left: 0; border-right: 4px solid var(--text-3); text-align: right; }
+@media screen and (prefers-reduced-motion: no-preference) {
+  .slide.active .longrun-bar i { animation: longrun-fill 7.12s linear .6s both; }
+  .slide.active .longrun-ticks li, .slide.active .longrun-head .done { animation: longrun-lit .15s linear both; animation-delay: calc(.6s + var(--at) * .0712s); }
+  @keyframes longrun-fill { from { width: 0; } to { width: 100%; } }
+  @keyframes longrun-lit { from { opacity: .3; } }
+}
+
+/* ---------- playing Pokémon, playing Minecraft (slides 16 and 17) ----------
+   A person's row, then an AI's row a click later, on a six-column grid: the person's box spans the model, harness
+   and tools columns it stands in for, and Pokémon's game box spans Minecraft's client and server columns. */
+.presses { display: grid; gap: 30px; margin-top: 14px; }
+.press { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0 34px; align-items: stretch; }
+.press .who { grid-column: 1 / -1; margin: 0 0 16px; font: 400 26px/1.2 var(--term); color: var(--text-3); }
+.press .box {
+  position: relative; background: var(--surface-2); border: 4px solid; border-color: var(--edge-light) var(--edge-dark) var(--edge-dark) var(--edge-light);
+  box-shadow: 0 0 0 4px var(--edge-dark); padding: 14px 12px; display: flex; flex-direction: column; gap: 6px;
+  font-size: 21px; line-height: 1.25; color: var(--text-2);
+}
+.press .box b { font: 400 24px/1.15 var(--term); color: var(--text); }
+.press .box.wide { grid-column: span 2; }
+.press .box.person { grid-column: span 3; flex-direction: row; align-items: center; gap: 20px; }
+.press .box.person > div { display: flex; flex-direction: column; gap: 6px; }
+.press .pxperson { width: 48px; height: 72px; flex: none; }
+.press .box + .box::after { content: ">"; position: absolute; left: -31px; top: 50%; width: 20px; margin-top: -11px; text-align: center; font: 400 22px/1 var(--term); color: var(--text-3); }
+.press .box em { font: 600 20px/1.2 var(--sans); font-style: normal; white-space: nowrap; color: var(--text); }
+.press .box em::before { margin-right: 8px; }
+.press .box.gap { border-color: var(--gap); background: var(--gap-dim); }
+.press .box.gap em::before { content: "✗"; color: var(--gap); }
+/* A time on the link between two boxes, on its own click: a bracket hanging under the row from the centre of one box
+   to the centre of the other, with an arrowhead into the second and the time on the bracket. --a1/--b1 put the
+   start a1 columns + b1 gaps from the left, --a2/--b2 the end that far from the right (6 columns, 5 gaps of 34px).
+   Green for the person, amber when the game waits (Pokémon), red when it doesn't (Minecraft). The box it explains
+   (Pokémon's "Waits", Minecraft's "Can't keep up") turns on with it; in print everything shows. */
+.press .link { grid-column: 1 / -1; position: relative; height: 38px; margin: 0; font-size: 22px; line-height: 1; color: var(--text-2); --c: var(--accent); }
+.press .link.slow { --c: var(--warn); }
+.press .link.gap { --c: var(--gap); }
+.press .link.none { visibility: hidden; }
+.press .link::before, .press .link span { position: absolute; left: calc(var(--a1) * (100% - 170px) / 6 + var(--b1) * 34px); right: calc(var(--a2) * (100% - 170px) / 6 + var(--b2) * 34px); }
+.press .link::before { content: ""; top: 4px; height: 18px; border: 4px solid var(--c); border-top: 0; }
+.press .link::after { content: ""; position: absolute; top: 2px; right: calc(var(--a2) * (100% - 170px) / 6 + var(--b2) * 34px - 10px); border: 12px solid transparent; border-top: 0; border-bottom: 16px solid var(--c); }
+.press .link span { top: 22px; transform: translateY(-50%); text-align: center; white-space: nowrap; }
+.press .link i { font-style: normal; background: var(--surface); padding: 0 14px; }
+.press .link b { font: 400 28px/1 var(--term); word-spacing: -.4em; color: var(--c); }
+.press .box em { transition: opacity .2s ease; }
+.press .box.waits em::before { content: "✓"; color: var(--accent); }
+@media screen {
+  .slide:not(:has(.link.gap.shown)) .press .box.gap { border-color: var(--edge-light) var(--edge-dark) var(--edge-dark) var(--edge-light); background: var(--surface-2); }
+  .slide:not(:has(.link.gap.shown)) .press .box.gap em, .slide:not(:has(.link.slow.shown)) .press .box.waits em { opacity: 0; }
+}
+.system1 { margin: 22px 0 0; font-size: 30px; line-height: 1.3; color: var(--text-2); }
+.system1 b { font: 400 30px/1 var(--term); color: var(--text); }
+/* The slide's flex gap is 34px: pull the creeper line up under the AI row and the System 1 line up under it. */
+.fuse { margin: -10px 0 0; font-size: 30px; line-height: 1.3; color: var(--text-2); }
+.fuse + .system1 { margin-top: -22px; }
+
+/* ---------- the layers: model on the left, game on the right ---------- */
+.stack { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 34px; counter-reset: layer; }
+.stack li {
+  position: relative; background: var(--surface-2); border: 4px solid; border-color: var(--edge-light) var(--edge-dark) var(--edge-dark) var(--edge-light);
+  box-shadow: 0 0 0 4px var(--edge-dark); padding: 18px 16px 16px; display: flex; flex-direction: column; gap: 10px;
+  font-size: 24px; line-height: 1.3; color: var(--text-2); transition: border-color .2s ease, background-color .2s ease;
+}
+.stack li::before { counter-increment: layer; content: "0" counter(layer); font: 400 22px/1 var(--term); color: var(--text-3); }
+/* The chevron in the gap between two layers. */
+.stack li + li::after { content: ">"; position: absolute; left: -31px; top: 50%; width: 20px; margin-top: -11px; text-align: center; font: 400 22px/1 var(--term); color: var(--text-3); }
+.stack b { font: 400 33px/1.2 var(--term); color: var(--text); }
+.stack span { min-height: 3.9em; }
+.stack small { font: 400 22px/1.2 var(--term); color: var(--text-3); }
+/* A layer's verdict: hidden until the step that explains it, then a tick or cross, a word and the border colour. */
+.stack em { font: 600 22px/1.2 var(--sans); color: var(--text); border-top: 4px solid var(--line); padding-top: 12px; opacity: 0; transition: opacity .2s ease; }
+.stack em::before { margin-right: 8px; }
+.stack .ok em::before { content: "✓"; color: var(--accent); }
+.stack .gap em::before { content: "✗"; color: var(--gap); }
+.slide:has(.key-ok.shown) .stack .ok { border-color: var(--accent); background: var(--ok-dim); }
+/* Tools turns red on its step. Actions and Client turn red when their clip lands in them (or is skipped with →). */
+.slide:has(.key-gap.shown) .stack .tools, .slide:has(.pop[data-box="actions"].landed) .stack .actions,
+.slide:has(.pop[data-box="client"].landed) .stack .client { border-color: var(--gap); background: var(--gap-dim); }
+.slide:has(.key-ok.shown) .stack .ok em, .slide:has(.key-gap.shown) .stack .tools em, .slide:has(.key-gap.shown) .stack .asis em,
+.slide:has(.pop[data-box="actions"].landed) .stack .actions em, .slide:has(.pop[data-box="client"].landed) .stack .client em { opacity: 1; }
+.stack .ok em { border-top-color: var(--accent-dim); }
+.stack .gap em { border-top-color: var(--gap); }
+
+/* An arrow under the layers, pointing back from the game towards the model. */
+.trace { display: flex; align-items: center; gap: 20px; margin: -8px 0; font: 400 22px/1 var(--term); color: var(--text-2); opacity: 0; transition: opacity .2s ease; }
+.trace i { flex: 1; height: 4px; background: var(--text-3); position: relative; margin-left: 16px; }
+.trace i::before { content: ""; position: absolute; left: -16px; top: -10px; border: 12px solid transparent; border-left: 0; border-right: 16px solid var(--text-3); }
+.slide:has(.key-rule.shown) .trace { opacity: 1; }
+
+/* A strip on each area's opening slide: which layers this area is about. */
+.stackmap { list-style: none; margin: 0; padding: 0; display: flex; gap: 8px; }
+.stackmap li { font: 400 22px/1 var(--term); padding: 9px 11px; border: 4px solid var(--line); color: var(--text-3); background: var(--surface); }
+.stackmap li.on { border-color: var(--accent); color: var(--text); background: var(--ok-dim); }
+
+/* ---------- chapter cards ---------- */
+/* The talk is seven parts, each named by the question it answers. A part opens with a card: the question on the left,
+   and on the right the list of all seven (deck.js fills it in), with the earlier ones ticked and this one lit.
+   On screen the card's own list is hidden and only holds the space. The list that shows is #parts, one copy on the
+   stage, and it stays up: a rail of numbered boxes in the right margin on ordinary slides, opening out into the full
+   list on a card and folding back when the talk moves on. */
+.slide.chapter { display: grid; grid-template-columns: 1fr 470px; column-gap: 56px; align-items: center; align-content: center; }
+.chapter-head { display: flex; flex-direction: column; gap: 34px; }
+.chapters { list-style: none; margin: 0; padding: 0; counter-reset: chapter; display: flex; flex-direction: column; gap: 8px; }
+.chapters li { counter-increment: chapter; display: flex; align-items: center; gap: 16px; padding: 12px 16px; border: 4px solid var(--line); background: var(--surface); font-size: 26px; line-height: 1.2; color: var(--text-2); }
+.chapters li::before { content: counter(chapter); flex: none; width: 22px; font: 400 22px/1 var(--term); color: var(--text-3); }
+.chapters li.done { color: var(--text-3); }
+.chapters li.done::before { content: "✓"; font: 400 24px/1 var(--sans); color: var(--accent); }
+.chapters li.on { border-color: var(--accent); background: var(--ok-dim); color: var(--text); }
+.chapters li.on::before { color: var(--accent); }
+.slide.chapter .chapters { visibility: hidden; }
+#parts { position: absolute; z-index: 5; right: 16px; top: 444px; width: 44px; gap: 6px; transform: translate(0, -50%);
+  transition: right .45s ease-in-out, width .45s ease-in-out, gap .45s ease-in-out, transform .4s cubic-bezier(.2, .8, .2, 1), visibility 0s; }
+#parts li { height: 44px; padding: 7px; gap: 0; overflow: hidden;
+  transition: height .45s ease-in-out, padding .45s ease-in-out, gap .45s ease-in-out, border-color .3s ease, background-color .3s ease, color .3s ease; }
+#parts li::before { text-align: center; }
+#parts li span { max-width: 0; opacity: 0; overflow: hidden; white-space: nowrap; transition: max-width .45s ease-in-out, opacity .15s ease; }
+#parts.open { right: 100px; width: 470px; gap: 8px; }
+#parts.open li { height: 64px; padding: 12px 16px; gap: 16px; }
+#parts.open li span { max-width: 400px; opacity: 1; transition: max-width .45s ease-in-out, opacity .25s ease .2s; }
+/* Out of the way: off the right edge. The fold back to the rail waits until it has gone, so it leaves as it was. */
+#parts.away, #stage:has(.slide.route.active .clip.started) #parts { visibility: hidden; transform: translate(calc(100% + 110px), -50%);
+  transition: transform .3s cubic-bezier(.4, .1, .9, .6), visibility 0s .3s, right 0s .3s, width 0s .3s, gap 0s .3s; }
+#parts.away li, #parts.away li span { transition-duration: 0s; transition-delay: .3s; }
+@media (prefers-reduced-motion: reduce) { #parts, #parts li, #parts li span { transition: none !important; } }
+
+/* ---------- pixel icons ---------- */
+/* Textures are 16x16 (HUD sprites 9x9), scaled up with hard edges. See vendor/pixel-perfection/CREDITS.txt. */
+.px { image-rendering: pixelated; width: 64px; height: 64px; flex: none; }
+/* A face cut from an unedited mob texture: the creeper's is the 8x8 at (8, 8) of a 64x32 sheet. */
+.creeper { --s: 64px; display: inline-block; flex: none; width: var(--s); height: var(--s); image-rendering: pixelated;
+  background: url(vendor/pixel-perfection/creeper.png) calc(var(--s) * -1) calc(var(--s) * -1) / calc(var(--s) * 8) calc(var(--s) * 4) no-repeat; }
+/* A block drawn the way the inventory draws it: three faces, top lit, left 80%, right 60%. --s is one face. */
+.cube { --s: 40px; display: inline-block; flex: none; position: relative; width: var(--s); height: var(--s); margin: calc(var(--s) * .29) calc(var(--s) * .21);
+  transform-style: preserve-3d; transform: rotateX(-30deg) rotateY(-45deg); }
+.cube > * { position: absolute; inset: 0; width: 100%; height: 100%; image-rendering: pixelated; }
+.cube .t { transform: rotateX(90deg) translateZ(calc(var(--s) / 2)); }
+.cube .l { transform: translateZ(calc(var(--s) / 2)); filter: brightness(.8); }
+.cube .r { transform: rotateY(90deg) translateZ(calc(var(--s) / 2)); filter: brightness(.6); }
+/* The pack's grass top is grey, as the game's is: the game colours it by biome. This does the same over the unedited file. */
+/* The command block's textures are two frames, one above the other. This shows the top one. */
+.cube.command > * { background: url(vendor/pixel-perfection/command_block_side.png) 0 0 / 100% 200%; }
+.cube.command .l { background-image: url(vendor/pixel-perfection/command_block_front.png); }
+.cube .grass-top { background: url(vendor/pixel-perfection/grass_block_top.png) 0 0 / 100% 100%, #86c257; background-blend-mode: multiply; }
+/* The dragon is the one thing that is not an icon: two pictures rendered from the pack's dragon texture
+   (tools/render-dragon.mjs). It is nearly black, so it gets a purple glow to lift it off the slide. */
+.dragon-head { width: 76px; height: auto; flex: none; filter: drop-shadow(0 0 6px rgba(200, 140, 255, .7)); }
+.dragon { width: 330px; height: auto; flex: none; filter: drop-shadow(0 0 16px rgba(190, 120, 255, .6)); }
+
+/* An inventory slot, and a hotbar of them. */
+.slot { width: 96px; height: 96px; flex: none; display: grid; place-items: center; background: #2b2539; border: 4px solid; border-color: var(--edge-dark) var(--edge-light) var(--edge-light) var(--edge-dark); }
+.hotbar { display: flex; align-self: flex-start; padding: 4px; background: var(--edge-dark); gap: 4px; }
+.hotbar .slot.on { outline: 6px solid var(--text); outline-offset: 0; z-index: 1; }
+
+/* ---------- the progression chain ---------- */
+.chain { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)) minmax(0, 2fr); gap: 0; }
+.chain li { display: flex; flex-direction: column; align-items: center; gap: 6px; position: relative; font-size: 24px; text-align: center; color: var(--text-2); }
+.chain li .slot { position: relative; z-index: 1; margin-bottom: 12px; }
+.chain li::after { content: ""; position: absolute; top: 46px; left: 50%; width: 100%; height: 4px; background: var(--line); }
+.chain li:last-child::after { display: none; }
+/* The dragon is taller than a slot; the negative margins keep its middle on the line and its label level with the rest. */
+.chain li .dragon { position: relative; z-index: 1; margin: -27px 0 -15px; }
+.chain li b { color: var(--text); font-size: 26px; line-height: 1.2; white-space: nowrap; }
+
+/* ---------- the route slide ----------
+   It opens as a heading over the chain. Once its clip starts (Space), the heading goes, the chain slides to the bottom
+   of the screen and the clip plays above it. deck.js marks the chain: .on for the steps in shot, .ahead for the ones to come. */
+.slide.route { justify-content: flex-start; padding-top: 176px; }
+.route-head { display: flex; flex-direction: column; gap: 34px; transition: opacity .25s ease; }
+.slide.route .chain { position: absolute; left: 100px; right: 100px; top: 498px; transition: transform .5s cubic-bezier(.3, 0, .2, 1); }
+.slide.route .chain li { transition: opacity .3s ease; }
+.slide.route .chain .dragon { transform-origin: 50% 100%; transition: transform .5s ease; }
+.slide.route .chain li > span:not(.slot) { transition: opacity .2s ease; }
+.slide.route .clip { position: absolute; left: 178px; top: 14px; width: 1244px; opacity: 0; transition: opacity .35s ease .25s; outline: 4px solid var(--edge-dark); }
+.slide.route:has(.clip.started) .route-head { opacity: 0; }
+.slide.route:has(.clip.started) .clip { opacity: 1; }
+.slide.route:has(.clip.started) .chain { transform: translateY(232px); }
+/* Full size, the dragon's wing would poke up over the clip. */
+.slide.route:has(.clip.started) .chain .dragon { transform: scale(.88); }
+.slide.route:has(.clip.started) .chain li > span:not(.slot) { opacity: 0; }
+.chain li.ahead { opacity: .32; }
+.chain li.on .slot { outline: 6px solid var(--text); outline-offset: 0; }
+.chain li.on b { color: var(--accent); }
+.chain li.on .dragon { filter: drop-shadow(0 0 10px rgba(255, 255, 255, .55)) drop-shadow(0 0 22px rgba(190, 120, 255, .9)); }
+#stage:has(.slide.route.active .clip.started) #chrome { display: none; }
+@media (prefers-reduced-motion: reduce) { .route-head, .slide.route .chain, .slide.route .chain li, .slide.route .chain .dragon, .slide.route .clip { transition: none; } }
+
+/* A pop clip: a step that Space plays big over its slide. deck.js starts it on top of its box and lets it grow out;
+   when it ends, it shrinks back into the box and fades, and the box lights (see the gap boxes above). */
+.clip.pop { position: absolute; left: 160px; top: 40px; width: 1280px; z-index: 6; margin: 0; overflow: visible; opacity: 0; visibility: hidden;
+  pointer-events: none; outline: 4px solid var(--edge-dark); transform-origin: 0 0; box-shadow: 0 0 0 1600px rgba(0, 0, 0, 0);
+  transition: transform .45s cubic-bezier(.55, 0, .8, .2), opacity .2s ease .3s, box-shadow .45s ease, visibility 0s .5s; }
+.clip.pop.step.shown { opacity: 0; }
+.clip.pop.step.playing { opacity: 1; visibility: visible; pointer-events: auto; box-shadow: 0 0 0 1600px rgba(0, 0, 0, .62);
+  transition: transform .45s cubic-bezier(.2, .8, .3, 1), opacity .12s ease, box-shadow .45s ease, visibility 0s; }
+.clip.pop.step.playing.landing { opacity: 0; box-shadow: 0 0 0 1600px rgba(0, 0, 0, 0);
+  transition: transform .45s cubic-bezier(.55, 0, .8, .2), opacity .15s ease .3s, box-shadow .45s ease, visibility 0s .5s; }
+.clip.pop figcaption { position: absolute; left: 0; right: 0; top: 100%; display: flex; gap: 18px; align-items: baseline; padding: 14px 20px;
+  background: var(--surface-2); border-top: 4px solid var(--gap); font: 400 26px/1.2 var(--sans); color: var(--text); }
+.clip.pop figcaption b { font: 400 30px/1 var(--term); color: var(--gap); }
+#stage:has(.slide.active .clip.pop.playing) #parts { visibility: hidden; }
+/* A credit pop (slide 11, AltoClef) isn't a bug: green caption, and its card gets a green edge once it lands. */
+.clip.pop.credit figcaption { border-top-color: var(--accent); }
+.clip.pop.credit figcaption b { color: var(--accent); }
+.slide:has(.pop[data-box="altoclef"].landed) .compare .altoclef { border-color: var(--accent); }
+/* A pop's thumbnail in its box (deck.js builds it): the first frame, dimmed, with a ▶ while the clip waits; an empty
+   dashed slot while it plays; the frame it stopped on, in the box's colour, once it has landed. In the six layers'
+   boxes (on "Playing Minecraft") it adds a row (the small line and verdict stay level across all six); on slide 11 it ends the AltoClef heading. */
+.pop-thumb { position: relative; flex: none; width: 100%; aspect-ratio: 16 / 9; background: #000; outline: 3px solid var(--edge-dark); overflow: hidden;
+  transition: outline-color .2s ease; }
+.pop-thumb canvas { position: absolute; inset: 0; width: 100%; height: 100%; transition: opacity .2s ease, filter .2s ease; }
+.pop-thumb .last { opacity: 0; }
+.pop-thumb.landed.has-last .last { opacity: 1; }
+.pop-thumb:not(.landed) canvas { filter: brightness(.55); }
+.pop-thumb .pop-mark { position: absolute; left: 50%; top: 50%; width: 44px; height: 44px; margin: -22px 0 0 -22px; display: grid; place-items: center;
+  background: rgba(0, 0, 0, .55); border: 3px solid var(--text); font: normal 400 18px/1 var(--term); color: var(--text); }
+.pop-thumb .pop-mark::before { content: "▶"; margin-left: 3px; }
+.pop-thumb.landed .pop-mark, .pop-thumb.out .pop-mark { display: none; }
+.pop-thumb.out { background: transparent; outline: 3px dashed var(--text-3); }
+.pop-thumb.out canvas { opacity: 0; }
+.stack .pop-thumb.landed { outline-color: var(--gap); }
+.stack:has(.pop-thumb) small { margin-top: auto; }
+.compare h3 .pop-thumb { width: auto; height: 80px; margin-left: auto; }
+.compare .pop-thumb.landed { outline-color: var(--accent); }
+@media (prefers-reduced-motion: reduce) { .clip.pop, .clip.pop.step.playing, .clip.pop.step.playing.landing, .pop-thumb, .pop-thumb canvas { transition: none; } }
+
+/* The pop-up the game shows when you earn an advancement. */
+.toast { display: inline-flex; align-items: center; gap: 22px; padding: 16px 30px 16px 18px; background: var(--surface-2); border: 4px solid; border-color: var(--edge-light) var(--edge-dark) var(--edge-dark) var(--edge-light); box-shadow: 0 0 0 4px var(--edge-dark); font: 400 33px/1.3 var(--term); }
+.toast small { display: block; font-size: 22px; color: var(--warn); }
+.toast .dragon-head { width: 64px; }
+.toast em { display: block; font: 400 24px/1.3 var(--sans); color: var(--text-2); }
+.toast .slot { width: 88px; height: 88px; }
+/* The game gives its hardest advancements a pink heading. */
+.toast.challenge small { color: #f08ae6; }
+/* Who I am: the job on the left, the rest as pop-ups that slide in from the right, the way the game's do. */
+.who { display: grid; grid-template-columns: 1fr 800px; gap: 60px; align-items: center; }
+.who > div:first-child { display: flex; flex-direction: column; gap: 30px; }
+.toasts { display: flex; flex-direction: column; gap: 30px; }
+.toasts .toast { display: flex; }
+.toasts .toast.step { transform: translateX(80px); transition: opacity .2s ease, transform .2s ease; }
+.toasts .toast.step.shown { transform: none; }
+@media (prefers-reduced-motion: reduce) { .toasts .toast.step { transform: none; } }
+.row { display: flex; align-items: center; gap: 48px; }
+.hero-icon { margin-bottom: 6px; }
+.hero-icon.px { width: 96px; height: 96px; }
+.hero-icon.cube { --s: 64px; }
+.px.inline { width: 48px; height: 48px; vertical-align: -10px; margin-left: 10px; }
+.cube.inline { --s: 28px; vertical-align: -18px; margin-left: 14px; }
+.slot .cube { --s: 44px; margin: 0; }
+
+/* ---------- why this problem: the Pokémon slides ---------- */
+/* Screenshots of the real pages on paper-coloured cards, so they read as cut out of somewhere else; each one drops
+   in a little crooked. The images are local files, nothing is fetched. */
+/* The line is to scale: 2.6 px a day, with 1 January 2025 at 40 px and a tick at the start of each month from February. Each .entry
+   sets --at (where its date falls on the line), --x (its card's left edge, chosen so the card sits over its date)
+   and optionally --w (a wider card).
+   Each entry says whether its card goes above the line (.up) or below it (.down), joined to its date by a stem. */
+.clippings { --card: 400px; --row: 250px; --band: 92px; position: relative; height: calc(var(--row) * 2 + var(--band)); margin: 8px -24px 0 -36px; }
+.clippings::before {
+  content: ""; position: absolute; left: 0; right: 18px; top: calc(var(--row) + var(--band) / 2 - 8px); height: 16px;
+  background: linear-gradient(var(--text-3), var(--text-3)) 0 6px / 100% 4px no-repeat, linear-gradient(90deg, var(--text-3) 4px, transparent 4px) 118.6px 0 / 79.14px 16px repeat-x;
+}
+.clippings::after { content: ""; position: absolute; right: 0; top: calc(var(--row) + var(--band) / 2 - 12px); border: 12px solid transparent; border-right: 0; border-left: 18px solid var(--text-3); }
+.clippings .year { position: absolute; z-index: 1; top: calc(var(--row) + var(--band) / 2); transform: translate(-50%, -50%); font: 400 22px/1 var(--term); color: var(--text-2); background: var(--surface); padding: 6px 8px; }
+.clippings .y25 { left: 40px; }
+.clippings .y26 { left: 1012px; }
+.entry { position: absolute; inset: 0; }
+.entry time { position: absolute; z-index: 1; left: calc(var(--at) - 2px); top: var(--row); height: calc(var(--band) / 2); display: flex; align-items: center; padding: 0 12px; border-left: 4px solid var(--text-3); font: 400 22px/1 var(--term); white-space: nowrap; word-spacing: -.3em; color: var(--text); }
+.entry time::after { content: ""; position: absolute; left: -10px; bottom: -8px; width: 16px; height: 16px; background: var(--text); box-shadow: 0 0 0 4px var(--surface); }
+.entry.down time { top: calc(var(--row) + var(--band) / 2); }
+.entry.down time::after { bottom: auto; top: -8px; }
+.entry.flip time { left: auto; right: calc(100% - var(--at) - 2px); border-left: 0; border-right: 4px solid var(--text-3); }
+.entry.flip time::after { left: auto; right: -10px; }
+.entry.launch time { border-color: var(--accent); }
+.entry.launch time::after { background: var(--accent); }
+.clipping { position: absolute; left: var(--x); bottom: calc(var(--row) + var(--band)); width: var(--w, var(--card)); margin: 0; background: #efe9dc; padding: 8px; display: flex; flex-direction: column; gap: 6px; box-shadow: 8px 8px 0 var(--edge-dark); transform: rotate(var(--tilt, 0deg)); }
+.entry.down .clipping { bottom: auto; top: calc(var(--row) + var(--band)); }
+.clipping img { display: block; width: 100%; height: auto; }
+.entry.launch .clipping { outline: 6px solid var(--accent); }
+.entry:nth-of-type(1) { --tilt: -1.4deg; }
+.entry:nth-of-type(2) { --tilt: 1deg; }
+.entry:nth-of-type(3) { --tilt: -.6deg; }
+.entry:nth-of-type(4) { --tilt: 1.2deg; }
+.entry:nth-of-type(5) { --tilt: -1deg; }
+.entry:nth-of-type(6) { --tilt: .7deg; }
+.entry.step .clipping { transform: translateY(-36px) rotate(calc(var(--tilt, 0deg) * 4)) scale(1.06); transition: transform .25s cubic-bezier(.2, .8, .3, 1); }
+.entry.step.shown .clipping { transform: rotate(var(--tilt, 0deg)); }
+@media (prefers-reduced-motion: reduce) { .entry.step .clipping { transform: rotate(var(--tilt, 0deg)); } }
+
+/* The Pokémon runs in date order, and under each one what its harness gave the model. */
+.runs, .helps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); column-gap: 28px; }
+.runs li { position: relative; padding-top: 44px; display: flex; flex-direction: column; gap: 10px; font-size: 30px; color: var(--text-2); }
+.runs li::before { content: ""; position: absolute; left: 0; top: 0; width: 20px; height: 20px; background: var(--text); z-index: 1; }
+.runs li::after { content: ""; position: absolute; left: 0; right: -28px; top: 8px; height: 4px; background: var(--line); }
+.runs li:last-child::after { display: none; }
+.runs time { font: 400 22px/1.2 var(--term); letter-spacing: .06em; text-transform: uppercase; color: var(--text-3); }
+.runs b { font: 400 33px/1.2 var(--term); color: var(--text); min-height: 2.4em; display: flex; flex-direction: column; justify-content: flex-start; }
+/* Whose model it was: the maker's mark and name in its colour, as in the heading two slides back. */
+.runs .llm { display: flex; align-items: center; gap: .32em; }
+.runs .llm svg { width: .82em; height: .82em; filter: none; }
+.runs .won { color: var(--text); }
+.runs .won::before { content: "✓"; color: var(--accent); font-weight: 700; margin-right: 10px; }
+.runs-key { font: 400 22px/1.2 var(--term); letter-spacing: .06em; text-transform: uppercase; color: var(--accent); border-top: 4px solid var(--line); padding-top: 16px; margin-top: 0; }
+.helps { margin-top: -10px; opacity: 0; transition: opacity .2s ease; }
+.slide:has(.key-help.shown) .helps { opacity: 1; }
+.helps li { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+/* How many things each harness added, counted over its list. */
+.helps b { display: flex; align-items: baseline; gap: 12px; margin-bottom: 4px; font: 400 44px/1 var(--term); color: var(--text); text-shadow: .0909em .0909em 0 var(--shadow); }
+.helps b small { font: 400 22px/1 var(--term); letter-spacing: .06em; text-transform: uppercase; color: var(--text-3); text-shadow: none; }
+.helps span { font-size: 22px; line-height: 1.2; padding: 4px 14px; color: var(--text-2); background: var(--surface-2); border: 4px solid; border-color: var(--edge-light) var(--edge-dark) var(--edge-dark) var(--edge-light); }
+.helps .only { color: var(--text); background: var(--ok-dim); border-color: var(--accent); }
+.helps .src { margin-top: 4px; font: 400 22px/1.2 var(--term); letter-spacing: .04em; color: var(--text-3); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.helps .src:hover { color: var(--accent); }
+/* The last run waits for a click of its own: its nought fades in and "Screenshots only" lands, the way a Harder badge does. */
+.helps .last { opacity: 0; transition: opacity .2s ease; }
+.slide:has(.key-only.shown) .helps .last { opacity: 1; }
+.helps .only { opacity: 0; transform: scale(1.7); transform-origin: 0 50%; transition: transform .25s cubic-bezier(.2, .8, .2, 1) .2s, opacity .1s linear .2s; }
+.slide:has(.key-only.shown) .helps .only { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .helps .only { transition: none !important; } }
+
+/* Pokémon and Minecraft side by side. The first row is what they share; the other two come in a click each. */
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 88px; }
+.compare .card { gap: 22px; }
+.compare > .step { display: none; }
+/* Each card is headed by its game: a Pikachu drawn for the talk (art/pikachu.png) and a grass block. */
+.compare h3 { display: flex; align-items: center; gap: 22px; height: 80px; }
+/* Five rows a card on slide 9, so they run tighter here than .fact does on its own (the duo slide keeps its own). */
+.compare .card { gap: 14px; padding: 22px 36px 24px; }
+.compare .fact { gap: 2px; padding-top: 12px; }
+.compare .fact b { font-size: 46px; }
+.compare .fact span { font-size: 26px; }
+.compare:not(.duo) .card { gap: 9px; padding: 18px 36px 20px; }
+.compare:not(.duo) .fact { padding-top: 9px; }
+.compare:not(.duo) .fact b { font-size: 40px; }
+.compare:not(.duo) .fact span { font-size: 24px; }
+/* A badge on each row, sitting over the gap between the two cards: likewise for both, or harder in Minecraft. It is
+   in the Minecraft card's row and reaches left: 84px is the card's padding and border plus half the gap. The colour
+   never stands alone; each has its sign and its word. A harder one lands just after its row fades in. */
+.compare .fact { position: relative; }
+.verdict { position: absolute; left: -84px; top: calc(50% + 8px); transform: translate(-50%, -50%); width: 128px; padding: 4px 0 6px;
+  display: flex; flex-direction: column; align-items: center; gap: 0; font: 400 22px/1.15 var(--term); font-style: normal; text-transform: uppercase;
+  color: var(--text); border: 4px solid; box-shadow: 0 0 0 4px var(--edge-dark); }
+.verdict::before { font-size: 30px; line-height: 1; }
+.verdict.same { background: var(--ok-dim); border-color: var(--accent-dim); }
+.verdict.same::before { content: "="; color: var(--accent); }
+.verdict.harder { background: var(--warn-dim); border-color: var(--warn); }
+.verdict.harder::before { content: "→"; color: var(--warn); }
+.fact.clock .verdict, .fact.world .verdict, .fact.net .verdict { opacity: 0; transform: translate(-50%, -50%) scale(1.7); transition: transform .25s cubic-bezier(.2, .8, .2, 1) .2s, opacity .1s linear .2s; }
+.slide:has(.key-clock.shown) .fact.clock .verdict, .slide:has(.key-world.shown) .fact.world .verdict,
+.slide:has(.key-net.shown) .fact.net .verdict { opacity: 1; transform: translate(-50%, -50%); }
+@media (prefers-reduced-motion: reduce) { .fact .verdict { transition: none !important; } }
+.compare h3 .px { width: 80px; height: 80px; }
+/* The same two cards without badges between them: a bot that has done it, and the question. A row can lead with a
+   sign: a tick for done, a question mark for not known yet. */
+.compare.duo { gap: 56px; }
+.compare.duo .card { gap: 18px; padding: 26px 36px 32px; }
+.compare.duo .fact { gap: 6px; padding-top: 16px; }
+.sign { font: 700 .85em/1 var(--sans); margin-right: 18px; }
+.sign.yes { color: var(--accent); }
+.sign.ask { color: var(--warn); }
+.compare h3 .cube { --s: 52px; margin: 0 11px; }
+.fact { display: flex; flex-direction: column; gap: 6px; border-top: 4px solid var(--line); padding-top: 20px; }
+.fact b { font: 400 55px/1.1 var(--term); word-spacing: -.25em; text-shadow: .0909em .0909em 0 var(--shadow); }
+.fact span { font-size: 28px; color: var(--text-2); }
+.fact.clock, .fact.world, .fact.net { opacity: 0; transition: opacity .2s ease; }
+.slide:has(.key-clock.shown) .fact.clock, .slide:has(.key-world.shown) .fact.world, .slide:has(.key-net.shown) .fact.net { opacity: 1; }
+
+/* The show of hands: one row per question. */
+.poll { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 26px; font-size: 46px; }
+.poll li { display: flex; align-items: center; gap: 36px; }
+/* The takeaways are the same rows, smaller: each one led by its icon from the idea slide. */
+.poll.takeaways { font-size: 36px; gap: 18px; }
+.poll.takeaways li { gap: 30px; }
+.poll.takeaways .slot { width: 84px; height: 84px; }
+
+/* The idea: three cards, each under its icon, one a click. */
+.ideas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 34px; }
+.ideas .card { gap: 16px; padding: 30px 32px 36px; font-size: 32px; line-height: 1.3; color: var(--text-2); }
+.ideas .card h3 { font-size: 44px; margin-top: 12px; }
+.ideas .card.step { transform: translateY(28px); transition: opacity .2s ease, transform .25s cubic-bezier(.2, .8, .2, 1); }
+.ideas .card.step.shown { transform: none; }
+@media (prefers-reduced-motion: reduce) { .ideas .card.step { transform: none; } }
+
+/* A switch on a quote: which way the model had just flicked a reflex. Amber and to the left is off, green and to the
+   right is on, and the word says so too. The on switch slides across as its quote comes in. */
+blockquote.quote { position: relative; }
+.switch { position: absolute; right: 28px; top: -26px; display: flex; align-items: center; gap: 14px; padding: 8px 16px 8px 10px; font: 400 22px/1 var(--term); text-transform: uppercase;
+  color: var(--text); background: var(--warn-dim); border: 4px solid var(--warn); box-shadow: 0 0 0 4px var(--edge-dark); }
+.switch i { position: relative; width: 56px; height: 28px; background: var(--inset); border: 4px solid; border-color: var(--edge-dark) var(--edge-light) var(--edge-light) var(--edge-dark); }
+.switch i::after { content: ""; position: absolute; left: 0; top: 0; width: 24px; height: 20px; background: var(--warn); }
+.switch.on { background: var(--ok-dim); border-color: var(--accent); }
+.switch.on i::after { background: var(--accent); transform: translateX(24px); }
+@media screen and (prefers-reduced-motion: no-preference) {
+  .switch.on i::after { transition: transform .2s cubic-bezier(.2, .8, .2, 1) .3s, background-color .1s linear .3s; }
+  .step:not(.shown) .switch.on i::after { transform: none; background: var(--warn); }
+}
+
+/* A QR code on paper, like the headline cards. The picture is one pixel a module (tools/make-qr.mjs), scaled by six. */
+.qr { position: absolute; right: 100px; top: 140px; margin: 0; padding: 12px 12px 8px; display: flex; flex-direction: column; align-items: center; gap: 4px; background: #efe9dc; box-shadow: 8px 8px 0 var(--edge-dark); }
+.qr img { display: block; width: 246px; height: 246px; image-rendering: pixelated; }
+.qr figcaption { font: 400 22px/1.2 var(--term); letter-spacing: .06em; text-transform: uppercase; color: #15121c; }
+
+/* Appendix credits: who made what, and under which licence. */
+.credits { display: grid; grid-template-columns: max-content 1fr; gap: 12px 44px; font-size: 26px; line-height: 1.35; align-items: baseline; }
+.credits dt { font: 400 22px/1.2 var(--term); letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+.credits dd { margin: 0; color: var(--text-2); }
+.credits dd b { color: var(--text); }
+.credits dd .mono { font-size: 22px; }
+/* A floor of obsidian under the slides that open a section. */
+.slide.floor::before { content: ""; position: absolute; inset: auto 0 0 0; height: 288px; z-index: -1; background: url(vendor/pixel-perfection/obsidian.png) 0 0 / 96px 96px; image-rendering: pixelated; opacity: .5;
+  -webkit-mask-image: linear-gradient(to top, #000 10%, transparent); mask-image: linear-gradient(to top, #000 10%, transparent); }
+
+/* ---------- charts ---------- */
+.chart { display: flex; flex-direction: column; gap: 16px; }
+.chart-title { font-size: 28px; color: var(--text-2); }
+
+/* horizontal bars: one series, one hue */
+.bars { display: grid; grid-template-columns: max-content 1fr; column-gap: 28px; row-gap: 20px; align-items: center; font-size: 30px; }
+.bars .name { color: var(--text-2); text-align: right; }
+.bars .name.key { color: var(--text); font-weight: 700; }
+.bars .track { display: flex; align-items: center; gap: 14px; }
+.bars .bar { height: 22px; background: var(--series-1); min-width: 4px; }
+.bars .name .px { width: 48px; height: 48px; margin: -8px 0 -8px 16px; vertical-align: -9px; }
+.bars .name .px.hud { width: 45px; height: 45px; margin-right: 2px; }
+.bars .val { font-variant-numeric: tabular-nums; color: var(--text); }
+.bars .note { color: var(--text-3); }
+/* One bar lit and the rest grey: the others are only there for scale. */
+.bars.focus .bar { background: var(--series-mute); }
+.bars.focus .bar.key { background: var(--accent); }
+/* How calls ended: green for the ones that worked, amber for the ones that went wrong, grey for neither. The bar
+   above them says which is which, with a tick and a cross. */
+.bars.outcomes .bar { background: var(--series-4); }
+.bars.outcomes .bar.ok { background: var(--series-3); }
+.bars.outcomes .bar.mute { background: var(--series-mute); }
+
+/* run timeline: proportional phases with event markers. --stem is how far a label sits above the bar. */
+.timeline { position: relative; --head: 170px; padding-top: var(--head); }
+.timeline .phases { display: flex; gap: 2px; height: 24px; }
+.timeline .phase { height: 24px; position: relative; }
+.timeline .event { position: absolute; top: 0; height: var(--head); width: 0; --stem: 0px; }
+.timeline .event::before { content: ""; position: absolute; left: -1px; top: calc(var(--head) - var(--stem) - 62px); bottom: -30px; width: 2px; background: var(--text-2); }
+.timeline .event::after { content: ""; position: absolute; left: -8px; bottom: -44px; width: 12px; height: 12px; background: var(--text); border: 2px solid var(--surface); }
+.timeline .event span { position: absolute; bottom: calc(var(--stem) + 8px); left: -8px; white-space: nowrap; font-size: 26px; line-height: 1.25; color: var(--text); }
+.timeline .event.right span { left: auto; right: 12px; text-align: right; }
+.timeline .event .px { width: 27px; height: 27px; vertical-align: -4px; margin-right: 10px; }
+.timeline .event .creeper { --s: 24px; vertical-align: -3px; margin-right: 10px; }
+.timeline .event small { display: block; color: var(--text-3); font-size: 22px; font-variant-numeric: tabular-nums; }
+.timeline .axis { position: relative; height: 40px; margin-top: 52px; font-size: 22px; color: var(--text-3); font-variant-numeric: tabular-nums; }
+.timeline .axis span { position: absolute; transform: translateX(-50%); }
+.timeline .axis span:first-child { transform: none; }
+.timeline .axis span:last-child { transform: translateX(-100%); }
+.legend { display: flex; flex-wrap: wrap; gap: 14px 30px; font-size: 24px; color: var(--text-2); }
+.legend i { display: inline-block; width: 18px; height: 18px; margin-right: 12px; vertical-align: -2px; }
+.legend b { color: var(--text); font-weight: 650; font-variant-numeric: tabular-nums; margin-left: 8px; }
+
+#tip {
+  position: fixed; z-index: 50; pointer-events: none; background: #000; color: var(--text); border: 1px solid var(--line);
+  padding: 8px 12px; font-size: 14px; line-height: 1.35; max-width: 280px; display: none;
+}
+
+/* ---------- clips ---------- */
+.clip { position: relative; background: #000; overflow: hidden; aspect-ratio: 16 / 9; width: 100%; }
+.clip video { width: 100%; height: 100%; object-fit: cover; display: none; }
+.clip.ready video { display: block; }
+.clip .placeholder {
+  position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+  border: 3px dashed var(--line); color: var(--text-3); font-size: 28px; text-align: center; padding: 30px;
+}
+.clip.ready .placeholder { display: none; }
+/* Until a played clip has been started, say which key starts it. */
+.clip .hint { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: none; padding: 18px 30px; background: rgba(0, 0, 0, .7); border: 4px solid; border-color: var(--edge-light) var(--edge-dark) var(--edge-dark) var(--edge-light); font: 400 33px/1 var(--term); color: var(--text); pointer-events: none; }
+.clip.ready[data-mode="play"]:not(.started) .hint { display: block; }
+.clip .placeholder code { font-family: var(--term); color: var(--warn); font-size: 24px; }
+.clip .controls {
+  position: absolute; left: 0; right: 0; bottom: 0; display: none; align-items: center; gap: 18px; padding: 16px 22px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, .75)); font-size: 22px; font-variant-numeric: tabular-nums;
+}
+.clip.ready[data-mode="play"] .controls { display: flex; }
+.clip .controls button { all: unset; cursor: pointer; width: 44px; height: 44px; display: grid; place-items: center; font-size: 26px; }
+.clip .controls .scrub { flex: 1; height: 8px; background: rgba(255, 255, 255, .25); cursor: pointer; position: relative; }
+.clip .controls .scrub i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--accent); width: 0; }
+/* ---------- clip play/pause (deck.js syncPaused) ----------
+   One chip top right on every started clip, loops too: faint on hover while it plays (always faint on a touch screen, which has no hover), lit (green bars, green edge) while
+   it's paused. It's the only paused sign: nothing covers or dims the frame, so Ben can pause and point at it. */
+.clip .clip-toggle { all: unset; position: absolute; top: 18px; right: 18px; width: 56px; height: 56px; display: none; place-items: center; cursor: pointer;
+  background: rgba(0, 0, 0, .72); border: 4px solid; border-color: var(--edge-light) var(--edge-dark) var(--edge-dark) var(--edge-light); opacity: 0; transition: opacity .2s ease; }
+.clip.started:not(.ended) .clip-toggle { display: grid; }
+.clip:hover .clip-toggle { opacity: .7; }
+@media (hover: none) { .clip .clip-toggle { opacity: .55; } }
+.clip.paused .clip-toggle { opacity: 1; border-color: var(--accent); }
+.clip .clip-toggle::before { content: ""; width: 20px; height: 24px; border-left: 7px solid var(--text); border-right: 7px solid var(--text); }
+.clip.paused .clip-toggle::before { border-color: var(--accent); }
+#stage:has(.slide.active .clip.pop.playing.paused) #space-cue.on { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .clip .clip-toggle { transition: none; } }
+@media print { .clip .clip-toggle { display: none !important; } }
+.slide.bleed { padding: 0; }
+/* A full-screen clip has its own bar along the bottom, so the footer text gets out of its way. */
+#stage:has(.slide.bleed.active) #chrome { display: none; }
+.slide.bleed .clip { height: 100%; aspect-ratio: auto; }
+
+/* A single bar split in two, with a labelled block under it for each part. */
+.share { display: flex; gap: 2px; height: 24px; }
+.share.thick { height: 36px; }
+.sides { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+.side { display: flex; flex-direction: column; gap: 12px; }
+.side h3 i { display: inline-block; width: 22px; height: 22px; margin-right: 16px; }
+.side .value { font: 400 88px/1.1 var(--term); word-spacing: -.25em; text-shadow: .0909em .0909em 0 var(--shadow); }
+.side p { color: var(--text-2); }
+.bars.roomy { font-size: 34px; row-gap: 26px; }
+
+/* ---------- run database explorer (appendix) ---------- */
+.explorer { flex: 1; min-height: 0; display: flex; gap: 28px; font-size: 22px; line-height: 1.35; }
+.explorer-gate { display: flex; flex-direction: column; gap: 30px; align-items: flex-start; justify-content: center; }
+.explorer button { font: inherit; color: var(--text); background: var(--surface-2); border: 1px solid var(--line); padding: 8px 14px; cursor: pointer; text-align: left; }
+.explorer button:hover { border-color: var(--text-3); }
+.explorer button:disabled { opacity: .5; cursor: default; }
+.explorer button.primary { background: var(--accent); color: #0c2417; border-color: var(--accent); font-weight: 700; }
+.explorer-gate button.load { font: 400 33px/1.2 var(--term); padding: 20px 32px; border: 4px solid; border-color: #b9f5cd #2f7a4d #2f7a4d #b9f5cd; box-shadow: 0 0 0 4px var(--edge-dark); }
+.explorer-side { width: 330px; flex: none; display: flex; flex-direction: column; gap: 10px; min-height: 0; }
+.explorer-side h3 { font: 400 22px/1.2 var(--term); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.explorer-side .size { font-size: 18px; color: var(--text-3); }
+.explorer-list { display: flex; flex-direction: column; gap: 6px; }
+.explorer-main { flex: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; gap: 12px; position: relative; }
+.explorer textarea { height: 150px; flex: none; resize: none; font-family: var(--mono); font-size: 20px; line-height: 1.4; color: var(--text); background: var(--inset); border: 1px solid var(--line); padding: 12px 14px; }
+.explorer textarea:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+.explorer-bar { display: flex; align-items: center; gap: 16px; }
+.explorer-bar .hint, .explorer-bar .status { color: var(--text-3); font-size: 18px; }
+.explorer select { font: inherit; font-size: 20px; color: var(--text); background: var(--surface-2); border: 1px solid var(--line); padding: 8px 10px; max-width: 300px; }
+.explorer-bar .status { margin-left: auto; font-variant-numeric: tabular-nums; }
+.explorer-results { flex: 1; min-height: 0; overflow: auto; border: 1px solid var(--line); background: var(--inset); }
+.explorer-results table { border-collapse: collapse; font-family: var(--mono); font-size: 18px; width: max-content; min-width: 100%; }
+.explorer-results th { position: sticky; top: 0; background: var(--surface-2); color: var(--text-2); text-align: left; font-weight: 600; }
+.explorer-results th, .explorer-results td { padding: 6px 12px; border-bottom: 1px solid #262133; vertical-align: top; max-width: 520px; }
+.explorer-results td { cursor: pointer; overflow-wrap: anywhere; }
+.explorer-results td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.explorer-results td.null { color: var(--text-3); }
+.explorer-results tr:hover td { background: #1a1624; }
+.explorer-results .error { margin: 16px; color: var(--warn); font-family: var(--mono); }
+.explorer-detail { position: absolute; left: 0; right: 0; bottom: 0; top: 162px; background: var(--inset); border: 1px solid var(--text-3); padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+.explorer-detail[hidden] { display: none; }
+.explorer-detail .explorer-bar { justify-content: space-between; }
+.explorer-detail pre { margin: 0; flex: 1; min-height: 0; overflow: auto; font-family: var(--mono); font-size: 18px; line-height: 1.4; white-space: pre-wrap; overflow-wrap: anywhere; }
+
+/* ---------- phone hint (portrait only) ---------- */
+#hint { display: none; position: fixed; left: 0; right: 0; bottom: 18vh; margin: 0; padding: 0 28px; text-align: center; font-size: 15px; line-height: 1.4; color: var(--text-3); pointer-events: none; }
+@media (orientation: portrait) and (max-width: 700px) { body:not(.speaker) #hint { display: block; } }
+
+/* ---------- chrome ---------- */
+#chrome { position: absolute; left: 0; right: 0; bottom: 0; height: 60px; display: flex; align-items: center; justify-content: space-between; padding: 0 100px 10px; font: 400 22px/1 var(--term); color: var(--text-3); pointer-events: none; box-shadow: inset 0 -10px 0 var(--edge-dark); }
+#count { color: var(--accent); }
+/* The Space cue (deck.js syncCue): lit when the next Space plays a clip. */
+#space-cue { position: absolute; left: 50%; top: 50%; margin-top: -5px; transform: translate(-50%, -50%); padding: 7px 14px 8px;
+  border: 2px solid var(--accent-dim); background: var(--inset); color: var(--accent); white-space: nowrap; opacity: 0; transition: opacity .2s ease; }
+#space-cue.on { opacity: 1; }
+#stage:has(.slide.active .clip.pop.playing) #space-cue { opacity: 0; }
+#progress { position: absolute; left: 0; bottom: 2px; height: 6px; width: 0; transition: width .2s ease;
+  background: repeating-linear-gradient(90deg, var(--accent) 0 60px, var(--accent-dim) 60px 64px); }
+
+/* ---------- speaker view (?speaker) ---------- */
+body.speaker { overflow: auto; }
+body.speaker #viewport { position: absolute; left: 24px; top: 24px; width: 52vw; height: calc(52vw * 9 / 16); inset: auto; left: 24px; top: 24px; border: 1px solid var(--line); }
+#speaker { display: none; }
+body.speaker #speaker {
+  display: grid; position: absolute; left: calc(52vw + 48px); right: 24px; top: 24px; gap: 18px; font-size: 18px; color: var(--text-2);
+}
+#speaker .clock { font-size: 56px; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; line-height: 1; }
+#speaker .pace { font-size: 18px; }
+#speaker .pace.behind { color: var(--warn); }
+#speaker button { font: inherit; padding: 6px 14px; background: var(--surface-2); color: var(--text); border: 1px solid var(--line); cursor: pointer; }
+#speaker .next { border-top: 1px solid var(--line); padding-top: 14px; }
+#speaker-notes { position: absolute; left: 24px; right: 24px; top: calc(52vw * 9 / 16 + 48px); font-size: 26px; line-height: 1.45; color: var(--text); padding-bottom: 60px; display: none; }
+body.speaker #speaker-notes { display: block; }
+#speaker-notes ul { padding-left: 1.1em; margin: 0; }
+#speaker-notes li { margin-bottom: .4em; }
+aside.notes { display: none; }
+
+/* ---------- print: one slide per page, everything revealed ---------- */
+@page { size: 1600px 900px; margin: 0; }
+@media print {
+  html, body { overflow: visible; height: auto; background: var(--surface); }
+  #viewport { position: static; overflow: visible; }
+  #stage { position: static; transform: none; width: 1600px; height: auto; overflow: visible; }
+  .slide { position: relative; width: 1600px; height: 900px; opacity: 1; visibility: visible; break-after: page; page-break-after: always; }
+  .step { opacity: 1; }
+  .clip.pop { display: none; }
+  .toasts .toast.step { transform: none; }
+  .entry.step .clipping { transform: rotate(var(--tilt, 0deg)); }
+  .helps, .helps .last, .fact.clock, .fact.world, .receipt .fixed { opacity: 1; }
+  .helps .only { opacity: 1; transform: none; }
+  .ideas .card.step { transform: none; }
+  .fact .verdict { opacity: 1; transform: translate(-50%, -50%); }
+  .stack em, .trace { opacity: 1; }
+  .stack .ok { border-color: var(--accent); background: var(--ok-dim); }
+  .stack .gap { border-color: var(--gap); background: var(--gap-dim); }
+  .slide:last-of-type { break-after: auto; page-break-after: auto; }
+  .slide.chapter .chapters { visibility: visible; }
+  #chrome, #tip, #hint, #speaker, #speaker-notes, #parts { display: none !important; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+/* ---------- Playing Minecraft: from a person playing to the six layers (prefix mcb-) ----------
+   Scene A is the two rows, their timings, the creeper and System 1. Scene B, laid over it, is the six layers: a .stack,
+   which is where deck.js's pop clips look for their boxes. Hidden key steps after the scenes drive scene B, in order:
+   k-strip, k-key, k-phys, k-packet, k-snap, k-mf, k-code, k-mfpacket, k-actions, k-tools, k-harness, k-model. Then come the six layers'
+   own steps, as they were on their own slide until 13 November: key-ok, key-gap, the two pop clips (bug-drown into
+   Actions, bug-stair into Client) and key-rule, which shows the rule (.mcb-rule) and the trace. Every change is a CSS transition, so ← plays it
+   backwards; deck.js gives the slide .mcb-instant for two frames when it is arrived at or jumped more than one step,
+   so those land at once.
+   The boxes you see as the AI row's Java client and Java server are the faces (.mcb-face) of the stack's Client and
+   Game boxes, parked over the row (--fy, 298px down: the row's top, 485, less the stack's, 187; the row's own boxes are
+   stand-ins, .mcb-ghost). On k-strip they rise and grow, the client to the far left and the server to the far right,
+   and the four columns between them are the wire (.mcb-link). --k is how many columns left of its slide-18 place a
+   box sits: during the link the client sits at -4 and the server at 0; from Actions on all boxes share one, -1.5 with
+   three boxes, half a column less for each box added, 0 on k-model, the six layers in their places, heading
+   included. Print shows the end of the slide: the six layers with their verdicts and the rule. */
+/* Weight (Ben: "don't feel physical"): boxes arrive on a spring with a small overshoot, a chain of boxes moves 50ms
+   apart from the incoming one rightwards, and a box lifts a little, with a shadow, while it travels. The lift comes
+   from --mcb-p, which each box eases from the old step's number to the new one: halfway it's x.5, so the sine of its
+   fraction peaks mid-move and is 0 at rest, and a jump (no transition) never lifts. */
+@property --mcb-p { syntax: "<number>"; inherits: true; initial-value: 0; }
+.mcb { --mcb-move: .6s cubic-bezier(.65, 0, .35, 1); --mcb-spring: cubic-bezier(.34, 1.3, .64, 1); }
+.mcb-title { display: grid; }
+.mcb-title > span { grid-area: 1 / 1; transition: opacity .3s ease; }
+.mcb-scenes { display: grid; }
+.mcb-a, .mcb-b { grid-area: 1 / 1; min-width: 0; }
+.mcb-a { align-self: start; display: flex; flex-direction: column; gap: 34px; transition: opacity .5s ease, transform var(--mcb-move); }
+.mcb-b { display: flex; flex-direction: column; gap: 34px; align-self: start; }
+.mcb .stack { --k: 0; }
+.mcb .stack { --f: 4; --mcb-phase: 0; }
+.mcb .stack li { --dx: 0px; --lag: calc((var(--i) - var(--f)) * 50ms); --mcb-p: var(--mcb-phase); transform: translateX(calc(var(--k) * (100% + 34px) + var(--dx)));
+  transition: transform .65s var(--mcb-spring) var(--lag), --mcb-p .65s linear var(--lag), opacity .4s ease, border-color .2s ease, background-color .2s ease, box-shadow .2s ease; }
+.mcb .stack li:nth-child(1) { --i: 0; } .mcb .stack li:nth-child(2) { --i: 1; } .mcb .stack li:nth-child(3) { --i: 2; }
+.mcb .stack li:nth-child(4) { --i: 3; } .mcb .stack li:nth-child(5) { --i: 4; } .mcb .stack li:nth-child(6) { --i: 5; }
+@supports (width: calc(sin(rem(3, 2) * 1rad) * 1px)) {
+  .mcb .stack li:not(.client, .asis), .mcb .stack .mcb-face { --lift: sin(rem(var(--mcb-p), 1) * 180deg); translate: 0 calc(var(--lift) * -6px);
+    box-shadow: 0 0 0 4px var(--edge-dark), 0 calc(var(--lift) * 14px) calc(var(--lift) * 22px) rgb(0 0 0 / calc(var(--lift) * .5)); }
+}
+.mcb .stack li::before, .mcb .stack li::after, .mcb .stack li > :not(.pop-thumb) { transition: opacity .3s ease; }
+/* The pop clips' thumbnails (deck.js builds them in Actions and Client) stay hidden with the rest of those boxes'
+   contents until k-model, then fade in with them; their own outline change is kept. */
+.mcb .stack li > .pop-thumb { transition: opacity .3s ease, outline-color .2s ease; }
+.mcb-rule { transition: opacity .2s ease; }
+/* A face is a whole box laid exactly over its stack box, styled like the rows' boxes, with its own chevron. */
+.mcb .stack .mcb-face { position: absolute; top: -4px; left: -4px; right: -4px; height: calc(100% + 8px); box-sizing: border-box;
+  background: var(--surface-2); border: 4px solid; border-color: var(--edge-light) var(--edge-dark) var(--edge-dark) var(--edge-light);
+  box-shadow: 0 0 0 4px var(--edge-dark); padding: 14px 12px; display: flex; flex-direction: column; gap: 6px; transform: translateY(var(--fy, 0px));
+  font-size: 21px; line-height: 1.25; color: var(--text-2); transition: transform .65s var(--mcb-spring) var(--lag), height var(--mcb-move) var(--lag), padding var(--mcb-move) var(--lag), opacity .4s ease; }
+.mcb-face b { font: 400 24px/1.15 var(--term); color: var(--text); }
+/* Everything in a face keeps its own height and flows down the column: a longer wrap (a wider body font) pushes
+   what's under it down instead of being squeezed under it. */
+.mcb-face > * { flex-shrink: 0; }
+.mcb-face span { min-height: 0; }
+.mcb-face small { font-size: 18px; }
+.mcb-face::before { content: ">"; position: absolute; left: -31px; top: 50%; width: 20px; margin-top: -11px; text-align: center;
+  font: 400 22px/1 var(--term); color: var(--text-3); transition: opacity .3s ease; }
+.mcb-mf::before { content: none; }
+/* The link (Ben: "the packets must travel between the two boxes"): the four columns between the client and the
+   server are the wire, in two lanes. Positions go to the server along the upper one; corrections come back along the
+   lower one, in red. A card launches from one box, small, and grows as it travels its lane to the other; the lane's
+   rail draws along behind it. The lane is 990px (four columns and five gaps) and a card stops 20px short of each end,
+   so a card's run is 950px less its own width: translateX(calc(100% - 950px)) puts it at the far end. */
+.mcb-b { position: relative; }
+.mcb-link { position: absolute; top: 0; left: calc((100% - 170px) / 6); right: calc((100% - 170px) / 6); z-index: 1;
+  display: flex; flex-direction: column; gap: 22px; transition: opacity .35s ease, transform .45s ease; }
+.mcb { --mcb-fly: cubic-bezier(.5, 0, .25, 1.08); }
+.mcb-lane { position: relative; display: flex; }
+.mcb-lane::before { content: ""; position: absolute; left: 10px; right: 10px; top: 50%; height: 4px; margin-top: -2px; background: var(--text-3);
+  transform: scaleX(0); transform-origin: left; transition: transform .9s cubic-bezier(.45, 0, .25, 1), opacity .3s ease; }
+.mcb-lane::after { content: ""; position: absolute; top: 50%; right: 0; margin-top: -12px; border: 12px solid transparent; border-right: 0;
+  border-left: 16px solid var(--text-3); transition: opacity .2s ease; }
+.mcb-down::before { background: var(--gap); transform-origin: right; }
+.mcb-down::after { right: auto; left: 0; border: 12px solid transparent; border-left: 0; border-right: 16px solid var(--gap); }
+.mcb-proto { margin: -6px 0 0; text-align: center; font: 400 20px/1.2 var(--term); color: var(--text-3); transition: opacity .3s ease .4s; }
+.mcb-packet { position: relative; width: 560px; box-sizing: border-box; --mcb-p: 0;
+  background: var(--surface-2); border: 4px solid; border-color: var(--edge-light) var(--edge-dark) var(--edge-dark) var(--edge-light);
+  box-shadow: 0 0 0 4px var(--edge-dark); padding: 12px 16px 14px; display: flex; flex-direction: column; gap: 10px;
+  transition: transform .9s var(--mcb-fly), --mcb-p .9s linear, opacity .25s ease .65s; }
+.mcb-out { margin: 0 20px 0 auto; transform-origin: left center; }
+.mcb-in { margin: 0 auto 0 20px; transform-origin: right center; }
+.mcb-cap { margin: 0; font-size: 20px; line-height: 1.3; color: var(--text); }
+.mcb-in .mcb-cap { color: var(--gap); }
+.mcb-ph { margin: 0; display: flex; align-items: baseline; gap: 14px; }
+.mcb-ph b { font: 400 24px/1.15 var(--term); color: var(--text); }
+.mcb-ph code { font: 400 24px/1 var(--term); color: var(--accent); white-space: nowrap; }
+.mcb-packet dl { margin: 0; padding-bottom: 2px; display: grid; grid-template-columns: auto auto auto 1fr; gap: 10px; }
+.mcb-in dl { grid-template-columns: auto auto 1fr; }
+.mcb-packet dl div { display: flex; flex-direction: column; gap: 4px; border-left: 4px solid var(--line); padding-left: 10px; }
+.mcb-packet dt { font: 400 16px/1.1 var(--term); color: var(--text-2); white-space: nowrap; }
+.mcb-packet dt i { display: block; font-style: normal; color: var(--text-3); }
+.mcb-packet dd { margin: auto 0 0; font: 400 21px/1.1 var(--term); color: var(--text); white-space: nowrap; }
+.mcb-packet dd small { font-size: 16px; color: var(--text-3); }
+.mcb-hex { margin: 0; font: 400 14px/1.35 var(--term); color: var(--text-2); white-space: nowrap; }
+.mcb-hex i { font-style: normal; color: var(--accent); }
+.mcb-ack { margin: 0; padding-top: 8px; border-top: 3px solid var(--line); font: 400 16px/1.3 var(--term); color: var(--text-3); white-space: nowrap; }
+.mcb-ack code { font: inherit; color: var(--accent); }
+/* After the swap, Mineflayer runs the same beat: the call that holds W in code, in the empty lower lane, then the same
+   physics panel and the same card. The card's caption swaps for the second trip. */
+.mcb-code { position: absolute; left: 20px; top: 50%; margin: 0; transform: translateY(-50%); transform-origin: left center;
+  background: var(--surface); border: 4px solid var(--line); border-left-color: var(--accent); padding: 12px 18px; display: flex; flex-direction: column; gap: 8px;
+  transition: opacity .3s ease, transform .5s var(--mcb-spring); }
+.mcb-code p { margin: 0; font: 400 18px/1.2 var(--term); color: var(--text-3); }
+.mcb-code code { font: 400 22px/1.2 var(--term); color: var(--text); white-space: nowrap; }
+.mcb-code .mcb-fn, .mcb-hi { color: var(--accent); }
+.mcb-code .mcb-str { color: var(--warn); }
+.mcb-cap { display: grid; }
+.mcb-cap > span { grid-area: 1 / 1; transition: opacity .25s ease; }
+.mcb-cap-b { opacity: 0; color: var(--accent); }
+@supports (width: calc(sin(rem(3, 2) * 1rad) * 1px)) {
+  .mcb-packet { --lift: sin(rem(var(--mcb-p), 1) * 180deg); translate: 0 calc(var(--lift) * -6px);
+    box-shadow: 0 0 0 4px var(--edge-dark), 0 calc(var(--lift) * 14px) calc(var(--lift) * 22px) rgb(0 0 0 / calc(var(--lift) * .5)); }
+}
+/* Chips under a face's text: the key you press on the client, the check on the server. */
+.mcb-chip { margin: 12px 0 0; display: flex; align-items: center; gap: 12px; padding: 8px 10px; border: 3px solid var(--line);
+  font: 400 18px/1.25 var(--term); color: var(--text-2); transition: opacity .3s ease, transform .5s var(--mcb-spring), border-color .2s ease; }
+.mcb-chip kbd { flex: none; display: grid; place-items: center; width: 40px; height: 40px; border: 3px solid var(--text-2); border-bottom-width: 7px;
+  font: 400 22px/1 var(--term); color: var(--text); background: var(--surface); }
+.mcb-chip .mcb-sub { flex-basis: 100%; color: var(--text-3); }
+.mcb-check { flex-wrap: wrap; row-gap: 6px; }
+.mcb-mark { flex: none; display: grid; place-items: center; width: 34px; height: 34px; border: 3px solid var(--text-3); font: normal 400 22px/1 var(--term); color: var(--text); }
+.mcb-mark::before { content: "?"; }
+/* The client's own physics: where W takes you, worked out on the client, between the lane out and the lane back.
+   x is the number that moves, and the one that snaps back. */
+.mcb-phys { margin: auto 0; border-left: 4px solid var(--line); padding-left: 10px; font: 400 16px/1.35 var(--term); color: var(--text-2);
+  max-height: 8em; overflow: hidden; transition: opacity .3s ease, transform .5s var(--mcb-spring), max-height .4s ease, margin .4s ease; }
+.mcb-phys p { margin: 0; white-space: nowrap; }
+.mcb-phys .mcb-phys-h { margin-bottom: 4px; color: var(--text-3); }
+.mcb-phys i { font-style: normal; color: var(--text-3); }
+.mcb-x { display: inline-grid; }
+.mcb-x > span { grid-area: 1 / 1; transition: opacity .2s ease, transform .4s var(--mcb-spring); }
+.mcb-x .mcb-new { color: var(--accent); }
+.mcb-x .mcb-was { color: var(--gap); opacity: 0; transform: translateY(-12px); }
+.mcb-java > span { transition: opacity .2s ease; }
+/* The Java client switching off: a flicker that ends dim and grey. */
+@keyframes mcb-off { 0% { filter: none; } 15% { filter: brightness(.3); } 25% { filter: brightness(1.3); } 40% { filter: brightness(.15); }
+  55% { filter: brightness(.8); } 100% { filter: brightness(.4) grayscale(1); } }
+@media screen {
+  .mcb-ghost { visibility: hidden; }
+  /* Before the strip: Client and Game sit over the AI row at its size, and show up with it. */
+  .mcb:not(:has(.press.ai.shown)) .mcb-b :is(.client, .asis) { opacity: 0; }
+  .mcb:not(:has(.k-strip.shown)) .mcb-b .mcb-face { --fy: 298px; height: 152px; }
+  /* The strip: the rest of the rows fade and sink while the two boxes rise and grow, the client to the far left and
+     the server to the far right, tall enough for both lanes between them. */
+  .mcb:has(.k-strip.shown) .mcb-a { opacity: 0; transform: translateY(40px); }
+  .mcb:has(.k-strip.shown) .mcb-java::before { opacity: 0; }
+  /* Once in the stack, a face's text lines up with the stack boxes': below the number slot, above the verdict slot. */
+  .mcb:has(.k-strip.shown) .mcb-b .mcb-face { padding: 50px 12px 68px; }
+  .mcb:has(.k-strip.shown):not(:has(.k-actions.shown)) .mcb-b .mcb-face { height: 454px; padding: 18px 12px; }
+  .mcb:has(.k-strip.shown):not(:has(.k-actions.shown)) .mcb-server::before { opacity: 0; }
+  .mcb:has(.k-strip.shown) .stack { --k: -2; --f: 4; --mcb-phase: 1; }
+  .mcb:has(.k-strip.shown):not(:has(.k-actions.shown)) .stack .client { --k: -4; }
+  .mcb:has(.k-strip.shown):not(:has(.k-actions.shown)) .stack .asis { --k: 0; }
+  .mcb:has(.k-actions.shown) .stack { --k: -1.5; --f: 3; --mcb-phase: 2; }
+  .mcb:has(.k-tools.shown) .stack { --k: -1; --f: 2; --mcb-phase: 3; }
+  .mcb:has(.k-harness.shown) .stack { --k: -.5; --f: 1; --mcb-phase: 4; }
+  .mcb:has(.k-model.shown) .stack { --k: 0; --f: 0; --mcb-phase: 5; }
+  /* A box not added yet waits faded out just left of its place, and slides in as the others move right. */
+  .mcb:not(:has(.k-actions.shown)) .mcb-b .actions, .mcb:not(:has(.k-tools.shown)) .mcb-b .tools,
+  .mcb:not(:has(.k-harness.shown)) .mcb-b .mcb-harness, .mcb:not(:has(.k-model.shown)) .mcb-b .mcb-model { opacity: 0; --dx: -40px; }
+  /* Each chevron sits in the gap to the left of its box: it waits for the box on that side. Game uses its face's. */
+  .mcb:not(:has(.k-actions.shown)) .mcb-b .client::after, .mcb:not(:has(.k-tools.shown)) .mcb-b .actions::after,
+  .mcb:not(:has(.k-harness.shown)) .mcb-b .tools::after, .mcb:not(:has(.k-model.shown)) .mcb-b .mcb-harness::after,
+  .mcb:not(:has(.k-model.shown)) .mcb-b .asis::after { opacity: 0; }
+  /* Until the last click, Client and Game are only their faces: no frame, no contents of their own. */
+  .mcb:not(:has(.k-model.shown)) .mcb-b :is(.client, .asis) { border-color: transparent; background-color: transparent; box-shadow: none; }
+  .mcb:not(:has(.k-model.shown)) .mcb-b :is(.client, .asis) > :not(.mcb-face) { opacity: 0; }
+  .mcb:has(.k-model.shown) .mcb-b .mcb-face { opacity: 0; }
+  /* The link, click by click. You press W; the client works out where that takes you. */
+  .mcb:not(:has(.k-key.shown)) .mcb-key { opacity: 0; transform: translateY(14px) scale(.85); }
+  .mcb:not(:has(.k-phys.shown)) .mcb-java .mcb-phys { opacity: 0; transform: translateY(14px) scale(.9); }
+  .mcb:not(:has(.k-phys.shown)) .mcb-new { opacity: 0; transform: translateY(12px); }
+  .mcb:has(.k-phys.shown) .mcb-new { transition-delay: .3s; }
+  /* The position goes out along the upper lane; the server's check comes up as it lands. */
+  .mcb:not(:has(.k-packet.shown)) .mcb-out { opacity: 0; transform: translateX(calc(100% - 950px)) scale(.4); }
+  .mcb:has(.k-packet.shown) .mcb-out { --mcb-p: 1; transition: transform .9s var(--mcb-fly), --mcb-p .9s linear, opacity .2s ease; }
+  .mcb:has(.k-packet.shown) .mcb-up::before { transform: none; }
+  .mcb:not(:has(.k-packet.shown)) .mcb-proto, .mcb:not(:has(.k-packet.shown)) .mcb-up::after { opacity: 0; }
+  .mcb:has(.k-packet.shown) .mcb-up::after { transition-delay: .7s; }
+  .mcb:not(:has(.k-packet.shown)) .mcb-check { opacity: 0; transform: translateY(14px) scale(.85); }
+  .mcb:has(.k-packet.shown):not(:has(.k-snap.shown)) .mcb-check { transition-delay: .8s, .8s, 0s; }
+  /* The answer: ✗ at once, then the correction travels the lower lane back, and the client's x snaps back as it lands. */
+  .mcb:has(.k-snap.shown) .mcb-check { border-color: var(--gap); }
+  .mcb:has(.k-snap.shown) .mcb-check .mcb-mark { border-color: var(--gap); color: var(--gap); }
+  .mcb:has(.k-snap.shown) .mcb-check .mcb-mark::before { content: "✗"; }
+  .mcb:not(:has(.k-snap.shown)) .mcb-in { opacity: 0; transform: translateX(calc(950px - 100%)) scale(.4); }
+  .mcb:has(.k-snap.shown) .mcb-in { --mcb-p: 1; transition: transform .9s var(--mcb-fly) .25s, --mcb-p .9s linear .25s, opacity .2s ease .25s; }
+  .mcb:has(.k-snap.shown) .mcb-down::before { transform: none; }
+  .mcb:has(.k-snap.shown):not(:has(.k-mf.shown)) .mcb-down::before { transition-delay: .25s; }
+  .mcb:not(:has(.k-snap.shown)) .mcb-down::after { opacity: 0; }
+  .mcb:has(.k-snap.shown):not(:has(.k-mf.shown)) .mcb-down::after { transition-delay: .95s; }
+  .mcb:has(.k-snap.shown) .mcb-new { opacity: 0; transform: translateY(12px); transition-delay: 1s; }
+  .mcb:has(.k-snap.shown) .mcb-was { opacity: 1; transform: none; transition-delay: 1s; }
+  /* The swap: the Java client flickers off, dims and loses its "Draws the world"; Mineflayer drops into its place and
+     shoves it down and out. The old conversation sinks. */
+  .mcb:not(:has(.k-mf.shown)) .mcb-b .mcb-mf { opacity: 0; transform: translateY(-200px); }
+  .mcb:has(.k-mf.shown):not(:has(.k-actions.shown)) .mcb-b .mcb-mf { transition: transform .65s var(--mcb-spring) .4s, opacity .15s ease .4s, height var(--mcb-move), padding var(--mcb-move); }
+  .mcb:has(.k-mf.shown) .mcb-java > span { opacity: 0; }
+  /* The client gets a small shove first (the curve's quick start), hangs, then is pushed out and fades. */
+  .mcb:has(.k-mf.shown) .mcb-b .mcb-java { opacity: 0; transform: translateY(200px); animation: mcb-off .4s linear both;
+    transition: transform .7s cubic-bezier(.15, .35, .7, -.05) .45s, opacity .3s ease .75s; }
+  /* By Actions it's long gone: later states (or all the steps at once) put it there straight away. */
+  .mcb:has(.k-actions.shown) .mcb-b .mcb-java { transition: none; }
+  .mcb:has(.k-mf.shown) .mcb-check, .mcb:has(.k-mf.shown) .mcb-down::before, .mcb:has(.k-mf.shown) .mcb-down::after { opacity: 0; }
+  .mcb:has(.k-mf.shown) .mcb-packet { opacity: 0; transform: translateY(20px); transition: opacity .3s ease, transform .4s ease; }
+  /* Mineflayer's side of the same beat. The call, and half a second later the same physics; then the same card goes
+     back to the client end out of sight and flies the same lane again, captioned as the same packet, and lights green
+     as it lands. */
+  .mcb:not(:has(.k-code.shown)) .mcb-code { opacity: 0; transform: translateY(-50%) translateX(-24px) scale(.9); }
+  .mcb:not(:has(.k-code.shown)) .mcb-mf .mcb-phys { opacity: 0; transform: translateY(14px) scale(.9); }
+  .mcb:has(.k-code.shown):not(:has(.k-actions.shown)) .mcb-mf .mcb-phys { transition-delay: .5s; }
+  /* The panels belong to the packet beat: when the build moves on they fade and give their room back (the code card
+     sinks with the wire). */
+  .mcb:has(.k-actions.shown) .mcb-phys { opacity: 0; max-height: 0; margin: 0; }
+  .mcb:has(.k-code.shown):not(:has(.k-mfpacket.shown)) .mcb-out { transform: translateX(calc(100% - 950px)) scale(.4);
+    transition: transform .9s var(--mcb-fly), --mcb-p .9s linear, opacity .25s ease .65s; }
+  .mcb:has(.k-mfpacket.shown) .mcb-out { opacity: 1; transform: none; --mcb-p: 2; border-color: var(--accent);
+    transition: transform .9s var(--mcb-fly), --mcb-p .9s linear, opacity .2s ease, border-color .3s ease .9s; }
+  .mcb:has(.k-mfpacket.shown) .mcb-cap-a { opacity: 0; }
+  .mcb:has(.k-mfpacket.shown) .mcb-cap-b { opacity: 1; }
+  /* All of the wire sinks away when Actions comes in. */
+  .mcb:has(.k-actions.shown) .mcb-link { opacity: 0; transform: translateY(24px); }
+  /* The last click settles into the next slide: its heading, the layer numbers and the clip thumbnails. */
+  .mcb:not(:has(.k-model.shown)) .stack li::before, .mcb:not(:has(.k-model.shown)) :is(.pop-thumb, .mcb-h-now),
+  .mcb:has(.k-model.shown) .mcb-h-was { opacity: 0; }
+  /* Then the six layers' own steps: the verdicts and the pop clips use the deck's .stack rules; the rule is ours. */
+  .mcb:not(:has(.key-rule.shown)) .mcb-rule { opacity: 0; }
+}
+.mcb-instant, .mcb-instant *, .mcb-instant *::before, .mcb-instant *::after { transition: none !important; }
+@media (prefers-reduced-motion: reduce) { .mcb, .mcb *, .mcb *::before, .mcb *::after { transition-duration: 0s !important; animation: none !important; } }
+@media print { .mcb-a, .mcb-face, .mcb-link, .mcb-h-was { display: none; } }
+
+/* ---------- part 5: the MCP server (We built an MCP server, Simple reusable actions, Replies the model can trust,
+   The server keeps the state, Tasks and reflexes, How it got reliable) ----------
+   Everything here is prefixed p5-. Panels reuse the bevel of .card and the terminal inset of .receipt. */
+/* We built an MCP server: the two boxes stacked on the left, the reasons and the proof a click each on the right. */
+.p5-split { display: grid; grid-template-columns: 660px minmax(0, 1fr); gap: 64px; align-items: start; }
+.p5-who { display: flex; flex-direction: column; }
+.p5-box { gap: 6px; padding: 20px 28px 24px; }
+.p5-box h3 { display: flex; align-items: center; gap: 18px; font-size: 33px; color: var(--text); }
+.p5-box h3 .px { width: 48px; height: 48px; }
+.p5-box h3 .cube { --s: 34px; margin: 0 7px; }
+.p5-box h3 small { margin-left: auto; font: 400 22px/1 var(--term); color: var(--text-3); }
+.p5-box b { font: 400 44px/1.2 var(--term); color: var(--accent); text-shadow: .0909em .0909em 0 var(--shadow); }
+.p5-box p { font-size: 26px; color: var(--text-2); }
+.p5-link { display: flex; justify-content: center; gap: 64px; padding: 14px 0; font: 400 22px/1.2 var(--term); color: var(--text-3); }
+.p5-why { display: flex; flex-direction: column; gap: 34px; padding-top: 6px; }
+.p5-why > p { display: flex; flex-direction: column; gap: 6px; padding-left: 26px; border-left: 8px solid var(--accent); }
+.p5-why > p b { font: 400 33px/1.25 var(--term); color: var(--text); }
+.p5-why > p span { font-size: 28px; color: var(--text-2); }
+.p5-proof { gap: 14px; margin-top: 4px; }
+.p5-proof .chart-title { font-size: 24px; }
+.p5-split-key { display: flex; flex-direction: column; gap: 10px; }
+.p5-split-key p { display: flex; align-items: baseline; gap: 14px; font-size: 24px; color: var(--text-2); white-space: nowrap; }
+.p5-split-key i { flex: none; width: 18px; height: 18px; align-self: center; }
+.p5-split-key b { font: 400 44px/1 var(--term); word-spacing: -.25em; color: var(--text); text-shadow: .0909em .0909em 0 var(--shadow); }
+
+/* Simple, reusable actions: four real calls, a click each, as the model sent them and what came back. */
+.p5-calls { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 32px; margin-top: -8px; }
+.p5-call, .p5-ask { background: var(--inset); border: 2px solid var(--accent-dim); padding: 12px 24px 14px; display: flex; flex-direction: column; gap: 6px; }
+.p5-call-head { display: flex; align-items: center; gap: 18px; }
+.p5-call-head .slot { width: 60px; height: 60px; }
+.p5-call-head .slot .px { width: 40px; height: 40px; }
+.p5-call-head .slot .cube { --s: 26px; }
+.p5-call-head code, .p5-tools code, .p5-then code { font-family: var(--term); }
+.p5-call-head code { font-size: 33px; color: var(--accent); }
+.p5-call-head time { margin-left: auto; font: 400 22px/1 var(--term); color: var(--text-3); }
+.p5-call-head time::after { content: " in"; }
+.p5-args { font: 400 22px/1.3 var(--term); color: var(--text-2); }
+.p5-said { font-size: 24px; line-height: 1.28; color: var(--text); }
+.p5-got { font: 400 22px/1.2 var(--term); color: var(--text); }
+.p5-got::before { content: "✓"; font: 700 24px/1 var(--sans); color: var(--accent); margin-right: 12px; }
+.p5-never { display: flex; flex-direction: column; gap: 6px; margin-top: -6px; font: 400 33px/1.25 var(--term); }
+.p5-never span { font: 400 24px/1.3 var(--sans); color: var(--text-3); }
+
+/* Replies the model can trust: a real Markdown reply, trimmed, as the model got it. The ** stay in, dimmed; the
+   lines each point is about light up on its click. */
+.p5-replies { display: grid; grid-template-columns: 1.12fr 1fr; gap: 48px; align-items: start; }
+.p5-reply { background: var(--inset); border: 2px solid var(--accent-dim); padding: 18px 26px 22px; display: flex; flex-direction: column; gap: 10px; }
+.p5-reply-head { font-size: 22px; color: var(--text-3); }
+.p5-reply-head .mono { color: var(--text-2); }
+.p5-reply pre { margin: 0; font: 400 22px/1.38 var(--term); white-space: pre-wrap; overflow-wrap: anywhere; color: var(--text-2); }
+.p5-reply pre .h { color: var(--accent); }
+.p5-reply pre i, .p5-reply pre em { font-style: normal; color: var(--text-3); }
+.p5-reply .saw, .p5-reply .ev { transition: background-color .2s ease, color .2s ease, box-shadow .2s ease; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.slide:has(.key-p5-saw.shown) .p5-reply .saw, .slide:has(.key-p5-ev.shown) .p5-reply .ev { background: var(--ok-dim); color: var(--text); box-shadow: 0 0 0 4px var(--ok-dim); }
+.p5-rules { display: flex; flex-direction: column; gap: 34px; }
+.p5-rules .points { font-size: 30px; line-height: 1.3; gap: 20px; }
+.p5-bread { font-size: 26px; padding: 20px 26px; gap: 8px; }
+.p5-bread .px.inline { width: 40px; height: 40px; vertical-align: -8px; }
+.p5-bread .tag { width: 128px; font-size: 20px; }
+
+/* The server keeps the state: what lives in SQLite, and the model asking for it. */
+.p5-state { display: grid; grid-template-columns: 1fr 1.15fr; gap: 48px; align-items: start; }
+.p5-db, .p5-asks { display: flex; flex-direction: column; gap: 16px; }
+.p5-label { font: 400 22px/1.2 var(--term); letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+.p5-db ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.p5-db li { display: flex; align-items: center; gap: 18px; padding: 10px 20px; font-size: 27px; color: var(--text-2); background: var(--surface-2);
+  border: 4px solid; border-color: var(--edge-light) var(--edge-dark) var(--edge-dark) var(--edge-light); box-shadow: 0 0 0 4px var(--edge-dark); }
+.p5-db li .px { width: 48px; height: 48px; }
+.p5-db li b { margin-left: auto; font: 400 33px/1 var(--term); word-spacing: -.25em; color: var(--text); }
+.p5-tools { display: flex; flex-wrap: wrap; gap: 14px; }
+.p5-tools code { font-size: 26px; padding: 8px 14px; color: var(--text); border: 4px solid var(--line); background: var(--surface); }
+.p5-tools code b { margin-left: 12px; color: var(--accent); font-weight: 400; }
+.p5-ask { margin-top: 4px; }
+.p5-sql { font: 400 22px/1.35 var(--term); color: var(--text-2); }
+.p5-then { font-size: 24px; line-height: 1.3; color: var(--text-2); border-top: 4px solid var(--line); padding-top: 10px; }
+.p5-then code { color: var(--accent); }
+
+/* Tasks and reflexes: the two kinds beside the combat clip, then one real handoff: a task, a reflex taking the body,
+   the task carrying on. Reflexes are amber here, as on the override switch. */
+.p5-body { display: grid; grid-template-columns: 1fr 576px; gap: 48px; align-items: center; }
+.p5-kinds { display: flex; flex-direction: column; gap: 26px; }
+.p5-kind { gap: 4px; padding: 14px 28px 18px; }
+.p5-kind h3 { font-size: 44px; line-height: 1.1; }
+.p5-kind p { display: flex; flex-direction: column; gap: 4px; font-size: 27px; color: var(--text-2); }
+.p5-kind code { font: 400 22px/1.2 var(--term); color: var(--text-3); }
+.p5-kind.reflex h3 { color: var(--warn); }
+.p5-handoff { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 34px; }
+.p5-handoff li { position: relative; display: flex; flex-direction: column; gap: 6px; padding: 16px 22px 18px; font-size: 24px; line-height: 1.3; color: var(--text-2);
+  background: var(--surface-2); border: 4px solid; border-color: var(--edge-light) var(--edge-dark) var(--edge-dark) var(--edge-light); box-shadow: 0 0 0 4px var(--edge-dark); }
+.p5-handoff li + li::before { content: ">"; position: absolute; left: -31px; top: 50%; width: 20px; margin-top: -11px; text-align: center; font: 400 22px/1 var(--term); color: var(--text-3); }
+.p5-handoff b { font: 400 28px/1.2 var(--term); color: var(--text); }
+.p5-handoff small { font: 400 22px/1.2 var(--term); color: var(--text-3); }
+.p5-handoff li.reflex { border-color: var(--warn); background: var(--warn-dim); }
+.p5-handoff li.reflex b { color: var(--warn); }
+.p5-handoff li:last-child b::before { content: "✓"; font: 700 26px/1 var(--sans); color: var(--accent); margin-right: 12px; }
+
+/* How it got reliable: the loop, then the Baritone rewrite as the worked example beside the navigation clip. */
+.p5-loop > div { padding: 16px 22px 18px; font-size: 26px; gap: 8px; }
+.p5-loop b { font-size: 30px; }
+.p5-baritone { display: grid; grid-template-columns: 560px 1fr; gap: 40px; align-items: start; }
+.p5-example { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
+.p5-example h3 { font-size: 30px; color: var(--accent); }
+.p5-example .tiles { align-self: stretch; grid-template-columns: 1fr 1fr; gap: 20px 28px; }
+.p5-example .tile { padding: 12px 20px 14px; gap: 4px; }
+.p5-example .tile .value { font-size: 44px; }
+.p5-example .tile .label { font-size: 22px; }
+/* One call, one whole job (narration pass, 13 November): the first call large, what it does beside it, then three
+   smaller calls in a row. */
+.p5-first { display: grid; grid-template-columns: 1.15fr 1fr; gap: 32px; align-items: stretch; margin-top: -8px; }
+.p5-does { display: flex; flex-direction: column; gap: 12px; padding: 16px 24px 18px; background: var(--surface-2);
+  border: 4px solid; border-color: var(--edge-light) var(--edge-dark) var(--edge-dark) var(--edge-light); box-shadow: 0 0 0 4px var(--edge-dark); }
+.p5-does ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; counter-reset: does; }
+.p5-does li { counter-increment: does; display: flex; gap: 14px; font-size: 26px; line-height: 1.25; color: var(--text); }
+.p5-does li::before { content: "0" counter(does); font: 400 22px/1.4 var(--term); color: var(--accent); }
+.p5-minis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.p5-minis .p5-call-head code { font-size: 28px; }
+.p5-minis .p5-call-head .slot { width: 52px; height: 52px; }
+.p5-minis .p5-call-head .slot .px { width: 36px; height: 36px; }
+.p5-minis .p5-call-head .slot .cube { --s: 22px; }
+
+/* A tool call is an async function: the analogy in JavaScript, the real calls, and the choice each time a wait runs out. */
+.p5-async { display: flex; flex-direction: column; gap: 6px; }
+.p5-js { margin: 0; padding: 10px 24px 12px; font: 400 22px/1.45 var(--term); white-space: pre; color: var(--text); background: var(--inset); border: 2px solid var(--accent-dim); }
+.p5-js .k { color: var(--accent); }
+.p5-js .s { color: var(--warn); }
+.p5-js .c { color: var(--text-3); }
+.p5-seq { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.p5-seq li { display: grid; grid-template-columns: 56px minmax(0, 1fr) 430px; gap: 16px; align-items: baseline; padding: 6px 16px; background: var(--inset); border-left: 6px solid var(--line); }
+.p5-seq time { font: 400 22px/1.3 var(--term); color: var(--text-3); }
+.p5-seq code { font: 400 22px/1.3 var(--term); color: var(--text); overflow-wrap: anywhere; }
+.p5-seq span { font: 400 22px/1.3 var(--term); color: var(--text-2); }
+.p5-seq li.done { border-left-color: var(--accent); }
+.p5-seq li.done span { color: var(--text); }
+.p5-seq li.done span::before { content: "✓"; font: 700 24px/1 var(--sans); color: var(--accent); margin-right: 10px; }
+.p5-choices { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.p5-choices p { display: flex; flex-direction: column; gap: 6px; padding: 12px 20px 14px; background: var(--surface-2);
+  border: 4px solid; border-color: var(--edge-light) var(--edge-dark) var(--edge-dark) var(--edge-light); box-shadow: 0 0 0 4px var(--edge-dark); }
+.p5-choices b { font: 400 28px/1.2 var(--term); color: var(--text); }
+.p5-choices code { font: 400 22px/1.2 var(--term); color: var(--accent); }
+/* I built an MCP server, narration pass: the reasons sit closer so the proof bar and the client line fit. */
+.p5-why.p5-tight { gap: 24px; }
+.p5-tight .p5-split-key { gap: 4px; }
+.p5-tight .p5-split-key b { font-size: 33px; }

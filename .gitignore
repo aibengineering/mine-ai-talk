@@ -1,0 +1,7 @@
+# Working files for the sessions that edit the deck, not part of the published copy.
+tools/shots/
+__pycache__/
+.deck.lock
+.deck-edits.log
+WORKERS.md
+mine-ai-talk.service

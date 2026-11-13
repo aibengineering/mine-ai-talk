@@ -1,0 +1,28 @@
+Pixel Perfection texture pack
+by XSSheep, continued by Nova_Wostra (Pixel Perfection Legacy)
+https://modrinth.com/resourcepack/pixel-perfection-legacy
+
+Licence: Creative Commons Attribution-ShareAlike 4.0 International
+https://creativecommons.org/licenses/by-sa/4.0/
+
+The PNG files in this folder are copied unchanged from "Pixel Perfection 26.3-97.2.zip"
+(Modrinth version UT4foa3M, published 22 October 2026, sha512 starting ea6a690ac750c01e836ce28c).
+Only the file names are flattened, e.g. gui/sprites/hud/heart/full.png is heart_full.png here.
+dragon.png is entity/enderdragon/dragon.png.
+repeater.png and filled_map.png are item/repeater.png and item/filled_map.png.
+command_block_front.png and command_block_side.png each hold two animation frames, one above the other, as in
+the pack. deck.css shows the top frame only.
+grass_block_top.png is grey in the pack, as it is in the game, which colours it by biome. deck.css puts a green
+over it with a blend; the file is as it came.
+The deck crops and scales them with CSS; the files themselves are not edited.
+
+Adapted from the pack: ../../art/ender-dragon.png and ../../art/dragon-head.png are pictures of a box model
+wearing dragon.png, rendered by tools/render-dragon.mjs (Ben, aibengineering, November 2026). They are
+shared under the same licence, CC BY-SA 4.0.
+
+Not from the pack: ../../art/pikachu.png, drawn for the talk by tools/draw-pikachu.py. It is not a sprite from the
+games. Pikachu is a character of Nintendo, Creatures Inc. and GAME FREAK inc.
+
+These are the pack's own pixel art, not Minecraft's textures.
+Minecraft is a trademark of Mojang Synergies AB / Microsoft. This talk is not approved by or
+affiliated with Mojang or Microsoft.
