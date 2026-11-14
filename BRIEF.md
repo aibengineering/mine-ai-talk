@@ -459,10 +459,14 @@ part; the code-size chart moved to the appendix. The three area openers and "Who
   combat package TODO moved into 25's notes. The override's last note hands over to the replies.
 - **27, Replies the model can trust.** A real Markdown reply from the run, trimmed and marked as trimmed, the ** left
   in and dimmed so it reads as what the model got. A click each: Markdown by default because a model reads it,
-  JSON on request; what it saw, reflex interruptions included (the Interruptions and Travel lines light up);
-  unread events ride along on every reply (the Notifications lines light up). Then the bread receipt as the
-  "report what you saw after the action" rule, and its fix on the next click. The receipt is still an
-  illustration, and the notes say so.
+  JSON on request; what happened around the action comes with it, reflexes that took over and travel while they had
+  the body (the Interruptions and Travel lines light up); one reply carries everything, because MCP gives the
+  server no line into the model, so chat, deaths and fights are merged into the next tool reply (the Notifications
+  lines light up); and truthful, partial progress included, with a second real reply under it: request 283,
+  `collect_block` dirt × 32 at 3:15:09 on a shoreline, `partial`, "Inventory gained: 2", and its observed stop
+  (trimmed, marked). Request 284 walked inland ("so block collection routing works") and 285 got all 32. Reframed on
+  14 November at Ben's request: the bread receipt and its two notes are gone, because it had no clear message on
+  this slide.
 - **28, The server keeps the state.** What lives in SQLite on the server (carried and worn items, every chunk seen,
   containers, events, notes), and the three tools the model asks with, with their counts. A click brings one real
   query: the closest dry land to the stronghold, then the walk there 7 s later.

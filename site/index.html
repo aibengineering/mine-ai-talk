@@ -795,26 +795,30 @@ Use read_recent_events to read and advance through recent events.</span></pre>
     <div class="p5-rules">
       <ul class="points">
         <li class="step">Markdown by default, because a model reads it. JSON if you ask.</li>
-        <li class="step key-p5-saw">What it saw, reflex interruptions included</li>
-        <li class="step key-p5-ev">Unread events ride along on every reply</li>
+        <li class="step key-p5-saw">What happened around the action comes with it, reflexes included</li>
+        <li class="step key-p5-ev">One reply carries everything: chat, deaths and fights ride along</li>
+        <li class="step">Truthful, partial progress included
+          <div class="p5-partial">
+            <p class="p5-reply-head">Another reply, 3:15 in · trimmed</p>
+            <pre><span class="h">## `collect_block`</span>
+<i>**</i>Status:<i>**</i> partial
+- Requested: 32
+- Inventory gained: 2
+<em>…</em>
+<i>**</i>Observed stop:<i>**</i> 5 routes in a row stopped without breaking or gaining anything; <em>…</em> inventory gained 2/32 requested items.</pre>
+          </div>
+        </li>
       </ul>
-      <div class="receipt p5-bread step">
-        <span class="small">Report what you saw after the action</span>
-        <span>eat bread <img class="px inline" src="vendor/pixel-perfection/bread.png" alt=""></span>
-        <span class="reply"><i class="tag bad">Before</i>bread: 1 → 1</span>
-        <span class="reply fixed"><i class="tag good">After</i>bread: 1 → 0 <span class="ok">confirmed</span></span>
-      </div>
-      <i class="step key-fix"></i>
     </div>
   </div>
   <aside class="notes"><ul>
     <li>The model makes every decision from what comes back, so the reply has to be true.</li>
     <li>On the left is a real reply from the run, two and a half hours in, trimmed: the full one is 2,610 characters. Every line you can see is word for word; the dots are where I cut. It's the reply to the trip on "One body, one lock": back to the surface after a cave full of creepers.</li>
     <li>→ It's Markdown by default, because a model reads it. Ask for JSON and you get the same thing as structured data.</li>
-    <li>→ It says what was observed. Partway through, a creeper turned up and the fight reflex took over for a few seconds; the reply says so, and how far it moved while the reflex had the body.</li>
-    <li>→ And unread events ride along on every reply: 373 of the 387 replies in the run carried them. Here the last one is that same creeper fight: target died, interrupted navigate. The model doesn't have to go looking, and read_recent_events gets the rest.</li>
-    <li>→ The rule came from a bug. Every "eat bread" came back "1 → 1", because the inventory updates a tick after the action. So the model decided eating was broken. This receipt is an illustration of the bug, not a copy of a real reply.</li>
-    <li>→ The fix: the tool waits for the count it expects, then says whether it was confirmed. Report what you saw after the action, never what you meant to do.</li>
+    <li>→ The action's own result comes with what happened around it. Partway through, a creeper turned up and the fight reflex took over for a few seconds. The reply says so, and how far the bot moved while the reflex had the body.</li>
+    <li>→ And one reply carries everything. MCP gives the server no line into the model: it only gets to speak when the model calls a tool. So anything that happened in the world meanwhile, a chat message, a death, a fight, gets merged into whatever reply goes back next. That's the Notifications block. 373 of the 387 replies in the run carried one. Here the last one is that same creeper fight. read_recent_events reads the rest and moves the cursor on.</li>
+    <li>→ And it's truthful, partial progress included. Every reply says what actually happened, so each action keeps its own account as it runs: how far it got, what it collected, what stopped it.</li>
+    <li>This one is three hours fifteen in, on a shoreline. It asked for 32 dirt, got 2, and the reply says why it stopped. So the model walked inland and asked again, and that time it got all 32.</li>
   </ul></aside>
 </section>
 
