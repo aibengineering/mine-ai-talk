@@ -1078,6 +1078,13 @@ aside.notes { display: none; }
 @media (prefers-reduced-motion: reduce) { .mcb, .mcb *, .mcb *::before, .mcb *::after { transition-duration: 0s !important; animation: none !important; } }
 @media print { .mcb-a, .mcb-face, .mcb-link, .mcb-h-was { display: none; } }
 
+/* ---------- Trim (14 November): "What happened in the run" (prefix run-merged), the old "Where the time went" and
+   "A third of its calls went wrong" as one slide ---------- */
+.run-merged .tile.wrong .value { color: var(--series-4); }
+.run-merged .tile.won { border-color: var(--accent); }
+.run-merged .tile.won .value { display: flex; align-items: center; gap: 14px; font-size: 46px; }
+.run-merged .tile.won .dragon-head { width: 48px; }
+
 /* ---------- part 5: the MCP server (We built an MCP server, Simple reusable actions, Replies the model can trust,
    The server keeps the state, Tasks and reflexes, How it got reliable) ----------
    Everything here is prefixed p5-. Panels reuse the bevel of .card and the terminal inset of .receipt. */
@@ -1222,5 +1229,125 @@ aside.notes { display: none; }
 .p5-choices code { font: 400 22px/1.2 var(--term); color: var(--accent); }
 /* I built an MCP server, narration pass: the reasons sit closer so the proof bar and the client line fit. */
 .p5-why.p5-tight { gap: 24px; }
+/* Tightening pass, 14 November: a red "what went wrong" line above the heading on the slides that answer a recorded
+   failure, and a click's second half that comes in with it (.p5-with-prev after a .step). */
+.p5-fail { display: flex; align-items: baseline; gap: 16px; margin-bottom: -16px; font-size: 24px; line-height: 1.3; color: var(--text-2); }
+.p5-fail b { flex: none; font: 400 22px/1.3 var(--term); letter-spacing: .06em; text-transform: uppercase; color: var(--gap); }
+.p5-fail b::before { content: "✗ "; }
+.p5-with-prev { opacity: 0; transition: opacity .2s ease; }
+.step.shown + .p5-with-prev { opacity: 1; }
+@media print { .p5-with-prev { opacity: 1; } }
+.p5-rules .points.p5-pts { font-size: 26px; gap: 14px; }
+.p5-pts-src { font-size: 22px; color: var(--text-3); }
 .p5-tight .p5-split-key { gap: 4px; }
 .p5-tight .p5-split-key b { font-size: 33px; }
+
+/* ---------- part 6: how did I build it? (31 attempts before the win, Mine Labs: every failure becomes a test,
+   The harness grew the runs got further, How I picked the next fix, Coding agents wrote the code) ----------
+   Everything here is prefixed p6-. Panels reuse the bevel of .card and the terminal inset of part 5's code panels;
+   .p5-label is borrowed as is. Green is the win or a pass; the scenario line is series 1. */
+/* 31 attempts: the furthest any attempt had got, as a staircase. Each step stands on a riser whose height is its level. */
+.p6-climb { display: flex; flex-direction: column; gap: 14px; }
+.p6-stairs { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; align-items: end; }
+.p6-stairs li { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
+.p6-stairs .slot { width: 76px; height: 76px; margin-bottom: 4px; }
+.p6-stairs .slot .px { width: 52px; height: 52px; }
+.p6-stairs .slot .cube { --s: 32px; }
+.p6-head { width: 62px; height: auto; filter: drop-shadow(0 0 5px rgba(200, 140, 255, .7)); }
+.p6-stairs b { font: 400 28px/1.15 var(--term); color: var(--text); }
+.p6-stairs small { font: 400 22px/1.2 var(--term); color: var(--text-3); }
+.p6-riser { display: block; align-self: stretch; margin-top: 8px; height: calc(22px + var(--lv) * 38px); background: var(--surface-2);
+  border: 4px solid; border-color: var(--edge-light) var(--edge-dark) var(--edge-dark) var(--edge-light); box-shadow: 0 0 0 4px var(--edge-dark); }
+.p6-stairs li.win b { color: var(--accent); }
+.p6-stairs li.win .p6-riser { background: var(--ok-dim); border-color: var(--accent) var(--accent-dim) var(--accent-dim) var(--accent); }
+.p6-groups { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; margin-top: 4px; }
+.p6-groups p { padding-top: 8px; border-top: 4px solid var(--line); font-size: 24px; line-height: 1.25; text-align: center; color: var(--text-2); }
+.p6-groups p.win { border-top-color: var(--accent); color: var(--accent); }
+.p6-cost { display: flex; flex-direction: column; gap: 8px; }
+.p6-cost .lede { font-size: 36px; }
+
+/* Mine Labs: the scenario as written on the left, what makes it a test on the right, its history along the bottom. */
+.p6-lab { display: grid; grid-template-columns: 820px minmax(0, 1fr); gap: 44px; align-items: start; margin-top: -10px; }
+.p6-yaml { display: flex; flex-direction: column; gap: 8px; }
+.p6-yaml .p5-label span { margin-left: 14px; letter-spacing: 0; text-transform: none; color: var(--text-3); }
+.p6-yaml pre { margin: 0; padding: 8px 20px 10px; font: 400 21px/1.27 var(--term); white-space: pre; color: var(--text); background: var(--inset); border: 2px solid var(--accent-dim); }
+.p6-yaml pre .k { color: var(--accent); }
+.p6-yaml pre .s { color: var(--warn); }
+.p6-yaml pre i { font-style: normal; color: var(--text-3); }
+.p6-facts { display: flex; flex-direction: column; gap: 24px; padding-top: 34px; }
+.p6-facts p { display: flex; flex-direction: column; gap: 6px; padding-left: 24px; border-left: 8px solid var(--accent); }
+.p6-facts b { font: 400 33px/1.2 var(--term); color: var(--text); }
+.p6-facts span { font-size: 26px; line-height: 1.3; color: var(--text-2); }
+.p6-history, .p6-fan ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 30px; }
+.p6-history li, .p6-fan li { position: relative; display: flex; flex-direction: column; gap: 2px; padding: 8px 18px 10px; font-size: 22px; line-height: 1.25; color: var(--text-2);
+  background: var(--surface-2); border: 4px solid; border-color: var(--edge-light) var(--edge-dark) var(--edge-dark) var(--edge-light); box-shadow: 0 0 0 4px var(--edge-dark); }
+.p6-history li + li::before, .p6-fan li + li::before { content: ">"; position: absolute; left: -27px; top: 50%; width: 20px; margin-top: -11px; text-align: center; font: 400 22px/1 var(--term); color: var(--text-3); }
+.p6-history time, .p6-fan time { font: 400 22px/1.2 var(--term); color: var(--accent); }
+.p6-history b, .p6-fan b { font: 400 27px/1.2 var(--term); color: var(--text); }
+/* On the Mine Labs slide each step of the history is one line: when, and what. */
+.p6-history { margin-top: -8px; }
+.p6-history li { flex-direction: row; align-items: baseline; gap: 14px; padding: 6px 18px 8px; }
+.p6-history b { font-size: 24px; white-space: nowrap; }
+.p6-history time { white-space: nowrap; }
+.p6-yaml .p5-label { white-space: nowrap; }
+
+/* The harness grew: one SVG, two panels on one date axis. The bottom panel waits for its click. */
+.p6-chart { width: 1300px; height: 505px; overflow: visible; font-family: var(--sans); }
+.p6-chart text { fill: var(--text-2); font-size: 22px; }
+.p6-chart .p6-panel { fill: var(--text); font: 400 24px/1 var(--term); }
+.p6-chart .p6-sub { fill: var(--text-3); font-size: 22px; }
+.p6-chart .p6-tick { fill: var(--text-3); font-size: 22px; }
+.p6-chart .p6-val { fill: var(--text); font: 400 28px/1 var(--term); }
+.p6-chart .p6-note { fill: var(--text-3); font-size: 22px; }
+.p6-chart .p6-none { fill: var(--text-3); font-size: 24px; font-style: italic; }
+.p6-chart .p6-dates text { fill: var(--text-3); font-size: 22px; font-variant-numeric: tabular-nums; }
+.p6-grid { stroke: var(--line); stroke-width: 2; }
+.p6-grid.faint { stroke-dasharray: 4 8; }
+.p6-mark { stroke: var(--text-3); stroke-width: 2; stroke-dasharray: 2 6; }
+.p6-axis { stroke: var(--text-3); stroke-width: 2; }
+.p6-area { fill: var(--series-1); opacity: .22; }
+.p6-line { fill: none; stroke: var(--series-1); stroke-width: 5; stroke-linejoin: round; }
+.p6-dots circle { fill: var(--series-1); stroke: var(--surface); stroke-width: 3; }
+.p6-step { fill: none; stroke: var(--accent); stroke-width: 5; stroke-linejoin: miter; }
+.p6-recs circle { fill: var(--accent); stroke: var(--surface); stroke-width: 3; }
+.p6-recs circle.win { fill: var(--text); stroke: var(--accent); stroke-width: 4; }
+.p6-runs { opacity: 0; transition: opacity .2s ease; }
+.slide:has(.key-p6-runs.shown) .p6-runs { opacity: 1; }
+.p6-caption { font-size: 30px; line-height: 1.3; color: var(--text-2); max-width: 1300px; margin-top: -6px; }
+
+/* How I picked the next fix: the loop as five numbered boxes, then one real fix a click at a time. */
+.p6-loop { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 22px; counter-reset: p6loop; }
+.p6-loop li { counter-increment: p6loop; display: flex; flex-direction: column; gap: 6px; padding: 14px 18px 16px; font-size: 24px; line-height: 1.28; color: var(--text-2);
+  background: var(--surface-2); border: 4px solid; border-color: var(--edge-light) var(--edge-dark) var(--edge-dark) var(--edge-light); box-shadow: 0 0 0 4px var(--edge-dark); }
+.p6-loop li::before { content: "0" counter(p6loop); font: 400 22px/1 var(--term); color: var(--accent); }
+.p6-loop b { font: 400 28px/1.2 var(--term); color: var(--text); }
+.p6-ex-label { margin-bottom: -18px; }
+.p6-example { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 22px; }
+.p6-example li { display: flex; flex-direction: column; gap: 6px; padding: 12px 18px 14px; font-size: 24px; line-height: 1.28; color: var(--text-2); background: var(--inset); border-left: 6px solid var(--line); }
+.p6-example time { font: 400 22px/1.2 var(--term); color: var(--text-3); }
+.p6-example b { display: flex; align-items: center; gap: 10px; font: 400 28px/1.2 var(--term); color: var(--text); }
+.p6-example b .px { width: 36px; height: 36px; }
+.p6-example li.done { border-left-color: var(--accent); }
+.p6-example li.done b::before { content: "✓"; font: 700 26px/1 var(--sans); color: var(--accent); }
+
+/* Coding agents wrote the code: who made the commits, how I steered, one evening's fan-out, then the rule. Claude's
+   share is in its own colour (it is its name); the inferred Codex share is hatched grey, because it is inferred. */
+.p6-agents { display: grid; grid-template-columns: 640px minmax(0, 1fr); gap: 48px; align-items: start; margin-top: -14px; }
+.p6-authors { gap: 14px; padding: 18px 28px 22px; }
+.p6-share { display: flex; height: 30px; gap: 3px; }
+.p6-share .cc, .p6-key i.cc { background: var(--claude); }
+.p6-share .cx, .p6-key i.cx { background: repeating-linear-gradient(135deg, var(--series-mute) 0 6px, #4a4659 6px 12px); }
+.p6-key { display: flex; flex-direction: column; gap: 8px; }
+.p6-key p { display: grid; grid-template-columns: 18px 76px minmax(0, 1fr); column-gap: 14px; align-items: baseline; font-size: 24px; line-height: 1.25; color: var(--text-2); }
+.p6-key i { width: 18px; height: 18px; align-self: center; border: 2px solid var(--line); }
+.p6-key i.cc, .p6-key i.cx { border: 0; }
+.p6-key b { font: 400 33px/1 var(--term); color: var(--text); text-align: right; }
+.p6-key small { grid-column: 3; font-size: 20px; color: var(--text-3); }
+.p6-steer { display: flex; flex-direction: column; gap: 12px; }
+.p6-steer p { display: flex; flex-direction: column; gap: 2px; padding-left: 22px; border-left: 8px solid var(--accent); }
+.p6-steer b { font: 400 28px/1.2 var(--term); color: var(--text); }
+.p6-steer span { font-size: 23px; line-height: 1.25; color: var(--text-2); }
+.p6-fan { display: flex; flex-direction: column; gap: 8px; margin-top: -8px; }
+.p6-fan li.done { border-color: var(--accent) var(--accent-dim) var(--accent-dim) var(--accent); background: var(--ok-dim); }
+.p6-rule { display: flex; align-items: center; gap: 22px; font: 400 44px/1.2 var(--term); color: var(--accent); text-shadow: .0909em .0909em 0 var(--shadow); }
+.p6-rule .px { width: 56px; height: 56px; }

@@ -24,9 +24,9 @@
      Each slide: data-section names the part of the talk, data-by is the minute that part should end by.
      <aside class="notes"> is only shown in the speaker view (press S). .todo chips mark unconfirmed content (press T to hide). -->
 
-<!-- ============ Opening: 0 to 1.25 min ============ -->
+<!-- ============ Opening: 0 to 1.5 min ============ -->
 
-<section class="slide floor" data-section="Opening" data-by="1.25" data-title="Title">
+<section class="slide floor" data-section="Opening" data-by="1.5" data-title="Title">
   <p class="kicker">Mine AI MCP</p>
   <h1>Beating Minecraft<br>with an LLM</h1>
   <p class="lede">Engineering a reliable long-horizon agent</p>
@@ -39,7 +39,7 @@
   </ul></aside>
 </section>
 
-<section class="slide" data-section="Who I am" data-by="1.25" data-title="Who I am">
+<section class="slide" data-section="Who I am" data-by="1.5" data-title="Who I am">
   <div class="who">
     <div>
       <p class="kicker">Who's talking</p>
@@ -48,7 +48,7 @@
     </div>
     <div class="toasts">
       <div class="toast step"><span class="slot"><img class="px" src="vendor/pixel-perfection/red_bed.png" alt=""></span><span><small>Goal Reached!</small>Long service leave<em>The time off you get after 10 years</em></span></div>
-      <div class="toast challenge step"><span class="slot"><img class="dragon-head" src="art/dragon-head.png" alt=""></span><span><small>Challenge Complete!</small>Beat Minecraft with an LLM<em>Limit-testing AI capabilities, Jul–Sep 2026</em></span></div>
+      <div class="toast challenge step"><span class="slot"><img class="dragon-head" src="art/dragon-head.png" alt=""></span><span><small>Challenge Complete!</small>Beat Minecraft with an LLM<em>Limit-testing AI capabilities, Jul–Sep 2026 <span class="todo">TODO: start date? Records say late June</span></em><em class="who-agents">I directed coding agents (Codex and Claude Code). They wrote the code.</em></span></div>
       <div class="toast step"><span class="slot"><img class="px" src="vendor/pixel-perfection/slime_ball.png" alt=""></span><span><small>For fun</small>Games and pickleball<em>Minecraft, League of Legends. Pickleball is new</em></span></div>
     </div>
   </div>
@@ -57,15 +57,17 @@
     <li>Say the bank's name out loud. It's only left off the slide and out of this file because they get published.</li>
     <li>Leave: I had the time, so I picked a project that would show how far AI could be pushed. It isn't bank work.</li>
     <li>The limits have a date on them: July to September 2026. A newer model moves them, and that's the question in part 4.</li>
+    <li>Same click: I designed it and directed it, but I didn't type the code. Coding agents did, Codex and Claude Code. How that worked is part 6.</li>
+    <li>TODO on the dates: the slide says July to September, my records say I started in late June. Settle which before the talk.</li>
     <li>Most of the building was offline. The stream was the bot playing while it was still being built: 3 full attempts on stream, plenty more in between.</li>
     <li>I play Minecraft and League, so I knew what winning takes. Pickleball is the one people can come and talk to you about afterwards.</li>
     <li>Then → to part 1: "Today we're talking about Minecraft."</li>
   </ul></aside>
 </section>
 
-<!-- ============ Part 1 · What is Minecraft? to 3.5 min ============ -->
+<!-- ============ Part 1 · What is Minecraft? to 3 min ============ -->
 
-<section class="slide floor chapter" data-section="1 · What is Minecraft?" data-by="3.5" data-title="Part 1: What is Minecraft?" data-chapter="What is Minecraft?">
+<section class="slide floor chapter" data-section="1 · What is Minecraft?" data-by="3" data-title="Part 1: What is Minecraft?" data-chapter="What is Minecraft?">
   <div class="chapter-head">
     <span class="cube hero-icon"><img class="t" src="vendor/pixel-perfection/oak_log_top.png" alt=""><img class="l" src="vendor/pixel-perfection/oak_log.png" alt=""><img class="r" src="vendor/pixel-perfection/oak_log.png" alt=""></span>
     <p class="kicker">Part 1 of 7</p>
@@ -80,7 +82,7 @@
   </ul></aside>
 </section>
 
-<section class="slide" data-section="1 · What is Minecraft?" data-by="3.5" data-title="Show of hands">
+<section class="slide" data-section="1 · What is Minecraft?" data-by="3" data-title="Show of hands">
   <p class="kicker">Quick poll</p>
   <h2>Hands up if you've…</h2>
   <ul class="poll">
@@ -90,13 +92,13 @@
   </ul>
   <aside class="notes"><ul>
     <li>Ask one at a time. → brings up the next one.</li>
-    <li>Watch how many hands are still up on the last one. That's how fast to do the next slide.</li>
-    <li>About half or more: one line on the route, then → past its clips.</li>
-    <li>Only a few: Space plays the route, a clip per step.</li>
+    <li>Watch how many hands are still up on the last one.</li>
+    <li>The plan: one line on the route, then → past its clips.</li>
+    <li>Only if just a few hands are up: Space plays the route, a clip per step, about 48 s.</li>
   </ul></aside>
 </section>
 
-<section class="slide route" data-section="1 · What is Minecraft?" data-by="3.5" data-title="How you beat Minecraft">
+<section class="slide route" data-section="1 · What is Minecraft?" data-by="3" data-title="How you beat Minecraft">
   <div class="route-head">
     <p class="kicker">If you've never played</p>
     <h2>Minecraft doesn't tell you how to win</h2>
@@ -114,10 +116,11 @@
     <li><img class="dragon" src="art/ender-dragon.png" alt=""><b>Ender Dragon</b><span>in the End</span></li>
   </ol>
   <aside class="notes"><ul>
-    <li>The hands decide how long this takes. A room of players gets one line on the chain, then → goes straight to the next slide.</li>
+    <li>The plan is one line on the chain, then → straight to the next slide: "No levels, no instructions. You win by killing the Ender Dragon, and every step needs the one before."</li>
+    <li>The clips are only for a room where few hands stayed up on the last question.</li>
     <li>It's an open world made of blocks. Each step needs the one before: tools to mine, armour to survive, items to open the portal.</li>
     <li>The game doesn't script any of this. You have to know the route or work it out.</li>
-    <li>Space drops the chain to the bottom and plays the clips straight through, about 48 s. Each step lights up while its clip plays. Space pauses, and once it stops on the dragon Space moves on. → always goes to the next slide.</li>
+    <li>Only if few hands went up: Space drops the chain to the bottom and plays the clips straight through, about 48 s. Each step lights up while its clip plays. Space pauses, and once it stops on the dragon Space moves on. → always goes to the next slide.</li>
     <li>Wood: punch a tree, craft a crafting table, put it down, craft a wooden pickaxe. Stone: mine stone, craft a stone pickaxe. Iron: mine iron ore, smelt it in a furnace, craft an iron pickaxe and iron boots. Diamonds: mine diamond ore.</li>
     <li>Nether: pour water on lava to make obsidian, mine it, build the portal frame and light it, arrive, kill blazes for their rods. Pearls: kill an enderman, craft eyes of ender from pearls and blaze powder. Stronghold: throw an eye and follow it, put the last eyes in, the End portal opens. Dragon: it flies, it perches, it dies.</li>
     <li>All of it is someone playing by hand, from two YouTube guides (The Aeon Arc and Schmizzle, both CC BY, on the credits slide). My bot crafts without opening a screen, so its run can't show most of this.</li>
@@ -125,11 +128,11 @@
   </ul></aside>
 </section>
 
-<!-- ============ Part 2 · Why try it with AI? to 5.75 min ============ -->
-<!-- The clip is someone else's stream, as an example. The headlines slide shows screenshots of the real pages, taken
-     by tools/capture-headlines.mjs and tools/capture-report.py. Sources are listed in BRIEF.md. -->
+<!-- ============ Part 2 · Why try it with AI? to 5 min ============ -->
+<!-- The headlines slide shows screenshots of the real pages, all at once, taken by tools/capture-headlines.mjs and
+     tools/capture-report.py. The example clip (someone else's stream) is an optional pop on the next slide. Sources are listed in BRIEF.md. -->
 
-<section class="slide floor chapter" data-section="2 · Why try it with AI?" data-by="5.75" data-title="Part 2: Why try it with AI?" data-chapter="Why try it with AI?">
+<section class="slide floor chapter" data-section="2 · Why try it with AI?" data-by="5" data-title="Part 2: Why try it with AI?" data-chapter="Why try it with AI?">
   <div class="chapter-head">
     <img class="px hero-icon" src="vendor/pixel-perfection/paper.png" alt="">
     <p class="kicker">Part 2 of 7</p>
@@ -139,24 +142,11 @@
   <ol class="chapters"></ol>
   <aside class="notes"><ul>
     <li>So that's the game. Why would anyone try it with AI?</li>
-    <li>One line here, then → to the Pokémon clip.</li>
+    <li>One line here, then → to the headlines.</li>
   </ul></aside>
 </section>
 
-<section class="slide bleed" data-section="2 · Why try it with AI?" data-by="5.75" data-title="Clip: an AI playing Pokémon">
-  <figure class="clip" data-src="media/pokemon-example.mp4" data-mode="loop" data-label="Silent loop, 18 s: the Claude Plays Pokémon stream, with the game and the model's thinking both in shot"></figure>
-  <aside class="notes"><ul>
-    <li>Games are how people have been testing model capabilities. A game makes a model keep going for hours, and you can watch whether it does.</li>
-    <li>Pokémon is the one that stuck. Everyone knows it, so nobody has to explain what winning means.</li>
-    <li>This is what it looks like. The model gets a screenshot, thinks, presses a button, and gets the next screenshot.</li>
-    <li>Say whose stream it is. It isn't mine: this is Claude Plays Pokémon, Anthropic's stream on Twitch. Claude 3.7 Sonnet, March 2025, Pokémon Red.</li>
-    <li>The story, if there's time: it spent dozens of hours trying to leave Cerulean City, got out, then jumped back down a ledge to talk to this person outside the gym. It was stuck again.</li>
-    <li>Left is the model thinking and the tool it calls. Top right is the buttons it pressed. Here it takes three goes to walk up to someone and talk to them.</li>
-    <li>It loops by itself with no sound. → moves on.</li>
-  </ul></aside>
-</section>
-
-<section class="slide top" data-section="2 · Why try it with AI?" data-by="5.75" data-title="Can Claude, Gemini or ChatGPT beat Pokémon?">
+<section class="slide top" data-section="2 · Why try it with AI?" data-by="5" data-title="Can Claude, Gemini or ChatGPT beat Pokémon?">
   <h2 aria-label="Can Claude, Gemini or ChatGPT beat Pokémon?"><span aria-hidden="true">Can <span class="rotator"><span class="rotator-track">
       <span class="llm claude"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#mark-claude"/></svg>Claude</span>
       <span class="llm gemini"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#mark-gemini"/></svg>Gemini</span>
@@ -164,42 +154,42 @@
       <span class="llm claude"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#mark-claude"/></svg>Claude</span>
     </span></span> beat Pokémon?</span></h2>
   <div class="clippings">
-    <div class="entry up step" style="--at: 180px; --x: 0px"><figure class="clipping">
+    <div class="entry up" style="--at: 180px; --x: 0px"><figure class="clipping">
       <img src="media/headlines/thinking-title.png" width="560" height="147" alt="Anthropic, 24 February 2025: Claude's extended thinking">
       <img src="media/headlines/thinking-quote.png" width="433" height="107" alt="From its section Claude plays Pokémon, highlighted: Claude 3.7 Sonnet advanced much further, successfully battling three Pokémon Gym Leaders (the game's bosses) and winning their Badges.">
     </figure><time datetime="2025-02-24">24 Feb</time></div>
-    <div class="entry down step" style="--at: 355px; --x: 40px"><figure class="clipping"><img src="media/headlines/pichai.png" width="560" height="200" alt="Sundar Pichai on X, 2 May 2025: What a finish! Gemini 2.5 Pro just completed Pokémon Blue! Special thanks to @TheCodeOfJoel for creating and running the livestream, and to everyone who cheered Gem on along the way."></figure><time datetime="2025-05-02">2 May</time></div>
-    <div class="entry up step" style="--at: 625px; --x: 420px"><figure class="clipping"><img src="media/headlines/gpt5-finish.png" width="560" height="296" alt="Clad3815 on X, 14 August 2025: GPT-5 just finished Pokémon Red! 6,470 steps vs. 18,184 for o3! Check the stats site to compare! That's a huge improvement! Well done, @OpenAI you cooked with GPT-5. What an incredible model. Next up: GPT-5 vs. Pokémon Crystal (16 Badges + Red). The run starts soon on Twitch."></figure><time datetime="2025-08-14">14 Aug</time></div>
-    <div class="entry down step" style="--at: 937px; --x: 620px"><figure class="clipping">
+    <div class="entry down" style="--at: 355px; --x: 40px"><figure class="clipping"><img src="media/headlines/pichai.png" width="560" height="200" alt="Sundar Pichai on X, 2 May 2025: What a finish! Gemini 2.5 Pro just completed Pokémon Blue! Special thanks to @TheCodeOfJoel for creating and running the livestream, and to everyone who cheered Gem on along the way."></figure><time datetime="2025-05-02">2 May</time></div>
+    <div class="entry up" style="--at: 625px; --x: 420px"><figure class="clipping"><img src="media/headlines/gpt5-finish.png" width="560" height="296" alt="Clad3815 on X, 14 August 2025: GPT-5 just finished Pokémon Red! 6,470 steps vs. 18,184 for o3! Check the stats site to compare! That's a huge improvement! Well done, @OpenAI you cooked with GPT-5. What an incredible model. Next up: GPT-5 vs. Pokémon Crystal (16 Badges + Red). The run starts soon on Twitch."></figure><time datetime="2025-08-14">14 Aug</time></div>
+    <div class="entry down" style="--at: 937px; --x: 620px"><figure class="clipping">
       <img src="media/headlines/crystal-title.png" width="620" height="180" alt="Joel's Developer Blog, 12 December 2025: Gemini 3 Pro vs 2.5 Pro in Pokemon Crystal">
       <img src="media/headlines/crystal-quote.png" width="480" height="57" alt="From the post, highlighted: Gemini 3 Pro became the Johto Champion without losing a single battle.">
     </figure><time datetime="2025-12-12">12 Dec</time></div>
-    <div class="entry up step" style="--at: 1340px; --x: 1060px"><figure class="clipping"><img src="media/headlines/lesswrong.png" width="620" height="360" alt="LessWrong, 16 May 2026: A Year Late, Claude Finally Beats Pokémon"></figure><time datetime="2026-05-16">16 May</time></div>
-    <div class="entry down flip launch step" style="--at: 1402px; --x: 1060px"><figure class="clipping">
+    <div class="entry up" style="--at: 1340px; --x: 1060px"><figure class="clipping"><img src="media/headlines/lesswrong.png" width="620" height="360" alt="LessWrong, 16 May 2026: A Year Late, Claude Finally Beats Pokémon"></figure><time datetime="2026-05-16">16 May</time></div>
+    <div class="entry down flip launch" style="--at: 1402px; --x: 1060px"><figure class="clipping">
       <img src="media/headlines/anthropic-title.png" width="560" height="147" alt="Anthropic, 9 June 2026: Claude Fable 5 and Claude Mythos 5">
       <img src="media/headlines/anthropic-quote.png" width="433" height="135" alt="From the post, highlighted: Fable 5 beat FireRed with a minimal, vision-only harness.">
     </figure><time datetime="2026-06-09">9 Jun</time></div>
     <span class="year y25">2025</span><span class="year y26">2026</span>
   </div>
   <aside class="notes"><ul>
-    <li>Every time a new model came out, this was the question, whoever made it. The name in the heading keeps changing on its own. One headline per click, in date order.</li>
-    <li>→ February 2025. Anthropic's own post for Claude 3.7 Sonnet: it beat three gym leaders, 3 of the 8 badges. The model before it couldn't leave the first house. That's the stream from the clip.</li>
-    <li>→ May 2025. Gemini 2.5 Pro finishes Blue, and Google's CEO posts about it the same day. An outside developer, Joel Zhang, built and ran it; Sundar thanks him in the post. He called it out on stage at I/O later that month too: "Artificial Pokémon Intelligence". And Google's Gemini 2.5 report in July gave it a section of its own: 813 hours to finish.</li>
-    <li>If asked: Anthropic's Claude 4 launch that same month showed Opus 4's own notes from playing Pokémon.</li>
-    <li>→ August. GPT-5 finishes Red in 6,470 steps, about a third of what o3 needed. That's the post from Clad3815, the outside developer who ran the stream. OpenAI's developer account had posted the stream when it started, a week earlier, and Greg Brockman shared the Victory Road update; OpenAI didn't post the finish itself.</li>
-    <li>→ December. Gemini 3 Pro finishes Pokémon Crystal, the harder sequel, without losing a battle. Same outside developer, Joel Zhang; this is his write-up. Google AI Studio shared it.</li>
-    <li>→ May this year. Claude gets there, a year after Gemini. Anthropic didn't announce that one; this is the write-up from people who follow the stream.</li>
-    <li>→ June. Fable 5 beats FireRed from screenshots. That's Anthropic's own line, in the launch post.</li>
-    <li>The line is to scale, a tick a month. Three are inside six months of 2025. Then the runs move on to harder games, and Claude takes until May.</li>
-    <li>These are screenshots of the pages and posts as they are now, the most official source for each. The yellow is mine.</li>
-    <li>Shift+→ skips the rest if the room knows all this.</li>
+    <li>Games are how people have been testing model capabilities. A game makes a model keep going for hours, and you can watch whether it does. Pokémon is the one that stuck: everyone knows what winning means.</li>
+    <li>All six are up at once, no clicks. Point along the line, don't read the cards: every time a new model came out, this was the question, whoever made it. The name in the heading changes on its own.</li>
+    <li>The one line: it took from February 2025 to June this year, and the early wins had a lot of help. Gemini's first finish took 813 hours. (The help comes back at the start of part 4.)</li>
+    <li>Then → to why Minecraft is harder.</li>
+    <li>If asked, left to right. February 2025: Anthropic's own post for Claude 3.7 Sonnet, three gym leaders, 3 of the 8 badges; the model before it couldn't leave the first house.</li>
+    <li>If asked: May 2025, Gemini 2.5 Pro finishes Blue and Google's CEO posts about it the same day. An outside developer, Joel Zhang, built and ran it; Sundar thanks him in the post, and called it out on stage at I/O later that month: "Artificial Pokémon Intelligence". Google's Gemini 2.5 report in July gave it a section of its own: 813 hours to finish. Anthropic's Claude 4 launch that same month showed Opus 4's own notes from playing Pokémon.</li>
+    <li>If asked: August, GPT-5 finishes Red in 6,470 steps, about a third of what o3 needed. That's the post from Clad3815, the outside developer who ran the stream. OpenAI's developer account had posted the stream when it started, a week earlier, and Greg Brockman shared the Victory Road update; OpenAI didn't post the finish itself.</li>
+    <li>If asked: December, Gemini 3 Pro finishes Pokémon Crystal, the harder sequel, without losing a battle. Same outside developer, Joel Zhang; this is his write-up. Google AI Studio shared it.</li>
+    <li>If asked: May this year, Claude gets there, a year after Gemini. Anthropic didn't announce that one; this is the write-up from people who follow the stream. June: Fable 5 beats FireRed from screenshots, Anthropic's own line in the launch post.</li>
+    <li>If asked: the line is to scale, a tick a month. Three are inside six months of 2025, then the runs move on to harder games. These are screenshots of the pages and posts as they are now, the most official source for each. The yellow is mine.</li>
   </ul></aside>
 </section>
 
-<section class="slide top" data-section="2 · Why try it with AI?" data-by="5.75" data-title="Minecraft is a harder problem">
+<section class="slide top" data-section="2 · Why try it with AI?" data-by="5" data-title="Minecraft is a harder problem">
   <h2>Minecraft is a harder problem</h2>
+  <figure class="clip pop step credit" data-src="media/pokemon-example.mp4" data-mode="pop" data-box="pkclip" data-label="Silent, 18 s: the Claude Plays Pokémon stream, with the game and the model's thinking both in shot"><figcaption><b>Claude Plays Pokémon</b>Claude 3.7 Sonnet, March 2025 · Anthropic's stream on Twitch</figcaption></figure>
   <div class="compare">
-    <div class="card">
+    <div class="card pkclip">
       <h3><img class="px" src="art/pikachu.png" alt="">Pokémon</h3>
       <p class="fact"><b>Famous</b><span>Known around the world</span></p>
       <p class="fact"><b>Long</b><span>Hours of play towards one goal</span></p>
@@ -220,6 +210,9 @@
   <aside class="notes"><ul>
     <li>Both are famous. You don't have to follow AI to know what beating Pokémon or Minecraft means, and that's a big part of why these runs make the news.</li>
     <li>And they're the same kind of problem. Hours of play, one goal, and the model has to keep track of what it's doing.</li>
+    <li>The clip is optional. The thumbnail in the Pokémon heading is someone else's stream. Short on time (the default): → once lands it without playing, then → again for the clock row.</li>
+    <li>With time: Space plays it, 18 s, silent. "This is what it looks like. The model gets a screenshot, thinks, presses a button, and gets the next screenshot." Say whose it is: Claude Plays Pokémon, Anthropic's stream on Twitch, Claude 3.7 Sonnet, March 2025, Pokémon Red. Left is the model thinking and the tool it calls, top right the buttons it pressed; here it takes three goes to walk up to someone and talk to them. It shrinks back into the heading when it ends.</li>
+    <li>If asked: it spent dozens of hours trying to leave Cerulean City, got out, then jumped back down a ledge to talk to this person outside the gym. It was stuck again.</li>
     <li>→ The big difference. A Pokémon emulator stops between button presses. The model can think for a minute and nothing happens to it. That's how a run can take 800 hours and still finish.</li>
     <li>Minecraft keeps going. 20 ticks a second, and a creeper doesn't wait for the model.</li>
     <li>→ And Minecraft brings an extra dimension. Literally. Pokémon is a flat map. In Minecraft you can fall, dig, build, and get lost underground.</li>
@@ -231,9 +224,9 @@
   </ul></aside>
 </section>
 
-<!-- ============ Part 3 · Can an LLM do it? to 7.75 min ============ -->
+<!-- ============ Part 3 · Can an LLM do it? to 7.5 min ============ -->
 
-<section class="slide floor chapter" data-section="3 · Can an LLM do it?" data-by="7.75" data-title="Part 3: Can an LLM do it?" data-chapter="Can an LLM do it?">
+<section class="slide floor chapter" data-section="3 · Can an LLM do it?" data-by="7.5" data-title="Part 3: Can an LLM do it?" data-chapter="Can an LLM do it?">
   <div class="chapter-head">
     <img class="px hero-icon" src="vendor/pixel-perfection/dragon_egg.png" alt="">
     <p class="kicker">Part 3 of 7</p>
@@ -246,7 +239,7 @@
   </ul></aside>
 </section>
 
-<section class="slide" data-section="3 · Can an LLM do it?" data-by="7.75" data-title="Bots have beaten it before">
+<section class="slide" data-section="3 · Can an LLM do it?" data-by="7.5" data-title="Bots have beaten it before">
   <h2>Bots have beaten it before</h2>
   <div class="compare duo">
     <div class="card altoclef">
@@ -262,19 +255,17 @@
   </div>
   <figure class="clip pop step credit" data-src="media/altoclef-dragon.mp4" data-silent-src="media/altoclef-dragon-silent.mp4" data-sound data-mode="pop" data-box="altoclef" data-label="AltoClef: the dragon dies 3 h 08 into its run, on TacoTechnica's stream, 24 May 2021 (split timer 3:07:36 to 3:08:01)"><figcaption><b>AltoClef</b>The dragon dies 3 h 08 in · TacoTechnica on YouTube, 2021</figcaption></figure>
   <aside class="notes"><ul>
-    <li>Give credit: we studied AltoClef to work out what an end-to-end run even needs.</li>
-    <li>24 May 2021, on a random seed, streamed by TacoTechnica. It was the ninth attempt. One command to start, then nobody touches it until the credits.</li>
-    <li>"First" is AltoClef's own claim, in its README and on the video. I haven't found anyone who disputes it. Say "first bot", not "first computer": a scripted replay of inputs is a different thing.</li>
-    <li>It runs on Baritone, the pathfinder that comes back in the navigation section.</li>
-    <li>Space to play AltoClef's own kill, 26 s, from TacoTechnica's stream, with the stream's sound: Taco commentating over the game ("first non-human to beat the game", then "yes baby, let's go" at the kill, "world record"). M mutes it; <code>?silent</code> plays the silent cut. The bot's view is on the left, a spectator top right, the split timer bottom right. The dragon dies at 3:07:53. When it ends it shrinks into the AltoClef card. → skips it.</li>
+    <li>One quick line: "Bots have beaten it before. AltoClef did it in 2021 with hand-written code and no LLM, and we studied it to see what a whole run needs. What I wanted to know is the question mark: can an LLM do the whole run and make its own calls?"</li>
+    <li>Default: → once lands AltoClef's clip without playing it, then → again to the dragon clip: "Here's the answer."</li>
+    <li>If asked: 24 May 2021, on a random seed, streamed by TacoTechnica. It was the ninth attempt. One command to start, then nobody touches it until the credits. "First" is AltoClef's own claim, in its README and on the video; I haven't found anyone who disputes it. Say "first bot", not "first computer": a scripted replay of inputs is a different thing.</li>
+    <li>If asked: it runs on Baritone, the pathfinder that comes back in the navigation section.</li>
+    <li>Only with time to spare: Space plays AltoClef's own kill, 26 s, from TacoTechnica's stream, with the stream's sound: Taco commentating over the game ("first non-human to beat the game", then "yes baby, let's go" at the kill, "world record"). M mutes it; <code>?silent</code> plays the silent cut. The bot's view is on the left, a spectator top right, the split timer bottom right. The dragon dies at 3:07:53. When it ends it shrinks into the AltoClef card. → skips it.</li>
     <li>Source, if asked: TacoTechnica, "Bot Beats Minecraft for the First Time (Baritone Random Seed Any%)", youtu.be/baAa6s8tahA. Used with credit; it isn't CC.</li>
     <li>Top row is the difference: nobody wrote the plan here. The model picked what to do and when.</li>
-    <li>The question mark on the right is why I did it: can an LLM do the whole run and make its own calls?</li>
-    <li>Then → to the clip: "Here's the answer."</li>
   </ul></aside>
 </section>
 
-<section class="slide bleed" data-section="3 · Can an LLM do it?" data-by="7.75" data-title="Clip: the dragon dies, on stream">
+<section class="slide bleed" data-section="3 · Can an LLM do it?" data-by="7.5" data-title="Clip: the dragon dies, on stream">
   <figure class="clip" data-src="media/dragon-reaction.mp4" data-silent-src="media/dragon-kill.mp4" data-sound data-mode="play" data-label="Played clip with sound, 30 s: the stream as the dragon dies, with Ben reacting on the webcam (run time 3:56:04 to 3:56:34)"></figure>
   <aside class="notes"><ul>
     <li>Before Space: "This is mine at the last step, fighting the dragon on stream, nearly four hours in."</li>
@@ -284,7 +275,7 @@
   </ul></aside>
 </section>
 
-<section class="slide top" data-section="3 · Can an LLM do it?" data-by="7.75" data-title="One prompt, then hands off">
+<section class="slide top" data-section="3 · Can an LLM do it?" data-by="7.5" data-title="One prompt, then hands off">
   <h2>One prompt. Then I didn't touch it.</h2>
   <pre class="prompt">Play Minecraft in survival mode and defeat the Ender Dragon. Do not stop until you have defeated the Ender Dragon. Use the Minecraft MCP tools for everything you need to do.
 <span class="muted">… plus a paragraph of strategy tips.</span></pre>
@@ -309,7 +300,7 @@
 <!-- ============ Part 4 · How do you approach it? The question, the layers and the thesis, to 12 min ============ -->
 <!-- The card asks the question. The slide after it is the last of the Pokémon slides: what each harness gave the model. -->
 
-<section class="slide floor chapter" data-section="4 · How do you approach it?" data-by="12" data-title="Part 4: How do you approach it?" data-chapter="How do you approach it?">
+<section class="slide floor chapter" data-section="4 · How do you approach it?" data-by="13" data-title="Part 4: How do you approach it?" data-chapter="How do you approach it?">
   <div class="chapter-head">
     <img class="px hero-icon" src="vendor/pixel-perfection/ender_eye.png" alt="">
     <p class="kicker">Part 4 of 7</p>
@@ -325,7 +316,7 @@
   </ul></aside>
 </section>
 
-<section class="slide top" data-section="4 · How do you approach it?" data-by="12" data-title="Early Pokémon wins needed a lot of help">
+<section class="slide top" data-section="4 · How do you approach it?" data-by="13" data-title="Early Pokémon wins needed a lot of help">
   <h2>Early Pokémon wins needed a lot of help</h2>
   <ol class="runs">
     <li><time>Feb 2025</time><b><span class="llm claude"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#mark-claude"/></svg>Claude</span>3.7 Sonnet</b><span>3 of 8 badges</span></li>
@@ -364,7 +355,7 @@
 </section>
 
 
-<section class="slide top" data-section="4 · How do you approach it?" data-by="12" data-title="Playing Pokémon">
+<section class="slide top" data-section="4 · How do you approach it?" data-by="13" data-title="Playing Pokémon">
   <h2>Playing Pokémon</h2>
   <div class="presses">
     <div class="press">
@@ -396,7 +387,7 @@
   </ul></aside>
 </section>
 
-<section class="slide top mcb" data-section="4 · How do you approach it?" data-by="12" data-title="Playing Minecraft">
+<section class="slide top mcb" data-section="4 · How do you approach it?" data-by="13" data-title="Playing Minecraft">
   <h2 class="mcb-title"><span class="mcb-h-was">Playing Minecraft</span><span class="mcb-h-now" aria-hidden="true">From the model to the game</span></h2>
   <div class="mcb-scenes">
     <div class="mcb-a">
@@ -511,13 +502,13 @@
     <li>Space: the client. Stream 7, 21 July, my first stream with the bot, on a stone staircase test course. It walks up the stairs fine, then stops one step below the finish and just stands there. What I said live: "He could just jump up here and get to the end, but he doesn't." The bot thought it was a hair slimmer than the server did, so every jump up that step got pushed back. The fix was a rounding tweak in the physics library, not a prompt. → skips either clip and just turns the box red.</li>
     <li>→ So get each layer right starting from the game end, then look at the one before it. Otherwise you end up rewriting prompts to fix a physics bug.</li>
     <li>This is the map for part 5. The missing tools layer is the MCP server I built, and its actions and reflexes fill the actions layer. Part 5 also answers the timing problem from the Minecraft slide: one lap through the model takes about 3 seconds and the game ticks 20 times a second, so the reacting has to happen at the game end, in the actions, without waiting for the model.</li>
-    <li>The other half of the timing problem: some actions take minutes, which is too long for a tool call to sit and wait. Part 5 answers that half on "Some actions take minutes", and the too-fast half on "Tasks and reflexes".</li>
+    <li>The other half of the timing problem: some actions take minutes, which is too long for a tool call to sit and wait. Part 5 answers that half on "Some actions take minutes", and the too-fast half on "One body, one lock".</li>
     <li>I had a pattern very like this in my first couple of days with Minecraft: one model call picks one action, and the actions do the work on top of Mineflayer. What was missing was the bridge. <span class="todo">TODO: which days? The earliest record found is mine_ai's first commit, 21 July 2026, which already has this shape.</span></li>
     <li>Sources, if asked: the packet is "Set Player Position", id 0x1C, for Minecraft 1.21.4 (protocol 769), the version Mine AI MCP runs: X, Feet Y and Z as doubles, then a flags byte, 0x01 on the ground (Minecraft Wiki, Java Edition protocol, the 1.21.4 revision). The values are made up; the bytes are what they encode to. Mineflayer's JavaScript version starts with Andrew Kelley's commits of 2 January 2013; the repo goes back to a C++ version he began in January 2011. It's in the PrismarineJS organisation on GitHub now and sits on node-minecraft-protocol, which reads and writes the packets.</li>
   </ul></aside>
 </section>
 
-<section class="slide" data-section="4 · How do you approach it?" data-by="12" data-title="The idea">
+<section class="slide" data-section="4 · How do you approach it?" data-by="13" data-title="The idea">
   <p class="kicker">The idea</p>
   <h2>Shrink the AI's job</h2>
   <div class="ideas">
@@ -533,9 +524,9 @@
   </ul></aside>
 </section>
 
-<!-- ============ Part 5 · What did I build? The MCP server, to 34 min ============ -->
+<!-- ============ Part 5 · What did I build? The MCP server, to 26 min ============ -->
 
-<section class="slide floor chapter" data-section="5 · What did I build?" data-by="19" data-title="Part 5: What did I build?" data-chapter="What did I build?">
+<section class="slide floor chapter" data-section="5 · What did I build?" data-by="18" data-title="Part 5: What did I build?" data-chapter="What did I build?">
   <div class="chapter-head">
     <img class="px hero-icon" src="vendor/pixel-perfection/stone_pickaxe.png" alt="">
     <p class="kicker">Part 5 of 7</p>
@@ -544,12 +535,11 @@
   </div>
   <ol class="chapters"></ol>
   <aside class="notes"><ul>
-    <li>This part is half the talk.</li>
-    <li>Straight in: the thing I built is an MCP server. Everything in this part is a design choice inside it.</li>
+    <li>Straight in: the thing I built is an MCP server. Each slide in this part is a design choice inside it, and most of them are there because something went wrong.</li>
   </ul></aside>
 </section>
 
-<section class="slide top" data-section="5 · What did I build?" data-by="19" data-title="I built an MCP server">
+<section class="slide top" data-section="5 · What did I build?" data-by="18" data-title="I built an MCP server">
   <h2>I built an MCP server</h2>
   <div class="p5-split">
     <div class="p5-who">
@@ -567,7 +557,7 @@
     </div>
     <div class="p5-why p5-tight">
       <p class="step"><b>The model can't react in real time</b><span>~3 s a turn. A creeper goes off in 1.5 s.</span></p>
-      <p class="step"><b>So the server has all the control</b><span>Pathfinding and combat plan every move. The model never touches the inputs.</span></p>
+      <p class="p5-with-prev"><b>So the server has all the control</b><span>Pathfinding and combat plan every move. The model never touches the inputs.</span></p>
       <div class="chart step p5-proof">
         <p class="chart-title">The run: mostly the model waiting for actions to finish</p>
         <div class="share thick">
@@ -581,19 +571,17 @@
       </div>
     </div>
   </div>
-  <p class="small p5-any">A standard MCP server, so any MCP client can connect. Used with Claude Code and Codex; the winning run was Claude Code.</p>
+  <p class="small p5-any">I designed and directed it; coding agents (Codex and Claude Code) wrote the code. The winning run used Claude Code.</p>
   <aside class="notes"><ul>
-    <li>So I built an MCP server. MCP is the standard way to hand a model a set of tools, so any harness that speaks it can connect. I've used it with Claude Code and Codex. The winning run was Claude Code.</li>
-    <li>If asked: other harnesses? Only Claude Code and Codex so far.</li>
-    <li>The model handles the long horizon: the goal, the plans, what it wants the bot to achieve. Intention and policy.</li>
-    <li>The MCP server carries out the execution, and everything in between: reacting to what happens, and reporting back to the model.</li>
-    <li>→ Why split it like that? The model can't react in real time. Last part: about 3 seconds a turn. A creeper goes off a second and a half after it reaches you.</li>
-    <li>→ So the server takes all the control. Every bit of movement is the server following a plan, and the plan comes from pathfinding or a combat procedure. The model gets no control at the input level.</li>
-    <li>→ And this is what it looks like over the run: 17.8 minutes of the model thinking, 7.5%. The rest of the time it was waiting for actions to finish: 3 h 38 of the server executing.</li>
+    <li>So I built an MCP server: the standard way to hand a model a set of tools. I designed it and directed it; coding agents, Codex and Claude Code, wrote the code. More on how in the next part.</li>
+    <li>The model has the long horizon: the goal, the plans, intention and policy. The server has the execution and everything in between: moving, reacting, reporting back.</li>
+    <li>→ Why split it like that? The model can't react in real time: about 3 seconds a turn, and a creeper goes off a second and a half after it reaches you. So the server has all the control. Every move follows a plan from pathfinding or a combat procedure; the model never touches the inputs.</li>
+    <li>→ Over the run: 17.8 minutes of the model thinking, 7.5%. The rest of the time it was waiting for actions to finish.</li>
+    <li>If asked: other harnesses? It's a standard MCP server, so any MCP client can connect. I've used it with Claude Code and Codex, nothing else so far.</li>
   </ul></aside>
 </section>
 
-<section class="slide top" data-section="5 · What did I build?" data-by="19" data-title="Simple, reusable actions">
+<section class="slide top" data-section="5 · What did I build?" data-by="18" data-title="One call, one whole job">
   <h2>One call, one whole job</h2>
   <div class="p5-first">
     <div class="p5-call">
@@ -630,21 +618,20 @@
       <p class="p5-got">212 blocks, 1 min 11 s</p>
     </div>
   </div>
-  <p class="step p5-never">It almost never says "press this button". <span>Every action reports back: succeeded, failed, or partial with how far it got.</span></p>
+  <p class="p5-never p5-with-prev">It almost never says "press this button". <span>Every action reports back: succeeded, failed, or partial with how far it got.</span></p>
   <aside class="notes"><ul>
-    <li>Simple, reusable actions. Strong primitives, each with a single goal, so you can check it: yes, that's done. One call, one outcome.</li>
-    <li>The main one is collect_block. This is the very first call of the winning run, four seconds in: 16 logs, with the model's own reason.</li>
-    <li>→ The finicky way would be "get logs from this tree": look around, pick a tree, give its position, back and forth. collect_block does all of it: walks to logs it can collect, uses the right tool, mines, picks up the drop, moves on to the next, until it has the count you asked for.</li>
-    <li>→ Same idea for the rest. Smelting: raw iron and coal in a furnace (coal is the fuel argument, left off the slide), and out come iron ingots. Crafting: five things in one call, and the server works out the recipe tree. Navigation: "go to my house" works once the model knows where the house is. Here it's a Nether fortress it spotted 70 blocks away.</li>
+    <li>Strong primitives, each with one goal, so you can check it's done. The first call of the winning run, four seconds in: 16 logs, with the model's own reason.</li>
+    <li>→ The finicky way is "get logs from this tree": look around, pick a tree, give its position, back and forth. collect_block does all of it, until it has the count.</li>
+    <li>→ Same for smelting (raw iron and coal in, iron ingots out), crafting (five things in one call) and navigation ("go to my house", here a Nether fortress it spotted). Every action reports back: succeeded, failed, or partial with how far it got. So the model almost never says "press this button"; the run tests its decisions, not its fine control.</li>
     <li>Say "ingots": iron bars are a different block.</li>
-    <li>→ Every action reports back: it succeeded, it failed, or it partly worked and here's how far it got.</li>
-    <li>So the model almost never says "press this button". It says "this is what I want to happen". The run tests its decisions, not its fine control of movement.</li>
-    <li>If asked: there is an escape hatch, raw_action: one look, dig, place, swing, item use, or up to 2 s of one key. The winning run used it twice in 387 calls, about three hours in, to try to carve a pumpkin with shears. It didn't work, and it went back to the normal tools.</li>
-    <li>If asked: collect_block got reused 25 times for 10 kinds of block, logs at the start to end stone in the End. And every call carries a one-sentence rationale, logged with it, which is why I can show you these.</li>
+    <li>If asked: the first bot, in June, had one model call pick one small JSON action every 8 seconds, like follow_player. In August I had it rewritten as "Simple Actions": one understandable action per call, each with a required rationale.</li>
+    <li>If asked: the escape hatch is raw_action: one look, dig, place, swing, item use, or up to 2 s of one key. The winning run used it twice in 387 calls, to try to carve a pumpkin with shears. It didn't work, and it went back to the normal tools.</li>
+    <li>If asked: collect_block got reused 25 times for 10 kinds of block. Coal is smelt_item's fuel argument, left off the slide.</li>
   </ul></aside>
 </section>
 
-<section class="slide" data-section="5 · What did I build?" data-by="19" data-title="Long actions">
+<section class="slide" data-section="5 · What did I build?" data-by="18" data-title="Some actions take minutes">
+  <p class="p5-fail"><b>What went wrong</b>A smelting call outlived the client's five-minute timeout. The model never heard back.</p>
   <h2>Some actions take minutes</h2>
   <div class="longrun">
     <p class="longrun-head"><span>collect_block <span class="cube inline"><img class="t" src="vendor/pixel-perfection/obsidian.png" alt=""><img class="l" src="vendor/pixel-perfection/obsidian.png" alt=""><img class="r" src="vendor/pixel-perfection/obsidian.png" alt=""></span> obsidian × 16</span><span class="done">16 of 16 in 7 min 07 s</span></p>
@@ -654,17 +641,16 @@
       <li class="flip" style="--at: 100"><b>7:07</b>done</li>
     </ol>
   </div>
-  <p class="small">For the frame of the Nether portal, with a few spare. 28 minutes into the winning run.</p>
   <p class="lede step">So how does the model keep control while it waits?</p>
   <aside class="notes"><ul>
-    <li>Obsidian is the purple-black block the portal into the Nether is built from. 28 minutes in, it asked for 16, enough for the frame with a few spare.</li>
-    <li>One tool call, and it ran for about seven minutes. The bar fills by itself, a second a minute.</li>
-    <li>Walking 2,000 blocks or smelting a stack takes minutes too.</li>
-    <li>→ So the question: if one call can take ten minutes, how does the model keep control? How can it still adapt while it waits?</li>
+    <li>What went wrong: a smelting call hit the client's five-minute idle timeout. The server kept working, and the model never heard back.</li>
+    <li>And calls that long are normal. 28 minutes into the winning run it asked for 16 obsidian, the purple-black block the Nether portal is built from. One call, seven minutes.</li>
+    <li>→ So how does the model keep control while it waits, and still adapt?</li>
+    <li>If asked: walking 2,000 blocks or smelting a stack takes minutes too.</li>
   </ul></aside>
 </section>
 
-<section class="slide top" data-section="5 · What did I build?" data-by="19" data-title="A tool call is an async function">
+<section class="slide top" data-section="5 · What did I build?" data-by="18" data-title="A tool call is an async function">
   <h2>A tool call is an async function</h2>
   <div class="p5-async">
     <p class="p5-label">In JavaScript terms</p>
@@ -690,16 +676,16 @@
     </div>
   </div>
   <aside class="notes"><ul>
-    <li>My answer: treat a tool call like an async function in JavaScript. You submit it and get a handle back straight away. Then you await it, with a timeout.</li>
-    <li>→ This is the obsidian call, as the model really sent it. Submit with a two-minute wait: "still running". Wait again: 2 of 16. Wait again: 14 of 16. Then done at 7:07.</li>
-    <li>→ When a wait runs out, control comes back to the model with the progress so far, and it decides. Keep waiting. Look at something first, like its status or its database. Or cancel, because it's going too slowly or something more important has come up. The body does one task at a time, so doing something else means cancelling this one first. That happened 59 times in the run.</li>
-    <li>Nothing gets lost: the result waits until the model collects it, and a new task is refused until it has.</li>
-    <li>I didn't design it this way at first. I found it by watching the bot play and seeing where it got stuck: a smelting call hit the client's five-minute idle timeout, the server kept working, and the model never heard back.</li>
-    <li>That led to the bigger question: what should the model control, and what should be automatic, reflexive? That's the next slide: one body, one lock.</li>
+    <li>My answer: treat a tool call like an async function. Submit it, get a handle back straight away, then await it with a timeout.</li>
+    <li>→ The obsidian call as the model really sent it: submit with a two-minute wait, "still running"; wait, 2 of 16; wait, 14 of 16; done at 7:07.</li>
+    <li>→ When a wait runs out, control comes back with the progress so far, and the model decides: keep waiting, look at something first, or cancel because it's too slow or something matters more. 59 times in the run.</li>
+    <li>That raised the bigger question: what should the model control, and what should be automatic? Next slide.</li>
+    <li>If asked: the body does one task at a time, so doing something else means cancelling first. The result waits until the model collects it, and a new task is refused until it has. There's no single incident behind this design; it came from watching the bot get stuck on long calls.</li>
   </ul></aside>
 </section>
 
-<section class="slide top" data-section="5 · What did I build?" data-by="26" data-title="Tasks and reflexes">
+<section class="slide top" data-section="5 · What did I build?" data-by="22.5" data-title="One body, one lock">
+  <p class="p5-fail"><b>What went wrong</b>3 Aug: the idle hostile guard held the body and refused every task. Three bots got stuck.</p>
   <h2>One body, one lock</h2>
   <div class="p5-body">
     <div class="p5-kinds">
@@ -717,22 +703,18 @@
   <ol class="p5-handoff">
     <li><b>navigate</b>"Return to the surface near sheep…"<small>task · 2:31 in</small></li>
     <li class="step reflex"><b>Hostile reflex</b>Takes the body and fights a creeper<small>3.5 s</small></li>
-    <li class="step"><b>navigate carries on</b>Arrived, 412 blocks<small>2 min 04 s in all</small></li>
+    <li class="p5-with-prev"><b>navigate carries on</b>Arrived, 412 blocks<small>2 min 04 s in all</small></li>
   </ol>
-  <p class="small step">17 trips and mining jobs lost the body to a reflex part way. 14 still finished.</p>
   <aside class="notes"><ul>
-    <li>That bigger question from the last slide: what does the model control, and what happens on its own?</li>
-    <li>The bot has one body, so the server has one lock. Whoever holds it moves the body.</li>
-    <li>Tasks are what the model asks for, one at a time. In the code they're "task" and "resumable_task". Reflexes are the things too fast to ask about: a skeleton shooting, running out of air, about to fall.</li>
-    <li>The clip: the bot fighting with no call from the model.</li>
-    <li>Along the bottom, a real trip from the run, two and a half hours in: the model asks to go back to the surface.</li>
-    <li>→ A creeper shows up, and the hostile reflex takes the body and fights it, three and a half seconds.</li>
-    <li>→ Then it hands the body back, and because navigate is a resumable task it just carries on. 412 blocks, 2 minutes in all. The model only heard about it afterwards, in the reply, which comes up after the reflexes.</li>
-    <li>→ Across the run: 17 trips and mining jobs had a reflex take the body part way. 14 still finished. The other 3, the model cancelled itself.</li>
+    <li>What went wrong: on 3 August the idle guard against monsters grabbed the body and wouldn't give it back. Every task got refused as "session busy", with no time limit. Three bots ended up stuck, two of them on 1 to 7 health.</li>
+    <li>So the rule now: one body, one lock. Tasks are what the model asks for, one at a time. Reflexes handle what's too fast to ask about, and a task can take the body back.</li>
+    <li>Along the bottom, a real trip two and a half hours in: go back to the surface.</li>
+    <li>→ A creeper shows up, the hostile reflex takes the body and fights it for three and a half seconds, then hands it back, and navigate just carries on. The model hears about it afterwards, in the reply.</li>
+    <li>If asked: across the run, 17 trips and mining jobs had a reflex take the body part way, and 14 still finished; the model cancelled the other 3. The code's kinds are "task" and "resumable_task". The fix was commit aaa912bc; the ownership model was written up as a design on 7 August and built on a Codex branch.</li>
   </ul></aside>
 </section>
 
-<section class="slide top" data-section="5 · What did I build?" data-by="26" data-title="Six reflexes">
+<section class="slide top" data-section="5 · What did I build?" data-by="22.5" data-title="Six reflexes">
   <h2>Six reflexes that don't ask the model</h2>
   <div class="chart">
     <p class="chart-title">Times each one fired in the winning run. 293 in total.</p>
@@ -746,15 +728,14 @@
     </div>
   </div>
   <aside class="notes"><ul>
-    <li>A reflex can take the body off whatever the model asked for, deal with it, then hand it back.</li>
-    <li>293 of these against 388 calls from the model.</li>
-    <li>Hostile is nearly all of it: 232 fights, 15 dodges, 2 hides, 1 shield.</li>
-    <li>Each one is there because something killed the bot.</li>
+    <li>Each one is there because something killed the bot. 293 of these against 388 calls from the model, and hostile is nearly all of it.</li>
+    <li>If asked, examples from the build: a "gatherer drowning fix" on 3 August; eating between fights when hunger stopped healing, 6 September; escaping fire and carrying on, 11 September.</li>
+    <li>If asked: hostile was 232 fights, 15 dodges, 2 hides, 1 shield.</li>
     <li>We looked at the existing combat plugins and packages first, then built scenarios for each situation. <span class="todo">TODO: confirm the name of the combat package collection (nxg-org?)</span></li>
   </ul></aside>
 </section>
 
-<section class="slide" data-section="5 · What did I build?" data-by="26" data-title="The override">
+<section class="slide" data-section="5 · What did I build?" data-by="22.5" data-title="The override">
   <p class="kicker">3 h 09 in, stuck in an ocean monument</p>
   <blockquote class="quote">"Automatic evade keeps seizing the body and swimming me deeper into the ocean monument; I need manual control to route north to land."
     <span class="switch off"><i></i>Reflex off</span>
@@ -765,16 +746,16 @@
     <footer>Two minutes later, switching it back on</footer>
   </blockquote>
   <aside class="notes"><ul>
-    <li>My favourite moment in the run. The reflex was wrong for this spot and the model noticed.</li>
-    <li>It had counted 55 guardians and 3 elder guardians around it.</li>
-    <li>Reflexes are defaults. The model can overrule one if it gives a reason and an expiry. It did that 9 times in the run.</li>
-    <li>This is the judgement we left for the model.</li>
+    <li>My favourite moment in the run. The reflex was wrong for this spot, with 55 guardians and 3 elder guardians around it, and the model noticed.</li>
+    <li>Reflexes are defaults. The model can overrule one if it gives a reason and an expiry. It did that 9 times in the run. That's the judgement we left for the model.</li>
+    <li>→ Two minutes later, back on land, it switched the reflex back on.</li>
+    <li>So reflexes act on their own, and the model still has to find out what they did. That's the reply: next.</li>
     <li>Optional loop here: media/monument-loop.mp4.</li>
-    <li>So reflexes act on their own, and the model still has to find out what they did. That's the reply it gets back: next.</li>
   </ul></aside>
 </section>
 
-<section class="slide top" data-section="5 · What did I build?" data-by="30" data-title="Replies the model can trust">
+<section class="slide top" data-section="5 · What did I build?" data-by="26" data-title="Replies the model can trust">
+  <p class="p5-fail"><b>What went wrong</b>4 Aug: a bot respawned 36 blocks away, gear gone, and nothing told it why.</p>
   <h2>Replies the model can trust</h2>
   <div class="p5-replies">
     <div class="p5-reply">
@@ -789,17 +770,16 @@
 <span class="ev"><span class="h">## Notifications</span>
 <i>**</i>178 unread notifications.<i>**</i>
 <em>…</em>
-- hostile: target died; interrupted navigate; health 20 → 20/20
-Use read_recent_events to read and advance through recent events.</span></pre>
+- hostile: target died; interrupted navigate; health 20 → 20/20</span>
+<em>…</em></pre>
     </div>
     <div class="p5-rules">
-      <ul class="points">
-        <li class="step">Markdown by default, because a model reads it. JSON if you ask.</li>
+      <ul class="points p5-pts">
+        <li>Markdown by default, because a model reads it. JSON if you ask.</li>
         <li class="step key-p5-saw">What happened around the action comes with it, reflexes included</li>
         <li class="step key-p5-ev">One reply carries everything: chat, deaths and fights ride along</li>
         <li class="step">Truthful, partial progress included
           <div class="p5-partial">
-            <p class="p5-reply-head">Another reply, 3:15 in · trimmed</p>
             <pre><span class="h">## `collect_block`</span>
 <i>**</i>Status:<i>**</i> partial
 - Requested: 32
@@ -812,17 +792,16 @@ Use read_recent_events to read and advance through recent events.</span></pre>
     </div>
   </div>
   <aside class="notes"><ul>
-    <li>The model makes every decision from what comes back, so the reply has to be true.</li>
-    <li>On the left is a real reply from the run, two and a half hours in, trimmed: the full one is 2,610 characters. Every line you can see is word for word; the dots are where I cut. It's the reply to the trip on "One body, one lock": back to the surface after a cave full of creepers.</li>
-    <li>→ It's Markdown by default, because a model reads it. Ask for JSON and you get the same thing as structured data.</li>
-    <li>→ The action's own result comes with what happened around it. Partway through, a creeper turned up and the fight reflex took over for a few seconds. The reply says so, and how far the bot moved while the reflex had the body.</li>
-    <li>→ And one reply carries everything. MCP gives the server no line into the model: it only gets to speak when the model calls a tool. So anything that happened in the world meanwhile, a chat message, a death, a fight, gets merged into whatever reply goes back next. That's the Notifications block. 373 of the 387 replies in the run carried one. Here the last one is that same creeper fight. read_recent_events reads the rest and moves the cursor on.</li>
-    <li>→ And it's truthful, partial progress included. Every reply says what actually happened, so each action keeps its own account as it runs: how far it got, what it collected, what stopped it.</li>
-    <li>This one is three hours fifteen in, on a shoreline. It asked for 32 dirt, got 2, and the reply says why it stopped. So the model walked inland and asked again, and that time it got all 32.</li>
+    <li>What went wrong: on 4 August a bot died, respawned 36 blocks away at full health with its gear gone, and nothing told it why. All three bots filed it as a critical engine failure.</li>
+    <li>On the left is a real reply, two and a half hours in, trimmed; every line you see is word for word. It's Markdown, because a model reads it. JSON if you ask.</li>
+    <li>→ The action's result comes with what happened around it: a creeper turned up, the fight reflex took over, and the reply says so, and how far the bot moved meanwhile.</li>
+    <li>→ And one reply carries everything. MCP gives the server no line into the model; it only speaks when a tool is called. So a chat message, a death, a fight gets merged into whatever reply goes back next: the Notifications block. That's the fix for the death nobody explained.</li>
+    <li>→ And it's truthful, partial progress included. This one, three hours fifteen in and trimmed, asked for 32 dirt on a shoreline, got 2, and says why it stopped. The model walked inland and got all 32.</li>
+    <li>If asked: 373 of the 387 replies carried notifications. read_recent_events reads the rest and moves the cursor on. The death notice was commit 1d829c39.</li>
   </ul></aside>
 </section>
 
-<section class="slide top" data-section="5 · What did I build?" data-by="30" data-title="The server keeps the state">
+<section class="slide top" data-section="5 · What did I build?" data-by="26" data-title="The server keeps the state">
   <h2>The server keeps the state</h2>
   <div class="p5-state">
     <div class="p5-db">
@@ -847,64 +826,241 @@ Use read_recent_events to read and advance through recent events.</span></pre>
     </div>
   </div>
   <aside class="notes"><ul>
-    <li>The model doesn't have to hold the game in its head. Inventory, containers, every chunk it has explored, events and its own notes all live in a SQLite database on the server.</li>
-    <li>That matters on a long run. Claude Code compacts its context as it goes, and nothing the model needs again is lost, because it was never only in the context. <span class="todo">TODO: did the winning run actually compact? Say so if it did.</span></li>
-    <li>So it asks: view_status 24 times, its own SQL 14 times, its notes once. That once was the very first call of the run, "check for prior progress notes so I can resume rather than restart". There were none.</li>
-    <li>6,836 chunks recorded as it walked: biome, materials, how much is water.</li>
-    <li>→ My favourite query. Three hours twenty in, it has found the stronghold, and it's under an ocean. It writes its own SQL: the closest chunk that's less than 20% water. Seven seconds later it walks there, then digs down to the portal room.</li>
-    <li>The query is trimmed in the middle; the full one also works out the distance to the portal.</li>
+    <li>The model doesn't have to hold the game in its head. What it carries, every chunk it has seen, containers, events and its own notes all live in SQLite on the server, so it asks instead of remembering.</li>
+    <li>→ My favourite query. Three hours twenty in, it has found the stronghold, and it's under an ocean. It writes its own SQL: the closest chunk that's less than 20% water. Seven seconds later it walks there and digs down to the portal room.</li>
+    <li>If asked: view_status 24 times, its own SQL 14 times, its notes once: the very first call of the run, "check for prior progress notes so I can resume rather than restart". There were none. The query is trimmed in the middle.</li>
+    <li>If asked: Claude Code compacts its context on a long run, and nothing the model needs again is lost, because it was never only in the context. <span class="todo">TODO: did the winning run actually compact? Say so if it did.</span></li>
   </ul></aside>
 </section>
 
-<section class="slide top" data-section="5 · What did I build?" data-by="34" data-title="How it got reliable">
-  <h2>How it got reliable</h2>
-  <div class="loopflow p5-loop">
-    <div><b>It breaks</b>On a real attempt</div>
-    <div><b>Reproduce it</b>A little scenario on a real server</div>
-    <div><b>Fix it</b>Until it passes every time</div>
-    <div><b>Keep it</b>So it can't sneak back in</div>
-  </div>
-  <div class="p5-baritone">
-    <figure class="clip" data-src="media/navigation-loop.mp4" data-mode="loop" data-label="Silent loop, 5 to 10 s: the bot crossing awkward terrain (jump, swim, pillar or bridge)"></figure>
-    <div class="p5-example step">
-      <h3>Basically rewriting Baritone in TypeScript</h3>
-      <div class="tiles">
-        <div class="tile"><span class="value">493</span><span class="label">scenario files so far</span></div>
-        <div class="tile"><span class="value">32</span><span class="label">files credit a Baritone idea</span></div>
-        <div class="tile"><span class="value">15.4k</span><span class="label">lines of navigation code</span></div>
-        <div class="tile"><span class="value">4</span><span class="label">libraries forked to fix bugs</span></div>
-      </div>
-    </div>
-  </div>
-  <p class="todo loose">TODO: one break → scenario → fix from the rewrite (the AABB bug?) · were the physics fixes sent upstream, or only in the forks?</p>
-  <aside class="notes"><ul>
-    <li>Nothing got reliable by design. It got reliable by failing in a way we could replay.</li>
-    <li>It breaks on a real attempt, I build a little scenario on a real server that does the same thing, fix it until it passes every time, and keep the scenario so it can't sneak back in.</li>
-    <li>This is how I evaluated it: 493 small scenarios under the model first, then whole attempts on top. You can't replay a model's decision. You can replay a stuck jump.</li>
-    <li>→ The biggest example is navigation. It underpins everything, and it was the most unreliable at first. Baritone is the best Minecraft pathfinder around, but it's Java and runs inside the game. We needed it somewhere we could test it over and over, so I was basically rewriting Baritone in TypeScript.</li>
-    <li>32 files credit a Baritone idea. That's the "integrate" point: the ideas weren't ours, putting them together was.</li>
-    <li>Navigation spidered out into physics. If the bot's idea of its own body is wrong, every path is wrong. We found real bugs in the physics libraries, including the AABB collision code, and forked four: mineflayer, prismarine-physics, prismarine-recipe and minecraft-data.</li>
-    <li>That's what I built. Next: what actually happened in the run.</li>
-  </ul></aside>
-</section>
+<!-- ============ Part 6 · How did I build it? Mine Labs, the loop, the agents: about 11.5 min ============ -->
 
-<!-- ============ Part 6 · What happened in the run? to 40 min, the fine print to 42.5 ============ -->
-
-<section class="slide floor chapter" data-section="6 · What happened in the run?" data-by="40" data-title="Part 6: What happened in the run?" data-chapter="What happened in the run?">
+<section class="slide floor chapter" data-section="6 · How did I build it?" data-by="28" data-title="Part 6: How did I build it?" data-chapter="How did I build it?">
   <div class="chapter-head">
-    <img class="px hero-icon" src="vendor/pixel-perfection/clock_00.png" alt="">
+    <img class="px hero-icon" src="vendor/pixel-perfection/repeater.png" alt="">
     <p class="kicker">Part 6 of 7</p>
-    <h1>What happened<br>in the run?</h1>
-    <p class="lede">The winning run, and what went wrong.</p>
+    <h1>How did<br>I build it?</h1>
+    <p class="lede">Every failure became a test, and coding agents wrote the fixes.</p>
   </div>
   <ol class="chapters"></ol>
   <aside class="notes"><ul>
-    <li>Back to the run from the start of the talk. This time all 3 h 56 of it.</li>
-    <li>Three slides: where the time went, how many calls failed, and the fine print.</li>
+    <li>That's what I built. This part is how: the process, because that's what actually got it over the line.</li>
+    <li>Short version: lots of attempts, every failure turned into a test, and agents writing the code against those tests.</li>
   </ul></aside>
 </section>
 
-<section class="slide top" data-section="6 · What happened in the run?" data-by="40" data-title="Where the time went">
+<section class="slide top" data-section="6 · How did I build it?" data-by="28" data-title="31 attempts before the win">
+  <h2>31 attempts before the win</h2>
+  <div class="p6-climb">
+    <ol class="p6-stairs">
+      <li style="--lv: 0"><span class="slot"><span class="cube"><span class="t grass-top"></span><img class="l" src="vendor/pixel-perfection/grass_block_side.png" alt=""><img class="r" src="vendor/pixel-perfection/grass_block_side.png" alt=""></span></span><b>Overworld only</b><small>runs 1–9 · 3–4 Sep</small><i class="p6-riser"></i></li>
+      <li style="--lv: 1"><span class="slot"><img class="px" src="vendor/pixel-perfection/lava_bucket.png" alt=""></span><b>Into the Nether</b><small>run 10 · 4 Sep</small><i class="p6-riser"></i></li>
+      <li style="--lv: 2"><span class="slot"><img class="px" src="vendor/pixel-perfection/ender_eye.png" alt=""></span><b>The End, with help</b><small>run 18 · 9 Sep</small><i class="p6-riser"></i></li>
+      <li style="--lv: 2"><span class="slot"><span class="cube"><img class="t" src="vendor/pixel-perfection/end_stone.png" alt=""><img class="l" src="vendor/pixel-perfection/end_stone.png" alt=""><img class="r" src="vendor/pixel-perfection/end_stone.png" alt=""></span></span><b>The End, on its own</b><small>dragon run 3 · 11 Sep</small><i class="p6-riser"></i></li>
+      <li style="--lv: 3"><span class="slot"><img class="p6-head" src="art/dragon-head.png" alt=""></span><b>Dragon at 118/200</b><small>dragon run 8 · 13 Sep</small><i class="p6-riser"></i></li>
+      <li style="--lv: 4" class="win"><span class="slot"><img class="px" src="vendor/pixel-perfection/dragon_egg.png" alt=""></span><b>Dragon killed</b><small>15 Sep</small><i class="p6-riser"></i></li>
+    </ol>
+    <div class="p6-groups">
+      <p style="grid-column: 1 / 4">20 runs to craft 12 Eyes of Ender · 3–10 Sep</p>
+      <p style="grid-column: 4 / 6">11 runs at the dragon · 11–14 Sep</p>
+      <p style="grid-column: 6 / 7" class="win">The win</p>
+    </div>
+  </div>
+  <div class="p6-cost step">
+    <p class="lede">A run takes hours, and what broke may never happen the same way again.</p>
+    <p class="small">Longest attempt 7 h 49 · the win 3 h 56 · one seed, one world, one go</p>
+  </div>
+  <aside class="notes"><ul>
+    <li>The first question people ask me: was there iteration? Lots. Before the win there were at least 31 full attempts, each from an empty world.</li>
+    <li>First twenty with a smaller goal: craft twelve Eyes of Ender, which is what you need to open the End portal. Then eleven runs where the goal was the dragon itself.</li>
+    <li>Each step here is the furthest any attempt had got so far. Nine runs never left the overworld. Run 10 got into the Nether and died in lava seven minutes later. Run 18 reached the End, with assistance. Then a dragon run got there on its own, one got the dragon down to 118 of 200, and on the 15th it died.</li>
+    <li>→ The problem with learning from runs: a run takes hours, and the thing that broke may never happen the same way again. Different seed, different mob, different cave. If I fix something, I might wait hours to see that situation again, or never. That's a slow, noisy feedback loop.</li>
+    <li>If asked, who played them: Claude Code with Sonnet subagents, Fable 5.1 and Opus 5, Gemini through the Antigravity CLI, once GPT-5.6. The dragon runs were headless Claude Code in Docker, nearly all Opus 5.</li>
+    <li>If asked, "the dragon at 190": in the last attempt before the win, run 11, the dragon got stuck circling at 190 of 200 for over 90 minutes and never landed. So 118 on run 8 was the closest before the win.</li>
+    <li>If asked, why "at least" 31: that's the run folders and notes I still have. Before September the bots were played by earlier agent loops, but none of those was a whole attempt at the dragon.</li>
+  </ul></aside>
+</section>
+
+<section class="slide top" data-section="6 · How did I build it?" data-by="30.5" data-title="Mine Labs: every failure becomes a test">
+  <h2>Mine Labs: every failure becomes a test</h2>
+  <div class="p6-lab">
+    <div class="p6-yaml">
+      <p class="p5-label">One scenario, trimmed <span>breath-reflex.yaml, 1 of 5 pens</span></p>
+      <pre><span class="k">description:</span> &gt;-
+  SealedDiver is in a flooded chamber under a stone roof,
+  beside a dolphin publishing 6000 air, and must dig out
+  on its own air.
+<span class="k">geometry:</span>
+  - fill: { block: stone, from: [-4,-60,-4], to: [12,-55,8] }
+  - fill: { block: water, from: [0,-59,0], to: [4,-57,4] }
+<span class="k">entities:</span>
+  - type: dolphin
+    nbt: <span class="s">"{NoAI:1b,<i>…</i>,Air:6000s}"</span>
+<span class="k">players:</span>
+  - name: SealedDiver
+    inventory:
+      - { item: stone_pickaxe, count: 1 }
+<span class="k">goal:</span>
+  kind: all
+  goals:
+    - { kind: health, who: SealedDiver, health: 14 }
+    - { kind: survive, who: SealedDiver, seconds: 40 }</pre>
+    </div>
+    <div class="p6-facts">
+      <p class="step"><b>A real world</b><span>A real 1.21.4 server, real physics, the real bot. No mocks.</span></p>
+      <p class="step"><b>Pass means observed</b><span>Above 14 health and alive at 40 s, seen in the game.</span></p>
+      <p class="step"><b>Checked both ways</b><span>Make a pen impossible and it has to fail.</span></p>
+    </div>
+  </div>
+  <ol class="p6-history step">
+    <li><time>Jul</time><b>Scenario Lab</b></li>
+    <li><time>13 Aug</time><b>Mine Labs repo</b></li>
+    <li><time>15 Sep</time><b>497 scenarios</b></li>
+    <li><time>Oct</time><b>Merged into 112</b></li>
+  </ol>
+  <aside class="notes"><ul>
+    <li>So I built a test harness, Mine Labs. The idea: every failure from a run becomes a small, repeatable scenario.</li>
+    <li>This is a real one, trimmed. It builds a stone room full of water, puts a bot called SealedDiver in it with a pickaxe, and a dolphin in the next room. Nobody asks the bot to do anything. Pass means it gets itself out: still above 14 health, still alive after 40 seconds. You'll see why there's a dolphin in two slides.</li>
+    <li>A scenario file usually has several pens: walled-off areas, one bot each, each with its own setup and goals. This file has five.</li>
+    <li>→ It runs against the real thing. Mine Labs starts a real Minecraft server, builds the world with commands, and runs the real bot runtime against it. Real physics, real mobs, real packets. No mocks.</li>
+    <li>→ Pass means the outcome was observed in the world. Not "the action returned success". That's the same rule as the tool replies in part 5.</li>
+    <li>→ And it's checked the other way: if I make a pen impossible, the scenario has to fail. Otherwise it isn't testing anything.</li>
+    <li>→ It started in July as a "Scenario Lab" inside the bot's repo. On 13 August it became its own project, Mine Labs. It's public now. On the day of the win there were 497 scenario files.</li>
+    <li>Since then I've merged them into 112 files with several pens each. The everyday set is 103 of them and takes 81 minutes run one at a time.</li>
+    <li>If asked, flakiness: each run of that everyday set fails a few percent of its trials, and different ones each time. Each is real runtime behaviour that usually holds, so they stay in with the rate written down. Anything that fails reliably goes to a known-failing folder.</li>
+    <li>If asked, the stack: TypeScript on Bun, Java 21 for the server, and a small JSON protocol, so the bot under test can be written in any language.</li>
+    <li>If asked, "checked both ways" exactly: when I merged them in October, each scenario was either shown to fail with a pen made impossible or a goal tightened, or has a written reason why its goals catch a regression.</li>
+  </ul></aside>
+</section>
+
+<section class="slide top" data-section="6 · How did I build it?" data-by="32" data-title="The harness grew, the runs got further">
+  <h2>The harness grew. The runs got further.</h2>
+  <svg class="p6-chart" viewBox="0 0 1300 505" role="img" aria-label="Scenario files in the repo rose from 0 on 13 August to 497 on 15 September. Full attempts started on 3 September; the furthest any had got rose from the overworld to the Nether on 4 September, the End on 9 and 11 September, the dragon at 118 of 200 on 13 September, and the dragon killed on 15 September.">
+    <text class="p6-panel" x="0" y="22">Scenario files in the repo</text>
+    <line class="p6-grid" x1="180" y1="210" x2="1280" y2="210"/>
+    <line class="p6-grid faint" x1="180" y1="50" x2="1280" y2="50"/>
+    <text class="p6-tick" x="166" y="218" text-anchor="end">0</text>
+    <text class="p6-tick" x="166" y="58" text-anchor="end">500</text>
+    <line class="p6-mark" x1="180" y1="70" x2="180" y2="210"/>
+    <text class="p6-note" x="192" y="86">13 Aug: Mine Labs gets its own repo</text>
+    <path class="p6-area" d="M180,210 L313.3,206.2 L413.3,203.9 L546.7,201 L646.7,195.3 L780,193 L880,183.8 L946.7,158.5 L1046.7,109.2 L1080,99 L1113.3,86.2 L1146.7,82.6 L1180,70.8 L1213.3,53.2 L1280,51 L1280,210 Z"/>
+    <polyline class="p6-line" points="180,210 313.3,206.2 413.3,203.9 546.7,201 646.7,195.3 780,193 880,183.8 946.7,158.5 1046.7,109.2 1080,99 1113.3,86.2 1146.7,82.6 1180,70.8 1213.3,53.2 1280,51"/>
+    <g class="p6-dots"><circle cx="413.3" cy="203.9" r="6"/><circle cx="880" cy="183.8" r="6"/><circle cx="1046.7" cy="109.2" r="6"/><circle cx="1280" cy="51" r="7"/></g>
+    <text class="p6-val" x="413.3" y="188" text-anchor="middle">19</text>
+    <text class="p6-val" x="880" y="168" text-anchor="middle">82</text>
+    <text class="p6-val" x="1032" y="103" text-anchor="end">315</text>
+    <text class="p6-val" x="1262" y="44" text-anchor="end">497</text>
+    <g class="p6-runs">
+      <text class="p6-panel" x="0" y="268">Furthest any attempt had got</text>
+      <line class="p6-grid faint" x1="180" y1="300" x2="1280" y2="300"/>
+      <line class="p6-grid faint" x1="180" y1="336" x2="1280" y2="336"/>
+      <line class="p6-grid faint" x1="180" y1="372" x2="1280" y2="372"/>
+      <line class="p6-grid faint" x1="180" y1="408" x2="1280" y2="408"/>
+      <line class="p6-grid" x1="180" y1="444" x2="1280" y2="444"/>
+      <text class="p6-tick" x="166" y="308" text-anchor="end">Dragon dead</text>
+      <text class="p6-tick" x="166" y="344" text-anchor="end">Dragon hurt</text>
+      <text class="p6-tick" x="166" y="380" text-anchor="end">The End</text>
+      <text class="p6-tick" x="166" y="416" text-anchor="end">Nether</text>
+      <text class="p6-tick" x="166" y="452" text-anchor="end">Overworld</text>
+      <text class="p6-none" x="530" y="390" text-anchor="middle">No full attempts yet</text>
+      <path class="p6-step" d="M880,444 H913.3 V408 H1080 V372 H1213.3 V336 H1280 V300"/>
+      <g class="p6-recs"><circle cx="880" cy="444" r="6"/><circle cx="913.3" cy="408" r="6"/><circle cx="1080" cy="372" r="6"/><circle cx="1146.7" cy="372" r="6"/><circle cx="1213.3" cy="336" r="6"/><circle class="win" cx="1280" cy="300" r="8"/></g>
+    </g>
+    <line class="p6-axis" x1="180" y1="472" x2="1280" y2="472"/>
+    <g class="p6-dates">
+      <text x="180" y="500">13 Aug</text><text x="413.3" y="500" text-anchor="middle">20 Aug</text><text x="646.7" y="500" text-anchor="middle">27 Aug</text>
+      <text x="880" y="500" text-anchor="middle">3 Sep</text><text x="1113.3" y="500" text-anchor="middle">10 Sep</text><text x="1280" y="500" text-anchor="end">15 Sep</text>
+    </g>
+  </svg>
+  <i class="step key-p6-runs"></i>
+  <p class="p6-caption step">Both rose over the same four weeks: a correlation, not a proof. My read is that the harness is a big reason it got there.</p>
+  <aside class="notes"><ul>
+    <li>Here's the claim I want to make, so let me show you the data behind it.</li>
+    <li>The top line is how many scenario files were in the repo each evening. 19 on 20 August, 82 on 3 September, 315 on the 8th, 497 the morning of the win.</li>
+    <li>→ The bottom is the staircase from two slides ago, on the same dates: the furthest any attempt had got. Full attempts only started on 3 September.</li>
+    <li>→ They rose together. That's a correlation, not a proof: both happened over the same four weeks, and I was fixing other things too. But my read is that the harness was a big reason we got there. That's my claim, and this chart is the evidence I have for it.</li>
+    <li>If asked, how counted: scenario YAML files in the bot's repo at the last commit of each day, then the published repo's history from 12 September. The early Scenario Lab used other fixtures, so July and early August show nothing here.</li>
+    <li>If asked, Baritone: the clearest case of scenarios deciding something. On 26 August every scenario was run against both the old pathfinder and my new one, a TypeScript rewrite of Baritone's ideas, and the new one became the default the same day. 32 source files credit a Baritone idea.</li>
+  </ul></aside>
+</section>
+
+<section class="slide top" data-section="6 · How did I build it?" data-by="35" data-title="How I picked the next fix">
+  <h2>How I picked the next fix</h2>
+  <ol class="p6-loop">
+    <li><b>Watch a run</b>The recorder logs every action, incident and death</li>
+    <li><b>Write down what broke</b>Notes after each run</li>
+    <li><b>Order the list</b>By how often it bites in a run</li>
+    <li><b>Fix it with a scenario</b>One that fails before the fix</li>
+    <li><b>Keep the scenario</b>Or park it in known-failing until it's fixed</li>
+  </ol>
+  <p class="p5-label p6-ex-label">One fix, start to finish · 5 September, run 12</p>
+  <ol class="p6-example">
+    <li class="step"><time>23:26</time><b><img class="px" src="vendor/pixel-perfection/air.png" alt="">Drowned</b>The recorder says air was 186–200. A player's full bar is 20.</li>
+    <li class="step"><time>same night</time><b>Why</b>Mineflayer took air from any entity nearby. A dolphin has 6000.</li>
+    <li class="step"><time>23:40</time><b>Fixed in our fork</b>A one-line filter, 14 min after the death</li>
+    <li class="step"><time>23:47</time><b>The scenario</b>A flooded room beside a dolphin. Drowned before the fix, passes after.</li>
+    <li class="step done"><time>today</time><b>Still in the suite</b>The SealedDiver pen from two slides ago</li>
+  </ol>
+  <aside class="notes"><ul>
+    <li>The next question: when you iterate, how do you decide what to fix next? This is the loop.</li>
+    <li>Watch a run. The server records everything: every action, every incident, every death, in a database and a log. Write down what broke. Order the list by how often it bites. Then fix the top one, but only with a scenario that fails before the fix. Keep the scenario. If I can reproduce something but can't fix it yet, it goes in a known-failing folder, which is the queue. There are 24 in there today.</li>
+    <li>→ One real example. Run 12, 5 September, 11:26 at night. The bot drowns while collecting stone. It has a breath reflex, so why didn't it surface? The recorder says its air was 186 to 200. A player's full air bar is 20.</li>
+    <li>→ The cause: Mineflayer, the library underneath, set the bot's air from any entity's air value, not just its own. There was a dolphin nearby. Dolphins have 6,000. So the reflex thought it had plenty of air.</li>
+    <li>→ The fix is one line in our fork of Mineflayer: only read the bot's own air. 14 minutes after the death. A packet test reproduced it first.</li>
+    <li>→ Then the scenario: a roofed, flooded room with a real dolphin next door. It drowned before the fix and passes after. That's 7 minutes later.</li>
+    <li>→ And it's still in the suite today. It's the SealedDiver pen you saw. The same file later picked up another drowning from run 17, under a waterfall overhang.</li>
+    <li>If asked, ordering: the 13 September plan literally says "Order of attack, by how often the failure bites during a run".</li>
+    <li>If asked, did the fix go upstream: the agent didn't push the fork branch, because publishing needed my decision. That's a deliberate gate.</li>
+  </ul></aside>
+</section>
+
+<section class="slide top" data-section="6 · How did I build it?" data-by="37.5" data-title="Coding agents wrote the code">
+  <h2>Coding agents wrote the code. I steered.</h2>
+  <div class="p6-agents">
+    <div class="card p6-authors">
+      <p class="p5-label">The 829 commits, July to October</p>
+      <div class="p6-share"><span class="cc" style="flex: 347"></span><span class="cx" style="flex: 482"></span></div>
+      <div class="p6-key">
+        <p><i class="cc"></i><b>347</b>Claude Code co-author line</p>
+        <p><i class="cx"></i><b>482</b>No line: most likely Codex<small>inferred from its session records</small></p>
+        <p><i></i><b>0</b>Found to be hand-written</p>
+      </div>
+    </div>
+    <div class="p6-steer step">
+      <p><b>Standing rules</b><span>Success means "the requested outcome was actually observed"</span></p>
+      <p><b>A core I review</b><span>A human-reviewed package I read line by line</span></p>
+      <p><b>Plans from my notes</b><span>Observe first, change the least, prove it with a scenario</span></p>
+      <p><b>Review before push</b><span>A page of every agent commit, pushed or not</span></p>
+    </div>
+  </div>
+  <div class="p6-fan step">
+    <p class="p5-label">13 September, two days before the win</p>
+    <ol>
+      <li><time>after a run</time><b>My 5-line note</b>"observed before being fixed"</li>
+      <li><time>then</time><b>A 761-line plan</b>12 items, worst first</li>
+      <li><time>19:38</time><b>12 agents</b>in parallel, a branch each</li>
+      <li class="done"><time>22:19</time><b>Merged to test</b>under three hours later</li>
+    </ol>
+  </div>
+  <p class="p6-rule step"><img class="px" src="vendor/pixel-perfection/repeater.png" alt="">No fix without a scenario that failed first.</p>
+  <aside class="notes"><ul>
+    <li>And the last question: when I say I built it, did I write the code? No. Coding agents wrote it, Codex and Claude Code. I steered.</li>
+    <li>829 commits from July to October. 42% carry a Claude Code co-author line. Codex doesn't leave one, but its session records line up with the rest, so most of the other 482 are most likely Codex. I couldn't find one commit that was demonstrably written by hand.</li>
+    <li>→ How I steered. Standing rules in an AGENTS.md file, like "a successful result must mean the requested outcome was actually observed". A core package marked human-reviewed, which I aim to understand line by line. Plans written from my notes. And I reviewed what the agents committed before anything was pushed.</li>
+    <li>→ One evening, two days before the win. After a run I wrote a five-line note of what to fix, including "these should be observed before being fixed". An agent turned it into a 761-line plan with twelve items in order of how often each bit. Then twelve agents worked it in parallel, one item and one branch each, and the integration branch was up under three hours later.</li>
+    <li>→ Here's why that worked: the scenario is the spec, and it's a check an agent can't argue with. It either passes in a real world or it doesn't. So the rule I ran the whole project on: no fix without a scenario that failed first. That's the "iterate" card you'll see again at the end.</li>
+    <li>If asked, why "most likely" Codex: the commit doesn't say. The evidence is Codex's own thread records and its branch names, like the twelve codex/reliability branches from that evening.</li>
+    <li>If asked, which models: the twelve were Codex subagents under one orchestrator. Claude Code did most of the October work, and played the game in the runs.</li>
+    <li>If asked, what "unreviewed" looks like: some agent commits say so in the message, "this set has not been carefully reviewed", outside the human-reviewed package.</li>
+    <li>That's how I built it. Now, the run itself, briefly.</li>
+  </ul></aside>
+</section>
+
+<!-- ============ Part 7 · What happened in the run? to 41 min, the fine print to 42.5, then the takeaways ============ -->
+<!-- No card: this slide carries the part's data-chapter, the way the takeaways slide did before 14 November. -->
+
+<section class="slide top run-merged" data-section="7 · What happened in the run?" data-by="39.5" data-title="What happened in the run" data-chapter="What happened in the run?">
+  <p class="kicker">Part 7 of 7 · the winning run</p>
   <h2>Where the 3 h 56 went</h2>
   <div class="chart">
     <div class="timeline">
@@ -928,54 +1084,29 @@ Use read_recent_events to read and advance through recent events.</span></pre>
       <span><i style="background:var(--series-5)"></i>The End<b>25 min</b></span>
     </div>
   </div>
-  <div class="tiles three">
+  <div class="tiles">
     <div class="tile"><span class="value">0:23</span><span class="label">full diamond armour</span></div>
     <div class="tile"><span class="value">99 min</span><span class="label">hunting ender pearls</span></div>
-    <div class="tile"><span class="value">15 min</span><span class="label">fighting the dragon</span></div>
+    <div class="tile wrong"><span class="value">1 in 3</span><span class="label">calls went wrong: 106 of 328</span></div>
+    <div class="tile won step"><span class="value"><img class="dragon-head" src="art/dragon-head.png" alt="">Won</span><span class="label">anyway. Free the End at 3 h 56</span></div>
   </div>
   <aside class="notes"><ul>
+    <li>Part 7, the last one. No card: the rail just moves to 7. "Back to the run from part 3, all 3 h 56 of it." Three facts, then the fine print, then what I'd take from it.</li>
     <li>Diamond armour by 23 minutes. Gathering is the part that's solved: wood, stone, iron, diamonds, all code once the model picks what it wants.</li>
-    <li>The longest stretch is the boring one: finding enough endermen. It explored about 1,560 Nether chunks looking for a better biome and didn't find one.</li>
-    <li>After the creeper got it, it walked back and picked up all 47 dropped items, then told the code to keep further away from hostiles.</li>
-    <li>The dragon went 200, 174, 146, 104, 90, 48, 34, 0. At one point the bot had 1.95 health left out of 20.</li>
-  </ul></aside>
-</section>
-
-<section class="slide top" data-section="6 · What happened in the run?" data-by="40" data-title="A third of its calls went wrong">
-  <h2>A third of its calls went wrong</h2>
-  <div class="chart">
-    <p class="chart-title">How the 328 finished calls ended</p>
-    <div class="share thick">
-      <span style="flex:217;background:var(--series-3)" data-tip="Worked: 217 of 328 (66%)"></span>
-      <span style="flex:106;background:var(--series-4)" data-tip="Went wrong: 106 of 328 (32%). Failed 49, partly worked 25, refused 19, cancelled 13."></span>
-      <span style="flex:5;background:var(--series-mute)" data-tip="Cancel requests: 5 (2%). The cancel was accepted; the call it stopped is counted under Cancelled."></span>
-    </div>
-    <div class="legend">
-      <span><i style="background:var(--series-3)"></i>✓ Worked<b>217</b></span>
-      <span><i style="background:var(--series-4)"></i>✗ Went wrong<b>106</b></span>
-      <span><i style="background:var(--series-mute)"></i>Cancel requests<b>5</b></span>
-    </div>
-    <div class="bars outcomes">
-      <span class="name">Worked</span><span class="track" data-tip="Worked: 217 of 328 (66%)"><span class="bar ok" style="width:70%"></span><span class="val">217</span></span>
-      <span class="name">Failed</span><span class="track" data-tip="Failed: 49 (15%)"><span class="bar" style="width:15.8%"></span><span class="val">49</span></span>
-      <span class="name">Partly worked</span><span class="track" data-tip="Partly worked: 25 (8%)"><span class="bar" style="width:8.1%"></span><span class="val">25</span></span>
-      <span class="name">Refused</span><span class="track" data-tip="Refused by the runtime before it started: 19 (6%)"><span class="bar" style="width:6.1%"></span><span class="val">19</span></span>
-      <span class="name">Cancelled</span><span class="track" data-tip="Cancelled by the model: 13 (4%)"><span class="bar" style="width:4.2%"></span><span class="val">13</span></span>
-      <span class="name">Cancel requested</span><span class="track" data-tip="A cancel that was accepted and still winding down: 5 (2%)"><span class="bar mute" style="width:1.6%"></span><span class="val">5</span></span>
-    </div>
-  </div>
-  <div class="row step"><p class="lede">It still won.</p><div class="toast"><img class="dragon-head" src="art/dragon-head.png" alt=""><span><small>Advancement Made!</small>Free the End</span></div></div>
-  <aside class="notes"><ul>
-    <li>106 of 328: failed, partly worked, refused or cancelled. That's the amber. Don't hide it.</li>
-    <li>The grey sliver is 5 cancel requests. They're the model asking to stop something, so they're neither.</li>
-    <li>It won because every failure came back as an honest result, and the model picked what to try next.</li>
-    <li>Nice little story: it guessed a database table name, got "no such table", read the data dictionary and tried again with the right one.</li>
+    <li>The longest stretch is the boring one: 99 minutes finding enough endermen. It explored about 1,560 Nether chunks looking for a better biome and didn't find one.</li>
+    <li>And a third of its calls went wrong: 106 of the 328 that finished failed, partly worked, were refused or were cancelled. Don't hide it.</li>
+    <li>→ It still won. Every failure came back as an honest result, and the model picked what to try next.</li>
+    <li>If asked, the breakdown: 217 worked, 49 failed, 25 partly worked, 19 refused by the runtime before they started, 13 cancelled by the model. Plus 5 cancel requests, the model asking to stop something, so neither.</li>
+    <li>If asked: the creeper got it at 2:11. It walked back and picked up all 47 dropped items, then told the code to keep further away from hostiles.</li>
+    <li>If asked: 15 minutes fighting the dragon. Its health went 200, 174, 146, 104, 90, 48, 34, 0, and at one point the bot had 1.95 health left out of 20.</li>
+    <li>If asked: it guessed a database table name, got "no such table", read the data dictionary and tried again with the right one.</li>
+    <li>Then → to the fine print.</li>
   </ul></aside>
 </section>
 
 <!-- ============ Limits: to 42.5 min ============ -->
 
-<section class="slide top" data-section="6 · What happened in the run?" data-by="42.5" data-title="The fine print">
+<section class="slide top" data-section="7 · What happened in the run?" data-by="41" data-title="The fine print">
   <h2>The fine print</h2>
   <ul class="points">
     <li>The prompt came with strategy tips</li>
@@ -988,13 +1119,13 @@ Use read_recent_events to read and advance through recent events.</span></pre>
     <li>Say these before anyone asks.</li>
     <li>The model called the four dragon tools 47 times. The hardest fight got the most programmed help, which is the whole idea pushed as far as it goes.</li>
     <li>The pumpkin: it wanted a carved pumpkin and there's no "use shears on a block" action. It also wanted a full stack of arrows and went into the End with 38.</li>
+    <li>Then → to the takeaways: what I'd take from all this.</li>
   </ul></aside>
 </section>
 
-<!-- ============ Part 7 · What I'd take from this: to 45 min ============ -->
+<!-- ============ What I'd take from this: to 45 min, the close of part 7 ============ -->
 
-<section class="slide" data-section="7 · What I'd take from this" data-by="45" data-title="Takeaways" data-chapter="What I'd take from this">
-  <p class="kicker">Part 7 of 7 · for agents that run for hours</p>
+<section class="slide" data-section="7 · What I'd take from this" data-by="43.5" data-title="Takeaways">
   <h2>What I'd take from this</h2>
   <ul class="poll takeaways">
     <li><span class="slot"><img class="px" src="vendor/pixel-perfection/shears.png" alt=""></span><span><strong>Shrink the AI's job.</strong> If you can program it and test it, do that.</span></li>
@@ -1003,9 +1134,11 @@ Use read_recent_events to read and advance through recent events.</span></pre>
   </ul>
   <p class="lede step">The model already made good enough calls. Most of the work was carrying them out.</p>
   <aside class="notes"><ul>
-    <li>Go back to the question from the start and answer it. Most of the work in that run was the code, and that was the plan.</li>
-    <li>None of this is really about Minecraft. It's how you give a slow, smart model a body that works.</li>
-    <li>It's for any agent that has to keep working after the demo's over.</li>
+    <li>This is the ending. There's no card for it any more, so say it: "So, what I'd take from all this."</li>
+    <li>It answers part 4's question, model or tools? Tools. Most of the work in that run was the code, and that was the plan.</li>
+    <li>Same three cards, same three icons as "The idea" at the end of part 4: shears, repeater, map. That's the bookend. The idea I started from is what I'd take away.</li>
+    <li>→ The last line. The model already made good enough calls; most of the work was carrying them out.</li>
+    <li>None of this is really about Minecraft. It's how you give a slow, smart model a body that works, for any agent that has to keep running for hours after the demo's over.</li>
   </ul></aside>
 </section>
 
@@ -1019,7 +1152,7 @@ Use read_recent_events to read and advance through recent events.</span></pre>
   </ul>
   <p class="small">The code, the winning run's transcript and database, and the recording.</p>
   <aside class="notes"><ul>
-    <li>Held back for questions: pathfinding internals, the repo's five code layers, the MCP protocol, the code-size chart (appendix). The SQL memory is on slide 24 and the required rationale is in slide 21's notes.</li>
+    <li>Held back for questions: pathfinding internals, the repo's five code layers, the MCP protocol, the code-size chart (appendix). The SQL memory is on "The server keeps the state", and the required rationale is in the notes of "One call, one whole job".</li>
     <li>The QR code is the first link, the repo. Its README links to the other two.</li>
     <li>Next slide is the run database, if someone asks "what did it actually do when…".</li>
     <li>Credits for the icons and fonts are the last slide.</li>
