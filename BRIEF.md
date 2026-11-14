@@ -937,6 +937,12 @@ his voice, not a polished one.
   speaker window's loops stay still. On a touch screen the chip is always faintly shown, since there's no hover. None of it shows on a pop that →
   lands mid-play, nor a clip that has run to its end. Hidden in print and in `tools/shoot.mjs`. Ben asked for it
   on 12 November: a paused clip used to just look frozen.
+- **The route's steps are buttons:** on slide 5, a click or tap on a step's icon in the chain (or its number key,
+  1–8, while the slide is up) jumps the clip to the start of that step's part (`routeSeek` in `deck.js`, using
+  `data-segments`). Paused, it stays paused on that frame; playing, not started or finished, it plays on from there.
+  The lit step follows at once, and the speaker window jumps with it. A tap on a step never counts as a deck tap.
+  The steps show a pointer and a green ring on hover once the clip has loaded, and nothing otherwise. Ben asked for
+  it on 14 November, to go back to something he went past or skip ahead mid-talk.
 - Print to PDF from the browser for a one-slide-per-page fallback.
 - `tools/shoot.mjs` screenshots every slide and reports anything outside the safe area.
 - `tools/make-qr.mjs` writes the QR code on the Questions slide. It needs the `qrcode` package from somewhere on

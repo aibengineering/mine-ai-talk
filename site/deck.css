@@ -365,6 +365,15 @@ pre.prompt::before { content: "> "; color: var(--accent); }
 .chain li.on .dragon { filter: drop-shadow(0 0 10px rgba(255, 255, 255, .55)) drop-shadow(0 0 22px rgba(190, 120, 255, .9)); }
 #stage:has(.slide.route.active .clip.started) #chrome { display: none; }
 @media (prefers-reduced-motion: reduce) { .route-head, .slide.route .chain, .slide.route .chain li, .slide.route .chain .dragon, .slide.route .clip { transition: none; } }
+/* ---------- the route slide: steps you can click (deck.js routeSeek) ----------
+   Once the clip has loaded, a click on a step jumps the clip to its part. The pointer and a green ring on hover say
+   so; nothing changes when nobody touches them. */
+.slide.route:has(.clip.ready) .chain li { cursor: pointer; user-select: none; -webkit-user-select: none; }
+.slide.route:has(.clip.ready) .chain li:hover .slot { outline: 4px solid var(--accent); }
+.slide.route:has(.clip.ready) .chain li.on:hover .slot { outline-width: 6px; }
+.slide.route:has(.clip.ready) .chain li:hover b { color: var(--accent); }
+.slide.route:has(.clip.ready) .chain li.ahead:hover { opacity: .75; }
+.slide.route:has(.clip.ready) .chain li:hover .dragon { filter: drop-shadow(0 0 10px rgba(126, 226, 160, .85)); }
 
 /* A pop clip: a step that Space plays big over its slide. deck.js starts it on top of its box and lets it grow out;
    when it ends, it shrinks back into the box and fades, and the box lights (see the gap boxes above). */

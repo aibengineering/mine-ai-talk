@@ -9,6 +9,7 @@
 //   Home / End             first / last slide        F            fullscreen
 //   S                      open the speaker view     T            hide or show TODO chips
 //   K                      play or pause the clip    R            restart the clip      M   mute
+//   1–8                    on the route slide: jump its clip to that step (so does a click on the step's icon)
 //   touch                  a tap on the right does what Space does (plays the next clip, pauses one that's playing),
 //                          a tap on the left goes back. A swipe is → or ←, so it always moves on, past any clip.
 
@@ -413,16 +414,53 @@ function syncRoute() {
   mark();
 }
 
+// ---------- the route clip: steps you can click (routeSeek) ----------
+// Each step of the chain is also a way into the clip (Ben, 14 November: "controls on the little icons", to go back to
+// something he went past or skip ahead mid-talk). A click or tap on a step, or its number key while the slide is up,
+// jumps the clip to the start of that step's part. Paused, it stays paused on that frame; playing, not started yet or
+// finished, it plays on from there. The other window jumps with it, and the lit step follows at once.
+function routeSeek(n) {
+  const figure = slides[index].querySelector('.clip.ready[data-mode="route"]');
+  const video = figure?.querySelector('video');
+  const part = video && routeParts(figure).find(p => n >= p.first && n <= p.last);
+  if (!part) return;
+  // Just past the cut, so the frame and the lit step are that part's, not the end of the one before.
+  const time = part.start ? Math.min(part.start + 0.05, part.end) : 0;
+  const play = !video.paused || video.ended || !figure.classList.contains('started');
+  applyClip('seek', time, play);
+  if (channel) channel.postMessage({ clip: 'seek', time, play, index });
+}
+
+for (const chain of document.querySelectorAll('.slide.route .chain')) {
+  const steps = [...chain.children];
+  steps.forEach(item => {
+    item.classList.add('route-step');
+    item.setAttribute('role', 'button');
+    item.setAttribute('aria-label', `Jump the clip to ${item.querySelector('b')?.textContent || 'this step'}`);
+  });
+  // A drag that starts on a step is a swipe (the viewport's handler moves slide), not a click on it.
+  let down = null;
+  chain.addEventListener('pointerdown', event => { down = { x: event.clientX, y: event.clientY }; });
+  chain.addEventListener('click', event => {
+    const item = event.target.closest('.route-step');
+    const moved = down && Math.hypot(event.clientX - down.x, event.clientY - down.y) > 8;
+    down = null;
+    if (item && !moved) routeSeek(steps.indexOf(item));
+  });
+}
+
 const activeVideo = () => slides[index].querySelector('.clip.pop.playing video') || slides[index].querySelector('.clip:not(.pop) video');
 // The current slide's clip, if it is one you play (a played clip or the route) and its file has loaded.
 const playableClip = () => slides[index].querySelector('.clip.ready:is([data-mode="play"], [data-mode="route"]) video');
 
-function applyClip(action, time) {
+function applyClip(action, time, play) {
   const video = activeVideo();
   if (!video) return;
   // The speaker window keeps its loops still, so a pause or resume of a loop is for the audience window only.
   if (isSpeaker && video.closest('.clip').dataset.mode === 'loop') return;
   if (action === 'mute') { if (!isSpeaker) video.muted = !video.muted; return; }
+  // syncRoute re-marks the chain now, rather than on the mark loop's next frame.
+  if (action === 'seek') { video.currentTime = time; if (play) playVideo(video); syncRoute(); return; }
   if (action === 'restart') video.currentTime = 0;
   else if (Number.isFinite(time) && Math.abs(video.currentTime - time) > 0.3) video.currentTime = time;
   if (action === 'pause') video.pause();
@@ -515,6 +553,7 @@ document.addEventListener('keydown', event => {
   else if (key === 'k' || key === 'K') { const v = activeVideo(); if (v) clipCommand(v.paused ? 'play' : 'pause'); }
   else if (key === 'r' || key === 'R') clipCommand('restart');
   else if (key === 'm' || key === 'M') clipCommand('mute');
+  else if (/^[1-9]$/.test(key) && slides[index].querySelector('.route-step')) routeSeek(Number(key) - 1);
 });
 
 let touchStart = null;
@@ -528,14 +567,14 @@ viewport.addEventListener('pointerup', event => {
   // A swipe always navigates, so a full-screen clip cannot trap a phone. A tap on a control does not.
   if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) return dx < 0 ? next() : prev();
   if (Math.abs(dx) > 8 || Math.abs(dy) > 8) return;
-  if (event.target.closest('button, a, .clip.ready[data-mode="play"], [data-tip], .explorer')) return;
+  if (event.target.closest('button, a, .clip.ready[data-mode="play"], [data-tip], .explorer, .route-step')) return;
   const box = viewport.getBoundingClientRect();
   (event.clientX - box.left) / box.width < 0.3 ? prev() : space();
 });
 
 if (channel) channel.addEventListener('message', ({ data }) => {
   if (!data.clip) return show(data.index, data.step, true, Boolean(data.pop));
-  if (data.index === index) applyClip(data.clip, data.time);
+  if (data.index === index) applyClip(data.clip, data.time, data.play);
 });
 addEventListener('resize', fit);
 addEventListener('hashchange', () => show((Number(location.hash.slice(1)) || 1) - 1, 0));
