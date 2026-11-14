@@ -362,6 +362,12 @@ slide. Each slide shows a person's row, then an AI's row a click later, on the s
   shows the end of the slide: the six layers with their verdicts and the rule. The notes for step 6 carry Ben's "a
   pattern very like this in my first couple of days" with a TODO chip for the date: the earliest record found is
   mine_ai's first commit, 21 July 2026, which already has one model call choosing one action on top of Mineflayer.
+- **The creeper (17, Ben 14 November: "show what that actually looks like"):** on the fuse click a pixel creeper
+  (drawn from Pixel Perfection's `creeper.png`, already credited) walks in right of the fuse line, stops, flashes white
+  and swells for exactly 1.5 s, and goes off: a pixel burst, smoke, a small crater. Under it a thin bar, "model's turn,
+  ~3 s", starts as the creeper stops and has a red tick at 1.5 s: it crosses the tick at the bang and is still running
+  ("too late" when it ends). Plays once per arrival by →; ← and → again replays it; any other arrival (hash, Shift,
+  from later) shows the end. It goes on the System 1 click, whose line runs under it. No sound.
 - **The timings (17), each on its own click, on the link it belongs to (Ben, 12 November):** after the person's row,
   a green bracket from Person to Keys, mouse: "~0.1 s to adjust a move" (online hand corrections, about 100 to
   125 ms: Pruszynski et al. 2010 and reviews). After the AI row, a red bracket from Model to Inputs: "~3 s a turn"

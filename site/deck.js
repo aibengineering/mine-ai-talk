@@ -590,6 +590,13 @@ function mcbInstant() {
     slide.classList.add('mcb-instant');
     requestAnimationFrame(() => requestAnimationFrame(() => slide.classList.remove('mcb-instant')));
   }
+  // The creeper on the fuse click plays only for a single → onto that click; arriving any other way shows its end.
+  if (slide.classList.contains('mcb')) {
+    const fuse = stepsOf(slide).indexOf(slide.querySelector('.fuse.step'));
+    const onestep = mcbLast.index === index && mcbLast.step === fuse && step === fuse + 1;
+    slide.classList.toggle('mcb-boom-play', step > fuse && onestep);
+    slide.classList.toggle('mcb-boom-done', step > fuse && !onestep);
+  }
   mcbLast = { index, step };
 }
 

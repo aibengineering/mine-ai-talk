@@ -923,6 +923,66 @@ aside.notes { display: none; }
 /* The Java client switching off: a flicker that ends dim and grey. */
 @keyframes mcb-off { 0% { filter: none; } 15% { filter: brightness(.3); } 25% { filter: brightness(1.3); } 40% { filter: brightness(.15); }
   55% { filter: brightness(.8); } 100% { filter: brightness(.4) grayscale(1); } }
+/* The creeper on the fuse click (Ben, 14 November: "show what that actually looks like"). Drawn from Pixel
+   Perfection's creeper.png. It sits right of the fuse line, in room that's free on that click (the System 1 line
+   under it comes a click later, and the creeper goes then). Timeline from the click: it walks in (0.2 to 1.1 s),
+   stops, flashes white and swells for exactly 1.5 s, and goes off at 2.6 s: a burst, smoke, a small crater. The
+   model's ~3 s turn starts as it stops, so the bar crosses its 1.5 s tick at the bang and is still running.
+   deck.js gives the slide .mcb-boom-play only for a single → onto the fuse click; any other way there gets
+   .mcb-boom-done. Every part's own style is its end state and the animations run from their first frame (fill
+   both), so done, reduced motion and print all show the end. */
+.mcb .fuse { position: relative; }
+.mcb-creeper { position: absolute; right: 0; top: -24px; width: 400px; height: 120px; pointer-events: none; visibility: hidden; opacity: 0;
+  transition: opacity .3s ease, visibility 0s linear .3s; }
+.mcb:is(.mcb-boom-play, .mcb-boom-done):not(:has(.system1.shown)) .mcb-creeper { visibility: visible; opacity: 1; transition: opacity .3s ease; }
+.mcb-creeper > * { position: absolute; }
+.mcb-cr-walker { left: 46px; top: 12px; opacity: 0; }
+.mcb-cr-body { display: block; transform-origin: 50% 100%; }
+.mcb-cr-sprite { display: block; }
+.mcb-cr-boom { left: 58px; top: 48px; }
+.mcb-cr-boom i { position: absolute; left: -4.5px; top: -4.5px; width: 9px; height: 9px; opacity: 0; }
+.mcb-cr-boom .mcb-cr-blast { left: -30px; top: -30px; width: 60px; height: 60px; background: #f4f1ea; }
+.mcb-cr-smoke { left: 58px; top: 54px; }
+.mcb-cr-smoke i { position: absolute; left: -9px; top: -9px; width: 18px; height: 18px; background: #8a8496; opacity: 0; }
+.mcb-cr-crater { left: 34px; top: 88px; display: block; }
+.mcb-cr-turn { left: 110px; top: 70px; width: 290px; height: 50px; font: 400 16px/1 var(--term); color: var(--text-3); }
+.mcb-cr-turn > * { position: absolute; white-space: nowrap; }
+.mcb-cr-bar { left: 0; top: 20px; width: 200px; height: 8px; background: var(--line); }
+.mcb-cr-bar i { position: absolute; inset: 0; background: var(--text-2); transform-origin: 0 50%; }
+.mcb-cr-tick { left: 100px; top: 0; transform: translateX(-50%); color: var(--gap); }
+.mcb-cr-tick::after { content: ""; position: absolute; left: 50%; top: 16px; width: 3px; height: 16px; margin-left: -1.5px; background: var(--gap); }
+.mcb-cr-label { left: 0; top: 34px; }
+.mcb-cr-late { left: 208px; top: 16px; color: var(--gap); }
+.mcb-boom-play .mcb-cr-walker { animation: mcb-cr-walk 2.6s linear both; }
+.mcb-boom-play .mcb-cr-body { animation: mcb-cr-swell 2.6s both; }
+.mcb-boom-play .mcb-cr-sprite { animation: mcb-cr-flash 2.6s linear both; }
+.mcb-boom-play :is(.mcb-cr-l1, .mcb-cr-l2) { animation: mcb-cr-step .3s steps(1) .2s 3 both; }
+.mcb-boom-play .mcb-cr-l2 { animation-delay: .35s; }
+/* The burst holds its first frame while it waits, so it stays out of sight until the bang. */
+.mcb-boom-play :is(.mcb-cr-boom, .mcb-cr-smoke) { animation: mcb-cr-at .01s 2.6s both; }
+.mcb-boom-play .mcb-cr-blast { animation: mcb-cr-blast .45s ease-out 2.6s both; }
+.mcb-boom-play .mcb-cr-boom i:not(.mcb-cr-blast) { animation: mcb-cr-spark .7s cubic-bezier(.2, .7, .4, 1) 2.6s both; }
+.mcb-boom-play .mcb-cr-smoke i { animation: mcb-cr-smoke 1.1s ease-out 2.75s both; }
+.mcb-boom-play .mcb-cr-crater { animation: mcb-cr-in .2s ease 2.65s both; }
+.mcb-boom-play .mcb-cr-bar > i { animation: mcb-cr-fill 3s linear 1.1s both; }
+.mcb-boom-play :is(.mcb-cr-bar, .mcb-cr-tick, .mcb-cr-label) { animation: mcb-cr-in .3s ease 1.1s both; }
+.mcb-boom-play .mcb-cr-late { animation: mcb-cr-in .2s ease 4.1s both; }
+/* 0.2 s is the fuse line fading in; 1.1 s it stops (42%); 2.6 s the bang (100%), where it's gone. */
+@keyframes mcb-cr-walk { 0% { opacity: 0; transform: translateX(270px); } 8% { opacity: 1; transform: translateX(270px); }
+  42% { opacity: 1; transform: translateX(0); } 99.9% { opacity: 1; transform: translateX(0); } 100% { opacity: 0; transform: translateX(0); } }
+@keyframes mcb-cr-step { 0% { transform: translateY(-1px); } 50% { transform: translateY(0); } 100% { transform: translateY(0); } }
+@keyframes mcb-cr-swell { 0%, 42% { transform: scale(1); } 85% { transform: scale(1.12, 1.07); } 100% { transform: scale(1.3, 1.15); } }
+@keyframes mcb-cr-flash { 0%, 46% { filter: none; } 50% { filter: brightness(2.4) saturate(.2); } 56% { filter: none; }
+  64% { filter: brightness(2.4) saturate(.2); } 70% { filter: none; } 77% { filter: brightness(2.6) saturate(.15); } 82% { filter: none; }
+  87% { filter: brightness(2.8) saturate(.1); } 91% { filter: none; } 94% { filter: brightness(3) saturate(0); } 97% { filter: none; }
+  100% { filter: brightness(3.2) saturate(0); } }
+@keyframes mcb-cr-blast { 0% { opacity: .95; transform: scale(.3); } 100% { opacity: 0; transform: scale(1.6); } }
+@keyframes mcb-cr-spark { 0% { opacity: 1; transform: none; } 70% { opacity: 1; } 100% { opacity: 0; transform: translate(var(--dx), var(--dy)); } }
+@keyframes mcb-cr-smoke { 0% { opacity: 0; transform: translate(0, 0) scale(.6); } 25% { opacity: .7; }
+  100% { opacity: 0; transform: translate(var(--dx), -46px) scale(var(--s)); } }
+@keyframes mcb-cr-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes mcb-cr-at { from { visibility: hidden; } to { visibility: visible; } }
+@keyframes mcb-cr-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @media screen {
   .mcb-ghost { visibility: hidden; }
   /* Before the strip: Client and Game sit over the AI row at its size, and show up with it. */
