@@ -630,7 +630,7 @@
       <p class="p5-got">212 blocks, 1 min 11 s</p>
     </div>
   </div>
-  <p class="step p5-never">It never says "press this button". <span>Every action reports back: succeeded, failed, or partial with how far it got.</span></p>
+  <p class="step p5-never">It almost never says "press this button". <span>Every action reports back: succeeded, failed, or partial with how far it got.</span></p>
   <aside class="notes"><ul>
     <li>Simple, reusable actions. Strong primitives, each with a single goal, so you can check it: yes, that's done. One call, one outcome.</li>
     <li>The main one is collect_block. This is the very first call of the winning run, four seconds in: 16 logs, with the model's own reason.</li>
@@ -638,7 +638,8 @@
     <li>→ Same idea for the rest. Smelting: raw iron and coal in a furnace (coal is the fuel argument, left off the slide), and out come iron ingots. Crafting: five things in one call, and the server works out the recipe tree. Navigation: "go to my house" works once the model knows where the house is. Here it's a Nether fortress it spotted 70 blocks away.</li>
     <li>Say "ingots": iron bars are a different block.</li>
     <li>→ Every action reports back: it succeeded, it failed, or it partly worked and here's how far it got.</li>
-    <li>So the model never says "press this button". It says "this is what I want to happen". The run tests its decisions, not its fine control of movement.</li>
+    <li>So the model almost never says "press this button". It says "this is what I want to happen". The run tests its decisions, not its fine control of movement.</li>
+    <li>If asked: there is an escape hatch, raw_action: one look, dig, place, swing, item use, or up to 2 s of one key. The winning run used it twice in 387 calls, about three hours in, to try to carve a pumpkin with shears. It didn't work, and it went back to the normal tools.</li>
     <li>If asked: collect_block got reused 25 times for 10 kinds of block, logs at the start to end stone in the End. And every call carries a one-sentence rationale, logged with it, which is why I can show you these.</li>
   </ul></aside>
 </section>

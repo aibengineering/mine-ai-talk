@@ -436,8 +436,8 @@ part; the code-size chart moved to the appendix. The three area openers and "Who
   so "done" can be checked. The run's first call, `collect_block` logs × 16 with its rationale, is up from the
   start; a click lists what that one call does (walk to logs, pick the tool, mine, pick up, next until 16), which
   is what the model would otherwise steer by hand. Then smelting (24 iron ingots; Ben said "iron bars" out loud
-  once, the notes tell him "ingots"), crafting and navigation as three smaller calls, and last "It never says
-  'press this button'." with the succeeded / failed / partial line. The reuse number moved to the notes.
+  once, the notes tell him "ingots"), crafting and navigation as three smaller calls, and last "It almost never says
+  'press this button'." ("never" until 14 November: raw_action, below) with the succeeded / failed / partial line. The reuse number moved to the notes.
 - **22, Some actions take minutes.** Since 13 November only the obsidian bar (one call, 7 min 07 s, for the portal
   frame) and, on a click, the question it raises: how does the model keep control while it waits? The four-step
   loop and the "still running" ticks moved to slide 23.
@@ -764,6 +764,15 @@ From the published winning run (Hugging Face dataset `aibengineering/beat-the-ga
     (`scaffold`, `allow_full_inventory`, `on_tool_loss`, `submission_id`, `wait_timeout_ms`).
   - `collect_block` was called 25 times for 10 kinds of block (logs, stone, coal_ore, iron_ore, diamond_ore,
     obsidian, nether_gold_ore, pumpkin, dirt, end_stone); `navigate` 39 times.
+  - `raw_action`, the escape hatch (slide 21, "almost never"; checked 14 November in the published database). Each
+    call is one low-level operation: look, dig one block, place one block, one swing or attack, use the held item for
+    one tick, or hold one control for 1 to 40 ticks (2 s at most); the docs say to use it only when normal actions
+    refuse and the bot is wedged (`docs/mcp/tools.md`). The winning run used it twice in 387 action requests:
+    request 246 at 2:57:18, `look` at a placed pumpkin ("Aiming at the placed pumpkin so a shears use targets that
+    block."), succeeded; request 247, `use_item` with the shears to carve it, reported "effect observed: no".
+    Request 248 (`view_blocks`) still showed a plain pumpkin. Request 250's rationale: "a carved pumpkin is not
+    craftable with these actions and 27 arrows will have to suffice". Request 275 dropped the shears and pumpkin
+    ("the pumpkin/shears plan failed so they are dead weight").
   - The reply on slide 27 is request 214, the `wait_for_action` that settled request 213's `navigate` (submitted
     2:30:56, "Return to the surface near sheep…", reply at 2:33:14). Full text 2,610 characters; the slide keeps
     11 lines word for word and marks the cuts with "…". It shows `[HOSTILE_CONTACT] fight response for
