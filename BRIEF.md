@@ -115,12 +115,14 @@ yet, so click once before starting. With no room audio, `?silent` on the URL swa
 Under a minute, straight after the host hands over. It answers "why should I listen to this person about this?" with four things:
 the job (one plain line on the left), why he built it, when, and one human thing. The proof is the dragon clip
 on slide 12, so the slide only names it ("Beat Minecraft with an LLM"). The last three arrive as advancement pop-ups, one click each:
-long service leave; "Challenge Complete! Beat Minecraft with an LLM" with "Limit-testing AI capabilities, Jul–Sep
+long service leave; "Challenge Complete! Beat Minecraft with an LLM" with "Limit-testing AI capabilities, Jun–Sep
 2026" under it; and "For fun: games and pickleball". The last one is labelled "For fun" because "Advancement Made!"
 read oddly to Ben (10 November).
 Since 14 November the challenge toast has a second line, "I directed coding agents (Codex and Claude Code). They
 wrote the code.", so the room knows from the start who typed the code; the new part 6 ("How I built it") is how.
-The dates carry a TODO chip: the slide says Jul–Sep, the records say the work started in late June. Ben's call.
+The dates were Jul–Sep until 14 November. They are Jun–Sep now: the bot's earliest files are from 27 June 2026 (an
+early project folder, `bot.log` "spawned as CodexBot", first file 13:51 that day). The long service leave card
+stays as it is, since the project may have started a few days before the leave; the notes say so if asked.
 The degree and "learnt on the job" are off the slide (10 November): they didn't help answer the question.
 
 ## Why this problem (slides 7–9, and slide 15)
@@ -526,8 +528,12 @@ facts, "Part 6", with its source.
 - **Mine Labs: every failure becomes a test.** The real `survival/breath-reflex.yaml`, SealedDiver's pen only and
   marked trimmed (description, two fills, the dolphin, the player, two goals; the dolphin's NBT is cut with "…").
   A click each: a real 1.21.4 server, real physics, the real bot; pass means the outcome was observed; checked both
-  ways (a pen made impossible has to fail). A last click, one line each: Scenario Lab (Jul) → Mine Labs repo (13 Aug) → 497 scenarios (15 Sep) →
-  merged into 112 (Oct); the notes carry "103 run in 81 min".
+  ways (a pen made impossible has to fail). A click (added 14 November, the early
+  folder): the harness's history as seven small cards, the bot (27 Jun) → whole-agent benchmarks (14 Jul, 121 runs
+  on one seed) → model-free arenas (19 Jul) → Scenario Lab (21 Jul) → Mine Labs (13 Aug) → 497 scenarios (15 Sep)
+  → 112, merged (Oct). A last click, "Took the model out": whole-agent runs were slow and noisy, so the arenas
+  call the real actions with zero model calls; the whole-agent card lights amber and the model-free card green.
+  The notes tie it to part 4's "Don't blame the model for a physics bug". `kind: all` is trimmed from the YAML.
 - **The harness grew. The runs got further.** One SVG, two panels on one date axis (13 Aug to 15 Sep): scenario
   files in the repo each evening (labels 19, 82, 315, 497), then on a click the staircase as a step line. A last
   click says it is a correlation, and Ben's claim is his ("My read is that the harness is a big reason it got
@@ -543,8 +549,9 @@ facts, "Part 6", with its source.
   from his notes, review before push). A click: 13 Sep, the 5-line note → 761-line plan → 12 agents at 19:38 →
   integration branch at 22:19. A last click, the rule the takeaways' Iterate card points back to: "No fix without a
   scenario that failed first." The last note hands over to the run.
-- Wording held back until Ben answers: no start month for the project (the records say 26–27 June; slide 2 says
-  Jul–Sep), and the agents named as "coding agents (Codex and Claude Code)".
+- The start date is settled (coordinator, 14 November): the bot started on 27 June 2026, so the part says "late
+  June" where it needs a start. Still held back until Ben answers: the agents are named as "coding agents (Codex
+  and Claude Code)".
 
 ## Review round (10 November)
 
@@ -887,6 +894,17 @@ From the published winning run (Hugging Face dataset `aibengineering/beat-the-ga
     surface". Review before push: `clean-mine-ai-mcp/reports/commit-review/server.ts`.
   - Baritone, for the notes: `a6183b09` (26 Aug) measured every scenario against both pathfinders and `8c7826bc`
     made the new one the default the same day.
+  - The early harness (an early project folder, read-only, 14 November): `bot.log` starts with "spawned as
+    CodexBot" and gpt-5.4-mini on an 8-second cadence; the folder's earliest file is `proxy.log`, 27 Jun 13:51.
+    `benchmarks/history.jsonl`: 121 whole-agent runs, 14 Jul 13:14 UTC to 19 Jul 09:25 UTC, all gpt-5.6-luna on seed
+    8675309 with turn and time limits (obtain_diamond: maxTurns 120, maxMinutes 45). Outcomes: obtain_diamond 18
+    succeeded, 48 failed, 23 incomplete; stone_tools_furnace 5 and 10; shelter_bed_sleep 8, 2 and 7 incomplete. The
+    first run (obtain_diamond, 14 Jul) used all 120 turns in 2,381 s with about 1.02 million tokens (estimated) and
+    failed on max_turns. `benchmarks/micro-history.jsonl`: 36 model-free runs, 19 Jul 11:34 UTC to 20 Jul 14:04 UTC
+    (course 16, path 11, combat 7, all 2). `docs/current-state.md`: "Model-free pathfinding, movement-regression,
+    navigation-course, and combat micro-benchmarks that reset scripted arenas, invoke production actions directly,
+    retain per-trial metrics and manifests, and enforce zero model calls"; path run `2026-07-19T11-34-33-620Z`
+    "satisfied all 12 contracts".
 - Part 5 (slides 20 to 29), checked 12 November against the run database (`action_requests`, `action_responses`,
   `notes`, `events`, `frontier_chunks`). Run times are from the first event, 00:43:38 UTC.
   - The four calls on slide 21, with their rationales word for word: request 3, `collect_block` logs × 16 at 0:00:04,
@@ -939,8 +957,9 @@ Shown on the slides as dashed yellow TODO chips (press T to hide them).
       the navigation loop clip left the slides when "How it got reliable" became part 6; Baritone is in the notes
       of "The harness grew, the runs got further". Bring them back as a slide or a click if the Integrate takeaway
       needs them on screen.
-- [ ] Part 6: no start month and the agents named only as "coding agents (Codex and Claude Code)" until Ben says
-      when work started (the records say 26–27 June) and how to name them.
+- [x] Start date (14 November): 27 June 2026, from the bot's earliest files (`bot.log` "spawned as CodexBot", first
+      file 13:51). "Who I am" says Jun–Sep 2026; its notes have "Started 27 June, a few days before the leave" if asked.
+- [ ] Part 6: the agents named only as "coding agents (Codex and Claude Code)" until Ben says how to name them.
 - [ ] Slide 17: look at what Jev's Minecraft demo actually does before saying more than the one line about it.
 - [x] Intro (10 November): Ben names his employer out loud on the day. In writing it is only ever "Australia's
       largest bank" (slide 2). The name is not written anywhere in this project, because the site, its speaker

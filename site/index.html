@@ -48,7 +48,7 @@
     </div>
     <div class="toasts">
       <div class="toast step"><span class="slot"><img class="px" src="vendor/pixel-perfection/red_bed.png" alt=""></span><span><small>Goal Reached!</small>Long service leave<em>The time off you get after 10 years</em></span></div>
-      <div class="toast challenge step"><span class="slot"><img class="dragon-head" src="art/dragon-head.png" alt=""></span><span><small>Challenge Complete!</small>Beat Minecraft with an LLM<em>Limit-testing AI capabilities, Jul–Sep 2026 <span class="todo">TODO: start date? Records say late June</span></em><em class="who-agents">I directed coding agents (Codex and Claude Code). They wrote the code.</em></span></div>
+      <div class="toast challenge step"><span class="slot"><img class="dragon-head" src="art/dragon-head.png" alt=""></span><span><small>Challenge Complete!</small>Beat Minecraft with an LLM<em>Limit-testing AI capabilities, Jun–Sep 2026</em><em class="who-agents">I directed coding agents (Codex and Claude Code). They wrote the code.</em></span></div>
       <div class="toast step"><span class="slot"><img class="px" src="vendor/pixel-perfection/slime_ball.png" alt=""></span><span><small>For fun</small>Games and pickleball<em>Minecraft, League of Legends. Pickleball is new</em></span></div>
     </div>
   </div>
@@ -56,9 +56,9 @@
     <li>The host has just introduced you, so keep it under a minute. Three clicks, one line each.</li>
     <li>Say the bank's name out loud. It's only left off the slide and out of this file because they get published.</li>
     <li>Leave: I had the time, so I picked a project that would show how far AI could be pushed. It isn't bank work.</li>
-    <li>The limits have a date on them: July to September 2026. A newer model moves them, and that's the question in part 4.</li>
+    <li>The limits have a date on them: June to September 2026. A newer model moves them, and that's the question in part 4.</li>
     <li>Same click: I designed it and directed it, but I didn't type the code. Coding agents did, Codex and Claude Code. How that worked is part 6.</li>
-    <li>TODO on the dates: the slide says July to September, my records say I started in late June. Settle which before the talk.</li>
+    <li>If asked: started 27 June, a few days before the leave, with one model call choosing one action at a time.</li>
     <li>Most of the building was offline. The stream was the bot playing while it was still being built: 3 full attempts on stream, plenty more in between.</li>
     <li>I play Minecraft and League, so I knew what winning takes. Pickleball is the one people can come and talk to you about afterwards.</li>
     <li>Then → to part 1: "Today we're talking about Minecraft."</li>
@@ -835,7 +835,7 @@
 
 <!-- ============ Part 6 · How did I build it? Mine Labs, the loop, the agents: about 11.5 min ============ -->
 
-<section class="slide floor chapter" data-section="6 · How did I build it?" data-by="28" data-title="Part 6: How did I build it?" data-chapter="How did I build it?">
+<section class="slide floor chapter" data-section="6 · How did I build it?" data-by="32.5" data-title="Part 6: How did I build it?" data-chapter="How did I build it?">
   <div class="chapter-head">
     <img class="px hero-icon" src="vendor/pixel-perfection/repeater.png" alt="">
     <p class="kicker">Part 6 of 7</p>
@@ -849,7 +849,7 @@
   </ul></aside>
 </section>
 
-<section class="slide top" data-section="6 · How did I build it?" data-by="28" data-title="31 attempts before the win">
+<section class="slide top" data-section="6 · How did I build it?" data-by="32.5" data-title="31 attempts before the win">
   <h2>31 attempts before the win</h2>
   <div class="p6-climb">
     <ol class="p6-stairs">
@@ -881,7 +881,7 @@
   </ul></aside>
 </section>
 
-<section class="slide top" data-section="6 · How did I build it?" data-by="30.5" data-title="Mine Labs: every failure becomes a test">
+<section class="slide top" data-section="6 · How did I build it?" data-by="35" data-title="Mine Labs: every failure becomes a test">
   <h2>Mine Labs: every failure becomes a test</h2>
   <div class="p6-lab">
     <div class="p6-yaml">
@@ -901,7 +901,6 @@
     inventory:
       - { item: stone_pickaxe, count: 1 }
 <span class="k">goal:</span>
-  kind: all
   goals:
     - { kind: health, who: SealedDiver, health: 14 }
     - { kind: survive, who: SealedDiver, seconds: 40 }</pre>
@@ -911,13 +910,17 @@
       <p class="step"><b>Pass means observed</b><span>Above 14 health and alive at 40 s, seen in the game.</span></p>
       <p class="step"><b>Checked both ways</b><span>Make a pen impossible and it has to fail.</span></p>
     </div>
+    <ol class="p6-history step">
+      <li><time>27 Jun</time><b>The bot</b><span>1 call a turn</span></li>
+      <li class="p6-whole"><time>14 Jul</time><b>Whole agent</b><span>121 runs, 1 seed</span></li>
+      <li class="p6-free"><time>19 Jul</time><b>Model-free</b><span>scripted arenas</span></li>
+      <li><time>21 Jul</time><b>Scenario Lab</b><span>in the bot repo</span></li>
+      <li><time>13 Aug</time><b>Mine Labs</b><span>its own repo</span></li>
+      <li><time>15 Sep</time><b>497 scenarios</b><span>at the win</span></li>
+      <li><time>Oct</time><b>112, merged</b><span>103 in 81 min</span></li>
+    </ol>
+    <p class="step p6-modelout"><b>Took the model out</b><span>Whole-agent runs were slow and noisy. Arenas: the real actions, 0 model calls.</span></p>
   </div>
-  <ol class="p6-history step">
-    <li><time>Jul</time><b>Scenario Lab</b></li>
-    <li><time>13 Aug</time><b>Mine Labs repo</b></li>
-    <li><time>15 Sep</time><b>497 scenarios</b></li>
-    <li><time>Oct</time><b>Merged into 112</b></li>
-  </ol>
   <aside class="notes"><ul>
     <li>So I built a test harness, Mine Labs. The idea: every failure from a run becomes a small, repeatable scenario.</li>
     <li>This is a real one, trimmed. It builds a stone room full of water, puts a bot called SealedDiver in it with a pickaxe, and a dolphin in the next room. Nobody asks the bot to do anything. Pass means it gets itself out: still above 14 health, still alive after 40 seconds. You'll see why there's a dolphin in two slides.</li>
@@ -925,15 +928,16 @@
     <li>→ It runs against the real thing. Mine Labs starts a real Minecraft server, builds the world with commands, and runs the real bot runtime against it. Real physics, real mobs, real packets. No mocks.</li>
     <li>→ Pass means the outcome was observed in the world. Not "the action returned success". That's the same rule as the tool replies in part 5.</li>
     <li>→ And it's checked the other way: if I make a pen impossible, the scenario has to fail. Otherwise it isn't testing anything.</li>
-    <li>→ It started in July as a "Scenario Lab" inside the bot's repo. On 13 August it became its own project, Mine Labs. It's public now. On the day of the win there were 497 scenario files.</li>
-    <li>Since then I've merged them into 112 files with several pens each. The everyday set is 103 of them and takes 81 minutes run one at a time.</li>
+    <li>→ It didn't start like this. The bot dates from late June: one model call a turn, picking one action. By mid-July my test was the whole agent, model included, on one fixed seed: for example, get a diamond within 120 turns and 45 minutes. I ran 121 of those. On the diamond goal, 18 succeeded, 48 failed and 23 didn't finish. Then the model-free arenas on 19 July, the Scenario Lab two days later, and on 13 August it became its own project, Mine Labs, public now. 497 scenario files on the day of the win; since then merged into 112 files with several pens each, and the everyday set of 103 takes 81 minutes run one at a time.</li>
+    <li>→ The turn was taking the model out. A whole-agent run is slow, noisy and costs money, and when it fails you can't tell if it was the model's call or the code. So: scripted arenas that call the real actions directly, with zero model calls. If a path fails there, it's the action's bug, and I can fix it without blaming the model. Same rule as "Don't blame the model for a physics bug" back in part 4. That's what grew into Mine Labs.</li>
+    <li>If asked, what a whole-agent run cost: the first one, 14 July, used all 120 turns in about 40 minutes, about a million tokens, and failed on the turn limit.</li>
     <li>If asked, flakiness: each run of that everyday set fails a few percent of its trials, and different ones each time. Each is real runtime behaviour that usually holds, so they stay in with the rate written down. Anything that fails reliably goes to a known-failing folder.</li>
     <li>If asked, the stack: TypeScript on Bun, Java 21 for the server, and a small JSON protocol, so the bot under test can be written in any language.</li>
     <li>If asked, "checked both ways" exactly: when I merged them in October, each scenario was either shown to fail with a pen made impossible or a goal tightened, or has a written reason why its goals catch a regression.</li>
   </ul></aside>
 </section>
 
-<section class="slide top" data-section="6 · How did I build it?" data-by="32" data-title="The harness grew, the runs got further">
+<section class="slide top" data-section="6 · How did I build it?" data-by="36.5" data-title="The harness grew, the runs got further">
   <h2>The harness grew. The runs got further.</h2>
   <svg class="p6-chart" viewBox="0 0 1300 505" role="img" aria-label="Scenario files in the repo rose from 0 on 13 August to 497 on 15 September. Full attempts started on 3 September; the furthest any had got rose from the overworld to the Nether on 4 September, the End on 9 and 11 September, the dragon at 118 of 200 on 13 September, and the dragon killed on 15 September.">
     <text class="p6-panel" x="0" y="22">Scenario files in the repo</text>
@@ -984,7 +988,7 @@
   </ul></aside>
 </section>
 
-<section class="slide top" data-section="6 · How did I build it?" data-by="35" data-title="How I picked the next fix">
+<section class="slide top" data-section="6 · How did I build it?" data-by="39" data-title="How I picked the next fix">
   <h2>How I picked the next fix</h2>
   <ol class="p6-loop">
     <li><b>Watch a run</b>The recorder logs every action, incident and death</li>
@@ -1014,7 +1018,7 @@
   </ul></aside>
 </section>
 
-<section class="slide top" data-section="6 · How did I build it?" data-by="37.5" data-title="Coding agents wrote the code">
+<section class="slide top" data-section="6 · How did I build it?" data-by="41.5" data-title="Coding agents wrote the code">
   <h2>Coding agents wrote the code. I steered.</h2>
   <div class="p6-agents">
     <div class="card p6-authors">
