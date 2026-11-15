@@ -1085,6 +1085,21 @@ aside.notes { display: none; }
 .run-merged .tile.won .value { display: flex; align-items: center; gap: 14px; font-size: 46px; }
 .run-merged .tile.won .dragon-head { width: 48px; }
 
+/* ---------- Flow (15 November): the Pokémon help slide folded into the headlines (prefix extras). One click puts a
+   sticker on each run's card, the extras its harness gave it, and the line under the 2025 cards says what they mean.
+   The .runs and .helps rules above are the old slide's, kept so it can come back. ---------- */
+.clipping .extras { position: absolute; z-index: 2; top: -22px; right: 16px; padding: 6px 14px; font: 400 24px/1 var(--term); font-style: normal; color: var(--text); background: var(--surface-2); border: 4px solid; border-color: var(--edge-light) var(--edge-dark) var(--edge-dark) var(--edge-light); box-shadow: 4px 4px 0 var(--edge-dark); transform: rotate(4deg); opacity: 0; transition: opacity .2s ease; }
+/* Cards below the line keep their sticker off the dates: the bottom corner, or for Fable 5 just inside the top. */
+.entry.down .clipping .extras { top: auto; bottom: -22px; }
+.entry.down .clipping .extras.none { top: 10px; bottom: auto; right: auto; left: 12px; transform: rotate(-3deg); white-space: nowrap; background: var(--ok-dim); border-color: var(--accent); }
+.clipping .extras small { font: 400 18px/1 var(--term); color: var(--text-2); margin-left: 8px; }
+.clipping .extras small::before { content: "· "; }
+.slide:has(.extras-key.shown) .clipping .extras { opacity: 1; }
+.extras-key { position: absolute; left: 60px; top: 530px; width: 600px; margin: 0; font-size: 26px; line-height: 1.3; color: var(--text-2); }
+.extras-key b { color: var(--text); font-weight: 600; }
+.extras-key b.none { color: var(--accent); }
+@media print { .clipping .extras { opacity: 1; } }
+
 /* ---------- part 5: the MCP server (We built an MCP server, Simple reusable actions, Replies the model can trust,
    The server keeps the state, Tasks and reflexes, How it got reliable) ----------
    Everything here is prefixed p5-. Panels reuse the bevel of .card and the terminal inset of .receipt. */

@@ -58,11 +58,11 @@ better model.
 |---|---|---|---|---|
 | | | | 1–2 | The title is up while the host introduces Ben. Then who he is: three months of long service leave, and a project to see how far AI could be pushed, with coding agents writing the code while he designed and directed it. |
 | 1 | What is Minecraft? | 3 | 4–5 | "Today we're talking about Minecraft." A show of hands, then the route in one line. Its clip plays only if few hands stay up (the plan since 14 November, not the exception). |
-| 2 | Why try it with AI? | 6 | 7–8 | Games are how people have been testing model capabilities (Ben's wording, 10 November, over "the new models"), and Pokémon is the one everybody watched: the headlines, all six at once in one beat (it took a long time and a lot of help), then why Minecraft is the harder one, with the example clip as an optional pop on that slide. Two slides since 14 November, were three. |
-| 3 | Can an LLM do it? | 9 | 10–12 | "Bots have beaten it before", one quick line since 14 November (AltoClef's clip only with time to spare): two cards, AltoClef (code decides, beat the dragon ✓) beside an LLM (the model decides, beat the dragon ?). The question mark is what Ben wanted to know: can an LLM do the whole run and make its own calls? Moved here from the end of part 1 on 10 November (Ben's call), so the question is asked and answered in the same part. Then the dragon dying as the stream saw it, with sound: Ben on the webcam counting down the last hits, arms up, "We did it!". Then the prompt and the stats, which read as "here's what you just watched". |
-| 4 | How do you approach it? | 14 | 15–18 | "Was that the model, or what I built around it? Let's talk about how you'd even approach it." The card is just the question, with no line under it (Ben, 10 November: "better model, better tools" read oddly and he wouldn't talk to it). The Pokémon runs had the same argument (what each harness gave the model), then the six layers, the timing problem and the idea, "Shrink the AI's job". |
+| 2 | Why try it with AI? | 6 | 7–8 | Games are how people have been testing model capabilities (Ben's wording, 10 November, over "the new models"), and Pokémon is the one everybody watched: the headlines, all six at once in one beat (it took a long time), then one click puts a sticker on each run counting the extras its harness gave it (since 15 November, when part 4's help slide merged in: the early wins had help, Fable 5 had none), then why Minecraft is the harder one, with the example clip as an optional pop on that slide. Two slides since 14 November, were three. |
+| 3 | Can an LLM do it? | 9 | 10–13 | "Bots have beaten it before", one quick line since 14 November (AltoClef's clip only with time to spare): two cards, AltoClef (code decides, beat the dragon ✓) beside an LLM (the model decides, beat the dragon ?). The question mark is what Ben wanted to know: can an LLM do the whole run and make its own calls? Moved here from the end of part 1 on 10 November (Ben's call), so the question is asked and answered in the same part. Then the dragon dying as the stream saw it, with sound: Ben on the webcam counting down the last hits, arms up, "We did it!". Then the prompt and the stats, which read as "here's what you just watched". Since 15 November (Ben: "do the reorder and I'll see how I feel about it") the run slide comes next, moved intact from part 7: "What happened in the run", its kicker now just "The winning run" and no data-chapter. The clip, the numbers, then what it did. To undo it, move the slide back after "Coding agents wrote the code" and give it back its data-chapter and the "Part 7 of 7 · the winning run" kicker (backup `/tmp/deck-backup-1115-035716-flow-pokemon-merge-run-move`). |
+| 4 | How do you approach it? | 14 | 15–17 | "Was that the model, or what I built around it? Let's talk about how you'd even approach it." The card is just the question, with no line under it (Ben, 10 November: "better model, better tools" read oddly and he wouldn't talk to it). Pokémon had the same argument, one line on the card since 15 November (the stickers in part 2 showed it), then playing Pokémon and playing Minecraft, which builds into the six layers, the timing problem and the idea, "Shrink the AI's job". |
 | 5 | What did I build? | 19 | 20–29 | "An MCP server that does what the model can't." Straight to the server (Ben, 12 November): the model has the long horizon, the server has execution and all the control, because the model can't react in real time. Then the design choices: one call per job, long actions and the async design for them, tasks and reflexes sharing one body, the six reflexes, the override, replies the model can trust, the state kept on the server, and how it got reliable. See "Part 5: the MCP server". |
-| 7 | What happened in the run? | none | What happened in the run, The fine print, Takeaways, Links and questions | Since 14 November the run is part 7, after the new part 6 ("How did I build it?"), and about four minutes: one slide, "What happened in the run" (kicker "Part 7 of 7 · the winning run"), carries the part's data-chapter, so there is no card. It is the old "Where the time went" timeline with four tiles: 0:23 full diamond armour, 99 min hunting ender pearls, 1 in 3 calls went wrong (106 of 328, amber), and, a click later, "Won anyway" (Free the End at 3 h 56). The outcome breakdown chart, the 15 minutes on the dragon, the dragon's health, the 47 items and the table-name story are in its notes as "If asked". Then the fine print. The takeaways close the part: no longer a part of their own and no kicker (coordinator, 14 November). Their notes say it is the ending, answer part 4 (tools) and point back at "The idea", the same three cards and icons. Then links and questions. |
+| 7 | What I'd take from this | none | The fine print, Takeaways, Links and questions | Since 15 November the run slide is in part 3, so part 7 opens on the fine print, which carries the part's data-chapter ("What I'd take from this") and the kicker "Part 7 of 7 · what I'd take from this": the honest limits before the takeaways. Still no card. The takeaways have no kicker; their notes say it is the ending, answer part 4 (tools) and point back at "The idea", the same three cards and icons. Then links and questions. On 14 November part 7 was "What happened in the run?" and the run slide opened it. |
 
 Rules for the cards:
 
@@ -85,13 +85,13 @@ Rules for the cards:
 - Each card still has its own copy of the list, hidden on screen. It holds the space, and it is what prints. With
   reduced motion on, nothing animates. `tools/shoot.mjs` runs with reduced motion so its screenshots show the
   list in place.
-- Part 7 has no card ("What happened in the run" carries its data-chapter, as the takeaways slide did until 14 November), so the list never opens there. The rail just moves to 7.
+- Part 7 has no card: the fine print carries its data-chapter (since 15 November; the run slide did on 14 November, the takeaways slide before that), so the list never opens there. The rail just moves to 7.
 - Part 5 had three areas with their own opening slides ("Area 1 of 3") until 12 November. Ben cut them: the part
   goes straight to the MCP server.
 - Each card costs about ten seconds. Nothing was taken from the time budget for them; the finish-by minutes are
   the same as before.
-- Pokémon is in two places on purpose. Slides 7–9 are the motivation. Slide 15 is the harness parallel Ben asked
-  about, and it comes straight after the question on slide 14.
+- Pokémon is told once since 15 November (Ben: "agree, let's merge it"). The harness parallel that was slide 15
+  is now one click on the headlines in part 2, and the part 4 card points back at it.
 
 How it got here, all Ben's calls on 10 November. The dragon clip started as a cold open on slide 2. The stats felt
 wrong before he'd introduced himself, so the intro went between them. He gets introduced and handed to, so a video
@@ -125,12 +125,12 @@ early project folder, `bot.log` "spawned as CodexBot", first file 13:51 that day
 stays as it is, since the project may have started a few days before the leave; the notes say so if asked.
 The degree and "learnt on the job" are off the slide (10 November): they didn't help answer the question.
 
-## Why this problem (slides 7–9, and slide 15)
+## Why this problem (slides 7–8)
 
 Added 10 November. Ben's point: the deck went straight into Minecraft without saying why an AI playing a game is
 worth an hour, or why now. The answer goes through Pokémon, which the room has already seen in the news. The
-slides were one block until Ben reordered the start; now three of them are the motivation (8–10) and the fourth is
-the harness parallel (15).
+slides were one block until Ben reordered the start; then three of them were the motivation (8–10) and the fourth was
+the harness parallel (15). Since 15 November the harness parallel is one click on the headlines, and part 2 is all of it.
 
 - **The example clip (optional since 14 November).** Until the trim it was its own slide: a full-screen silent loop of
   an AI playing Pokémon on a stream, so the room had seen what it looks like before the headlines started (Ben asked
@@ -179,7 +179,14 @@ the harness parallel (15).
   2025 (at 40 px), a tick at the start of each month from February, and a "2025" and a "2026" label. Four dates bunch up on the left, the nine
   quiet months are an empty stretch of line, and the last two sit together at the right end. Each card sits over or
   under its own date.
-- **Slide 15, the help.** "Early Pokémon wins needed a lot of help". Five runs in date order with what each one
+- **The stickers (15 November).** Part 4's help slide merged into the headlines, Ben: "agree, let's merge it". The
+  headlines get one click: a sticker on each run's card with the count from the old slide, 4, 5, 3 and 4 extras on
+  Claude 3.7 Sonnet, Gemini 2.5 Pro, GPT-5 and Opus 4.7 (the LessWrong card), and a green "0 extras · screenshots
+  only" on Fable 5. Gemini 3 Pro's Crystal card has none: the old slide didn't compare its harness. A line under the
+  2025 cards says what they mean: "Early wins had help: extras from the harness, beyond screenshots and memory.
+  Fable 5 had none." The chips, the sources and the rest of the old notes are in the headlines' notes as "If asked".
+  CSS prefix `extras`; the old slide's `.runs` and `.helps` rules are still in `deck.css`.
+- **Slide 15, the help (gone since 15 November, above).** "Early Pokémon wins needed a lot of help". Five runs in date order with what each one
   managed, "3 of 8 badges" through to "Beat FireRed". Each model name has its maker's mark beside it in the maker's
   colour (the same three marks as the rotating name on slide 8), with the version in white on the line under it.
   Two clicks. The first adds what each harness gave the model on top of the screenshot, as chips under a count:
@@ -217,8 +224,8 @@ the harness parallel (15).
 - **Why now** is spoken on slide 9: the models only got through Pokémon in the last 18 months, and Minecraft is where
   it has gone next (this run in September 2026, DeepMind's Argon paper a month later).
 
-Slide 15 comes straight after the question on slide 14 (model or tools is the same argument as model or harness),
-and slide 9 sets up the timing on the Minecraft slide (17), so both of those can go quicker than they did.
+Slide 15 came straight after the question on slide 14 until 15 November (model or tools is the same argument as
+model or harness; the card's notes still say so, pointing back at the stickers), and slide 9 sets up the timing on the Minecraft slide (17), so both of those can go quicker than they did.
 
 Checked against the pages on 10 November 2026:
 
@@ -594,7 +601,7 @@ the calls that were made along the way (his to overrule). The slide numbers here
 
 ## Pokémon harnesses, checked 10 November
 
-What each run on slide 15 got on top of the screenshot, so Ben can talk to it. "Harness" is everything between the
+What each run got on top of the screenshot (slide 15 until 15 November, the stickers on the headlines since), so Ben can talk to it. "Harness" is everything between the
 model and the emulator. All of these freeze the game between actions, so thinking time costs nothing.
 
 - **Claude 3.7 Sonnet, Feb 2025, 3 badges.** Anthropic's own stream, built by David Hershey. Anthropic said only
@@ -650,19 +657,28 @@ products of the respective model providers"); TechRadar, 15 August 2025; Anthrop
 | 3 min | Part 1, What is Minecraft? The card, show of hands, the route in one line (its clip only if few hands stay up) | 3–5 |
 | 5 min | Part 2, Why try it with AI? The card, the Pokémon headlines in one beat, why Minecraft is harder (the example clip an optional pop there) | 6–8 |
 | 7.5 min | Part 3, Can an LLM do it? The card, AltoClef in one line, the dragon clip with sound, then the prompt and the stats | 9–12 |
-| 13 min | Part 4, How do you approach it? The question, the help each Pokémon run got, playing Pokémon, then playing Minecraft, which builds into the six layers and their two bug clips (one slide since 13 November, 22 clicks), the thesis | 14–18 |
-| 18 min | Part 5, What did I build? The card, I built an MCP server, one call one whole job, some actions take minutes, a tool call is an async function | 19–23 |
-| 22.5 min | One body, one lock, six reflexes, the override | 24–26 |
-| 26 min | Replies the model can trust, the server keeps the state | 27–28 |
-| 28 min | Part 6, How did I build it? The card, 31 attempts before the win | Part 6 card, 31 attempts before the win |
-| 32 min | Mine Labs: every failure becomes a test; the harness grew, the runs got further | Mine Labs, The harness grew |
-| 37.5 min | How I picked the next fix (the dolphin drowning); coding agents wrote the code | How I picked the next fix, Coding agents wrote the code |
-| 39.5 min | Part 7, What happened in the run? One slide: the timeline and four tiles (no card since 14 November) | What happened in the run |
-| 41 min | The fine print | The fine print |
-| 45 min | Closing part 7: takeaways, links | Takeaways, Links and questions |
+| 9.5 min | What happened in the run: the timeline and four tiles (moved from part 7 on 15 November) | 13 |
+| 13.5 min | Part 4, How do you approach it? The question, playing Pokémon, then playing Minecraft, which builds into the six layers and their two bug clips (one slide since 13 November, 22 clicks), the thesis | 14–17 |
+| 18.5 min | Part 5, What did I build? The card, I built an MCP server, one call one whole job, some actions take minutes, a tool call is an async function | 18–22 |
+| 23 min | One body, one lock, six reflexes, the override | 23–25 |
+| 26.5 min | Replies the model can trust, the server keeps the state | 26–27 |
+| 28.5 min | Part 6, How did I build it? The card, 31 attempts before the win | 28–29 |
+| 32 min | Mine Labs: every failure becomes a test | 30 |
+| 34 min | The harness grew, the runs got further | 31 |
+| 37 min | How I picked the next fix (the dolphin drowning) | 32 |
+| 39.5 min | Coding agents wrote the code | 33 |
+| 41 min | Part 7, What I'd take from this: the fine print (it carries the part, no card) | 34 |
+| 45 min | Takeaways, links | 35–36 |
 | Questions | Appendix: the run database explorer, the MCP part is tiny, credits | 36–38 |
 
 Each `<section class="slide">` carries its finish-by minute in `data-by`; the speaker view uses it to show pace.
+
+**The flow change (15 November).** Part 3 got the run slide's 2 minutes (it ends at 9.5) and part 4 gave up the help
+slide's 1.5 (13.5, was 13), so part 5 moved half a minute later (18.5, 23, 26.5). Part 7 lost the run slide, so part 6
+can end at 39.5 and still leave the fine print, takeaways and links their minutes (41, 43.5, 45). So part 6 gets the
+help slide's 1.5 minutes: 13 minutes, 26.5 to 39.5. On 14 November its slides had been set to 32.5–41.5, which ran
+past the run slide's 39.5. The split now: the card and 31 attempts to 28.5, Mine Labs 32, the harness grew 34, how I
+picked the next fix 37, coding agents 39.5. Whoever owns part 6 may want to move time between those.
 
 **The Pokémon slides (8–10 and 15) took three minutes on 10 November.** They came from the winning run (7 minutes
 down to 6), and half a minute each from the Minecraft section, the layers section, limits and takeaways. The three
