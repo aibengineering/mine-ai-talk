@@ -807,9 +807,10 @@ aside.notes { display: none; }
 /* ---------- Playing Minecraft: from a person playing to the six layers (prefix mcb-) ----------
    Scene A is the two rows, their timings, the creeper and System 1. Scene B, laid over it, is the six layers: a .stack,
    which is where deck.js's pop clips look for their boxes. Hidden key steps after the scenes drive scene B, in order:
-   k-strip, k-key, k-phys, k-packet, k-snap, k-mf, k-code, k-mfpacket, k-actions, k-tools, k-harness, k-model. Then come the six layers'
+   k-strip, k-key, k-packet, k-snap, k-mf, k-mfpacket, k-actions, k-tools, k-harness, k-model (k-phys and k-code merged into k-key and
+   k-mf on 16 November: one click each for pressing W and for Mineflayer). Then come the six layers'
    own steps, as they were on their own slide until 13 November: key-ok, key-gap, the two pop clips (bug-drown into
-   Actions, bug-stair into Client) and key-rule, which shows the rule (.mcb-rule) and the trace. Every change is a CSS transition, so ← plays it
+   Actions, bug-stair into Client), k-stair (why it couldn't get up the step) and key-rule, which shows the rule (.mcb-rule) and the trace. Every change is a CSS transition, so ← plays it
    backwards; deck.js gives the slide .mcb-instant for two frames when it is arrived at or jumped more than one step,
    so those land at once.
    The boxes you see as the AI row's Java client and Java server are the faces (.mcb-face) of the stack's Client and
@@ -1037,9 +1038,10 @@ aside.notes { display: none; }
   .mcb:has(.k-model.shown) .mcb-b .mcb-face { opacity: 0; }
   /* The link, click by click. You press W; the client works out where that takes you. */
   .mcb:not(:has(.k-key.shown)) .mcb-key { opacity: 0; transform: translateY(14px) scale(.85); }
-  .mcb:not(:has(.k-phys.shown)) .mcb-java .mcb-phys { opacity: 0; transform: translateY(14px) scale(.9); }
-  .mcb:not(:has(.k-phys.shown)) .mcb-new { opacity: 0; transform: translateY(12px); }
-  .mcb:has(.k-phys.shown) .mcb-new { transition-delay: .3s; }
+  .mcb:not(:has(.k-key.shown)) .mcb-java .mcb-phys { opacity: 0; transform: translateY(14px) scale(.9); }
+  .mcb:not(:has(.k-key.shown)) .mcb-new { opacity: 0; transform: translateY(12px); }
+  .mcb:has(.k-key.shown):not(:has(.k-packet.shown)) .mcb-java .mcb-phys { transition-delay: .6s; }
+  .mcb:has(.k-key.shown) .mcb-new { transition-delay: 1s; }
   /* The position goes out along the upper lane; the server's check comes up as it lands. */
   .mcb:not(:has(.k-packet.shown)) .mcb-out { opacity: 0; transform: translateX(calc(100% - 950px)) scale(.4); }
   .mcb:has(.k-packet.shown) .mcb-out { --mcb-p: 1; transition: transform .9s var(--mcb-fly), --mcb-p .9s linear, opacity .2s ease; }
@@ -1075,14 +1077,15 @@ aside.notes { display: none; }
   /* Mineflayer's side of the same beat. The call, and half a second later the same physics; then the same card goes
      back to the client end out of sight and flies the same lane again, captioned as the same packet, and lights green
      as it lands. */
-  .mcb:not(:has(.k-code.shown)) .mcb-code { opacity: 0; transform: translateY(-50%) translateX(-24px) scale(.9); }
-  .mcb:not(:has(.k-code.shown)) .mcb-mf .mcb-phys { opacity: 0; transform: translateY(14px) scale(.9); }
-  .mcb:has(.k-code.shown):not(:has(.k-actions.shown)) .mcb-mf .mcb-phys { transition-delay: .5s; }
+  .mcb:not(:has(.k-mf.shown)) .mcb-code { opacity: 0; transform: translateY(-50%) translateX(-24px) scale(.9); }
+  .mcb:not(:has(.k-mf.shown)) .mcb-mf .mcb-phys { opacity: 0; transform: translateY(14px) scale(.9); }
+  .mcb:has(.k-mf.shown):not(:has(.k-mfpacket.shown)) .mcb-code { transition-delay: 1.1s; }
+  .mcb:has(.k-mf.shown):not(:has(.k-actions.shown)) .mcb-mf .mcb-phys { transition-delay: 1.6s; }
   /* The panels belong to the packet beat: when the build moves on they fade and give their room back (the code card
      sinks with the wire). */
   .mcb:has(.k-actions.shown) .mcb-phys { opacity: 0; max-height: 0; margin: 0; }
-  .mcb:has(.k-code.shown):not(:has(.k-mfpacket.shown)) .mcb-out { transform: translateX(calc(100% - 950px)) scale(.4);
-    transition: transform .9s var(--mcb-fly), --mcb-p .9s linear, opacity .25s ease .65s; }
+  .mcb:has(.k-mf.shown):not(:has(.k-mfpacket.shown)) .mcb-out { transform: translateX(calc(100% - 950px)) scale(.4);
+    transition: transform .9s var(--mcb-fly), --mcb-p .9s linear, opacity .25s ease; }
   .mcb:has(.k-mfpacket.shown) .mcb-out { opacity: 1; transform: none; --mcb-p: 2; border-color: var(--accent);
     transition: transform .9s var(--mcb-fly), --mcb-p .9s linear, opacity .2s ease, border-color .3s ease .9s; }
   .mcb:has(.k-mfpacket.shown) .mcb-cap-a { opacity: 0; }
@@ -1095,7 +1098,23 @@ aside.notes { display: none; }
   /* Then the six layers' own steps: the verdicts and the pop clips use the deck's .stack rules; the rule is ours. */
   .mcb:not(:has(.key-rule.shown)) .mcb-rule { opacity: 0; }
   .mcb:has(.k-model.shown):not(:has(.key-rule.shown)) .mcb-first { opacity: 1; transition-delay: .6s; }
+  /* k-stair (16 November): why the bot couldn't get up the step, said once, where the clip is. The number comes up on
+     the right and stays beside the rule; the cause and the fix sit where the rule goes, until the rule takes over. */
+  .mcb:not(:has(.k-stair.shown)) :is(.mcb-stair-why, .mcb-stair-num), .mcb:has(.key-rule.shown) .mcb-stair-why { opacity: 0; }
 }
+.mcb-end { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 48px; align-items: start; }
+.mcb-end > .mcb-rule, .mcb-stair-why { grid-area: 1 / 1; }
+/* The rule shares its row with the number from 16 November, so it wraps to two lines in the left column. */
+.mcb-end > .mcb-rule { margin: 0; text-wrap: balance; }
+.mcb-stair-why { display: flex; flex-direction: column; gap: 10px; font-size: 29px; line-height: 1.3; color: var(--text-2); transition: opacity .25s ease; }
+.mcb-stair-why p { margin: 0; }
+.mcb-stair-why b { color: var(--text); font-weight: 600; }
+.mcb-stair-num { grid-area: 1 / 2; margin-top: 4px; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; transition: opacity .25s ease; }
+.mcb-stair-num p { margin: 0; }
+.mcb-stair-q { margin-right: 18px; font: 400 22px/1.2 var(--term); color: var(--text-2); text-shadow: none; }
+.mcb-stair-eq code { font: 400 36px/1.2 var(--term); color: var(--text); background: none; padding: 0; }
+.mcb-stair-ans { display: flex; align-items: baseline; font: 400 64px/1 var(--term); color: var(--gap); text-shadow: .0625em .0625em 0 var(--shadow); }
+@media print { .mcb-stair-why { display: none; } }
 .mcb-instant, .mcb-instant *, .mcb-instant *::before, .mcb-instant *::after { transition: none !important; }
 @media (prefers-reduced-motion: reduce) { .mcb, .mcb *, .mcb *::before, .mcb *::after { transition-duration: 0s !important; animation: none !important; } }
 @media print { .mcb-a, .mcb-face, .mcb-link, .mcb-h-was { display: none; } }
@@ -1345,85 +1364,107 @@ aside.notes { display: none; }
 .p5-race-pair > p { display: flex; flex-direction: column; gap: 6px; font-size: 24px; color: var(--text-2); }
 .p5-race-pair b { font: 400 44px/1 var(--term); white-space: nowrap; color: var(--text); text-shadow: .0909em .0909em 0 var(--shadow); }
 .p5-race-pair .p5-race-say { margin-left: auto; max-width: 440px; font: 400 30px/1.25 var(--term); color: var(--accent); }
+/* Part 6 as a ladder (16 November, second pass): each slide's headline is a failure in the words it was written
+   down in, the green line under it is what was added. The rung strip at the top says where in the ladder we are. */
+.p5-rung { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: -12px; }
+.p5-ladder { list-style: none; margin: 0; padding: 0; display: flex; gap: 10px; font: 400 22px/1 var(--term); counter-reset: rung; }
+.p5-ladder li { white-space: nowrap; counter-increment: rung; padding: 6px 12px; color: var(--text-3); border: 2px solid var(--line); }
+.p5-ladder li::before { content: counter(rung) " "; }
+.p5-ladder li.done { color: var(--text-2); }
+.p5-ladder li.on { color: var(--text); border-color: var(--accent); background: var(--ok-dim); }
+.p5-when { font: 400 24px/1 var(--term); letter-spacing: .06em; text-transform: uppercase; color: var(--gap); white-space: nowrap; }
+.p5-was { font-size: 28px; line-height: 1.3; color: var(--text-2); margin-bottom: -16px; }
+h2.p5-wrong { font-size: 46px; line-height: 1.22; }
+.p5-fix { display: flex; align-items: baseline; gap: 18px; font-size: 32px; line-height: 1.3; color: var(--text); }
+.p5-fix b { flex: none; font: 400 30px/1.3 var(--term); color: var(--accent); }
+.p5-fix2 { display: flex; flex-direction: column; gap: 6px; }
+.p5-slow { display: flex; gap: 72px; }
+.p5-slow p { display: flex; align-items: baseline; gap: 18px; font-size: 30px; color: var(--text-2); }
+.p5-slow b { font: 400 66px/1 var(--term); word-spacing: -.25em; color: var(--text); text-shadow: .0909em .0909em 0 var(--shadow); }
+.p5-job { display: grid; grid-template-columns: 600px minmax(0, 1fr); gap: 48px; align-items: start; }
+.p5-job-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; font: 400 30px/1.25 var(--term); color: var(--text-2); }
+.p5-job-steps li::before { content: "› "; color: var(--text-3); }
+.p5-job-steps li.done { color: var(--text); }
+.p5-job-steps li.done::before { content: "✓ "; color: var(--accent); }
+.p5-refl { display: grid; grid-template-columns: minmax(0, 1fr) 540px; gap: 44px; align-items: start; }
+.p5-refl-main { display: flex; flex-direction: column; gap: 22px; }
+.p5-refl .p5-handoff { gap: 34px; }
+.p5-refl .p5-handoff li { padding: 10px 16px 12px; font-size: 24px; gap: 4px; }
+.p5-refl .p5-handoff b { font-size: 26px; }
+.p5-deaths { display: flex; flex-direction: column; gap: 18px; padding: 16px 24px 20px; background: var(--inset); border: 2px solid var(--gap); }
+.p5-deaths p:not(.p5-label) { display: flex; flex-direction: column; gap: 6px; font-size: 28px; line-height: 1.3; color: var(--text); }
+.p5-deaths span { font: 400 24px/1.2 var(--term); color: var(--accent); }
+.p5-grew { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 40px; align-items: start; }
+.p5-grew .saw, .p5-grew .ev { background: var(--ok-dim); color: var(--text); }
+.p5-grew-list { display: flex; flex-direction: column; gap: 16px; }
+.p5-grew-list > p:not(.p5-label) { display: flex; flex-direction: column; gap: 4px; padding-left: 22px; border-left: 8px solid var(--accent); font-size: 28px; line-height: 1.3; color: var(--text); }
+.p5-grew-list time { font: 400 24px/1.2 var(--term); color: var(--text-3); }
+.p5-err { margin-top: -10px; padding: 10px 18px; font: 400 24px/1.35 var(--term); color: var(--gap); background: var(--inset); border-left: 6px solid var(--gap); overflow-wrap: anywhere; }
+.p5-navrow { display: grid; grid-template-columns: 640px minmax(0, 1fr); gap: 48px; align-items: start; }
+.p5-seq-big li { grid-template-columns: 72px minmax(0, 1fr) 520px; padding: 8px 18px; }
+.p5-seq-big time { font-size: 24px; }
+.p5-seq-big code, .p5-seq-big span { font-size: 26px; }
+.p5-pcalls { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+.p5-pcalls .p5-args { font-size: 24px; }
+.p5-pcalls .p5-said { font-size: 26px; }
+.p5-after { margin-top: 8px; font-size: 28px; line-height: 1.3; color: var(--text); }
+.p5-when.plain { color: var(--text-3); }
 
-/* ---------- part 5: how did I build it? (Why a test runner, What a scenario looks like, From a script to a package,
-   The harness grew the runs got further, How I picked the next fix, Coding agents wrote the code) ----------
-   Everything here is prefixed bld-, and nothing outside this block is borrowed except the shared .card, .slot, .cube,
-   .clip and .todo. Green is the win or a pass; the scenario line is series 1; amber is the model taken out.
-   .bld-with is a step's companion: it shows with the step just before it (the :has rules), without a click of its own. */
+/* ---------- part 5: how did I build it? (An integration test in a 3D world, The loop and who wrote the code,
+   The harness grew the runs got further) ----------
+   Everything here is prefixed bld-, and nothing outside this block is borrowed except the shared .kicker, .clip and
+   the bevel of .card. Green is a pass or the win; the scenario line is series 1. Text is sized for a mirrored laptop
+   seen over a video call: nothing Ben has to say lives only in the notes. */
 .bld-label { font: 400 22px/1.2 var(--term); letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
 .bld-label span { margin-left: 14px; letter-spacing: 0; text-transform: none; color: var(--text-3); white-space: nowrap; }
-.bld-with { opacity: 0; transition: opacity .2s ease; }
 
-/* Why a test runner: three needs as cards, then the answer. */
-.bld-why { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 34px; }
-.bld-need { gap: 14px; padding: 28px 32px 34px; font-size: 30px; line-height: 1.3; color: var(--text-2); }
-.bld-need h3 { font-size: 40px; margin-top: 10px; }
-.bld-need.muted h3 { color: var(--text-2); }
-.bld-need.step { transform: translateY(28px); transition: opacity .2s ease, transform .25s cubic-bezier(.2, .8, .2, 1); }
-.bld-need.step.shown { transform: none; }
-.bld-answer, .bld-rule { display: flex; align-items: center; gap: 22px; font: 400 44px/1.2 var(--term); color: var(--accent); text-shadow: .0909em .0909em 0 var(--shadow); }
-.bld-answer { margin-top: 14px; }
-.bld-answer .px, .bld-rule .px { width: 56px; height: 56px; }
-
-/* What a scenario looks like: the YAML on the left, each part tagged as its click comes; the clip running on the right. */
-.bld-scenario { display: grid; grid-template-columns: 846px minmax(0, 1fr); gap: 40px; align-items: start; margin-top: -10px; }
+/* An integration test: the question and then the trimmed YAML on the left, the clip (played on Space) on the right. */
+.bld-test { display: grid; grid-template-columns: 760px minmax(0, 1fr); gap: 44px; align-items: start; margin-top: -4px; }
+.bld-left, .bld-right { display: flex; flex-direction: column; gap: 20px; }
+.bld-ask { margin: 0; padding: 18px 26px 20px; font-size: 33px; line-height: 1.3; color: var(--text-2); background: var(--surface-2); border-left: 8px solid var(--warn); }
+.bld-ask b { display: block; margin-top: 6px; font-weight: 400; font-family: var(--term); color: var(--text); }
 .bld-yaml { display: flex; flex-direction: column; gap: 8px; }
-.bld-code { display: flex; flex-direction: column; gap: 6px; padding: 8px 0 10px; background: var(--inset); border: 2px solid var(--accent-dim); }
-.bld-part { position: relative; padding: 2px 16px 2px 14px; border-left: 6px solid transparent; transition: border-color .2s ease; }
-.bld-part pre { margin: 0; font: 400 18px/1.3 var(--term); white-space: pre; color: var(--text); }
+.bld-code { display: flex; flex-direction: column; gap: 8px; padding: 10px 0 12px; background: var(--inset); border: 2px solid var(--accent-dim); }
+.bld-part { position: relative; padding: 2px 16px 2px 14px; border-left: 6px solid var(--accent); }
+.bld-part pre { margin: 0; font: 400 24px/1.3 var(--term); white-space: pre; color: var(--text); }
 .bld-part pre .k { color: var(--accent); }
 .bld-part pre i { font-style: normal; color: var(--text-3); }
-.bld-tag { position: absolute; right: 12px; top: 3px; padding: 2px 10px 3px; font: 400 19px/1 var(--term); color: var(--surface); background: var(--accent); }
-.bld-part:has(.bld-tag.step.shown), .bld-part:has(.bld-tag.step.shown) + .bld-part:has(.bld-with) { border-left-color: var(--accent); }
-.bld-part:has(.bld-tag.step.shown) + .bld-part .bld-with { opacity: 1; }
-/* The template line sits at the top of the file but is part of the logic: it lights with the params click. */
-.bld-code:has(.bld-logic.shown) .bld-tpl { border-left-color: var(--accent); }
-.bld-code:has(.bld-logic.shown) .bld-tpl .bld-with { opacity: 1; }
-.bld-scenario { position: relative; }
-.bld-pass { position: absolute; left: 0; bottom: 0; width: 846px; margin: 0; display: flex; flex-direction: column; gap: 8px; padding: 12px 16px 14px;
-  background: var(--surface-2); border: 4px solid var(--accent); box-shadow: 0 0 0 4px var(--edge-dark), 0 18px 40px rgba(0, 0, 0, .6); }
-.bld-pass img { display: block; width: 100%; height: auto; }
-/* Tall enough to cover the YAML from the params down, so no tag peeks out above it. */
-.bld-pass { min-height: 326px; justify-content: space-between; }
-.bld-pass figcaption { white-space: nowrap; }
-.bld-pass-sum { margin: 0; white-space: nowrap; font: 400 25px/1.2 var(--term); color: var(--text); }
-.bld-run { display: flex; flex-direction: column; gap: 16px; padding-top: 34px; }
-.bld-run .clip { outline: 4px solid var(--edge-dark); }
-.bld-strap, .bld-beat { display: flex; flex-direction: column; gap: 6px; padding-left: 24px; border-left: 8px solid var(--accent); }
-.bld-strap b, .bld-beat b { font: 400 33px/1.2 var(--term); color: var(--text); }
-.bld-beat b { font-size: 36px; }
-.bld-strap span, .bld-beat span { font-size: 25px; line-height: 1.3; color: var(--text-2); }
-.bld-beat span { font-size: 28px; }
+.bld-tag { position: absolute; right: 12px; top: 3px; padding: 2px 10px 4px; font: 400 22px/1 var(--term); color: var(--surface); background: var(--accent); }
+.bld-right .clip { outline: 4px solid var(--edge-dark); }
+.bld-right .clip .hint { white-space: nowrap; font-size: 30px; }
+.bld-strap { display: flex; flex-direction: column; gap: 14px; }
+.bld-strap p, .bld-steer { margin: 0; display: flex; flex-direction: column; gap: 4px; padding-left: 22px; border-left: 8px solid var(--accent); }
+.bld-strap b, .bld-steer b { font: 400 33px/1.2 var(--term); color: var(--text); }
+.bld-strap span, .bld-steer span { font-size: 27px; line-height: 1.3; color: var(--text-2); }
 
-/* From a script to a package: two eras of the history, then the two turns. The beats come first in the markup, so
-   "took the model out" is the first click, and sit under the eras by order. */
-.bld-grow { display: flex; flex-direction: column; gap: 56px; margin-top: 24px; }
-.bld-eras { order: 1; display: grid; grid-template-columns: 4fr 3fr; gap: 30px; }
-.bld-beats { order: 2; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 44px; }
-.bld-era { display: flex; flex-direction: column; gap: 14px; }
-.bld-era .bld-history { flex: 1; }
-.bld-era .bld-label { padding-bottom: 8px; border-bottom: 4px solid var(--line); }
-.bld-pkg .bld-label { border-bottom-color: var(--accent); }
-.bld-history, .bld-fan ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 30px; }
-.bld-pkg .bld-history { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.bld-history li, .bld-fan li { position: relative; display: flex; flex-direction: column; gap: 2px; padding: 8px 18px 10px; font-size: 22px; line-height: 1.25; color: var(--text-2);
-  background: var(--surface-2); border: 4px solid; border-color: var(--edge-light) var(--edge-dark) var(--edge-dark) var(--edge-light); box-shadow: 0 0 0 4px var(--edge-dark); }
-.bld-history li + li::before, .bld-pkg .bld-history li:first-child::before, .bld-fan li + li::before { content: ">"; position: absolute; left: -27px; top: 50%; width: 20px; margin-top: -11px; text-align: center; font: 400 22px/1 var(--term); color: var(--text-3); }
-.bld-history time, .bld-fan time { font: 400 22px/1.2 var(--term); color: var(--accent); }
-.bld-history b, .bld-fan b { font: 400 27px/1.2 var(--term); color: var(--text); }
-.bld-history li { padding: 10px 14px 14px; gap: 4px; transition: border-color .2s ease, background-color .2s ease; }
-.bld-history time { font-size: 24px; }
-.bld-history b { font-size: 26px; }
-.bld-history span { font-size: 22px; line-height: 1.25; color: var(--text-3); }
-.bld-history li.bld-now { border-color: var(--accent) var(--accent-dim) var(--accent-dim) var(--accent); background: var(--ok-dim); }
-.bld-modelout { border-left-color: var(--warn); }
-.slide:has(.bld-modelout.shown) .bld-history li.bld-whole { border-color: var(--warn); background: var(--warn-dim); }
-.slide:has(.bld-modelout.shown) .bld-history li.bld-free { border-color: var(--accent); background: var(--ok-dim); }
-.slide:has(.bld-pkg.shown) .bld-unix { opacity: 1; }
+/* The loop: five boxes in a row, then one worked fix, who wrote the code, and the rule. */
+.bld-loop { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 34px; }
+.bld-loop li { position: relative; display: flex; align-items: center; justify-content: center; min-height: 104px; padding: 12px 16px; text-align: center;
+  font: 400 30px/1.2 var(--term); color: var(--text); background: var(--surface-2);
+  border: 4px solid; border-color: var(--edge-light) var(--edge-dark) var(--edge-dark) var(--edge-light); box-shadow: 0 0 0 4px var(--edge-dark); }
+.bld-loop li + li::before { content: ">"; position: absolute; left: -29px; top: 50%; width: 22px; margin-top: -13px; text-align: center; font: 400 26px/1 var(--term); color: var(--text-3); }
+.bld-loop li.bld-again { color: var(--accent); border-color: var(--accent) var(--accent-dim) var(--accent-dim) var(--accent); background: var(--ok-dim); }
+.bld-loop li.bld-again::after { content: "↺"; margin-left: 12px; font: 700 30px/1 var(--sans); }
+.bld-example { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+.bld-example p:last-child { margin: 0; display: flex; align-items: center; gap: 20px; padding: 12px 22px 14px; font-size: 27px; line-height: 1.3; color: var(--text-2); background: var(--inset); border-left: 6px solid var(--accent); }
+.bld-example b { font-weight: 400; font-family: var(--term); color: var(--text); }
+.bld-example .px { width: 52px; height: 52px; flex: none; }
+.bld-agents { display: grid; grid-template-columns: minmax(0, 1fr) 440px; gap: 48px; align-items: end; }
+.bld-authors { display: flex; flex-direction: column; gap: 10px; }
+.bld-share { display: flex; height: 30px; gap: 3px; }
+.bld-share .cc, .bld-key i.cc { background: var(--claude); }
+.bld-share .cx, .bld-key i.cx { background: repeating-linear-gradient(135deg, var(--series-mute) 0 6px, #4a4659 6px 12px); }
+.bld-key { display: flex; gap: 30px; }
+.bld-key p { margin: 0; display: flex; align-items: baseline; gap: 12px; font-size: 26px; white-space: nowrap; color: var(--text-2); }
+.bld-key i { width: 20px; height: 20px; align-self: center; border: 2px solid var(--line); }
+.bld-key i.cc, .bld-key i.cx { border: 0; }
+.bld-key b { font: 400 36px/1 var(--term); color: var(--text); }
+.bld-rule { display: flex; align-items: center; gap: 22px; margin: 0; font: 400 42px/1.2 var(--term); color: var(--accent); text-shadow: .0909em .0909em 0 var(--shadow); }
+.bld-rule .px { width: 52px; height: 52px; }
 
 /* The harness grew: one SVG, two panels on one date axis. The bottom panel waits for its click. */
-.bld-chart { width: 1300px; height: 505px; overflow: visible; font-family: var(--sans); }
+.bld-before { margin: -12px 0 0; font: 400 27px/1.2 var(--term); color: var(--text-2); }
+.bld-chart { width: 1170px; height: 455px; overflow: visible; font-family: var(--sans); }
 .bld-chart text { fill: var(--text-2); font-size: 22px; }
 .bld-chart .bld-panel { fill: var(--text); font: 400 24px/1 var(--term); }
 .bld-chart .bld-tick { fill: var(--text-3); font-size: 22px; }
@@ -1443,40 +1484,5 @@ aside.notes { display: none; }
 .bld-recs circle.win { fill: var(--text); stroke: var(--accent); stroke-width: 4; }
 .bld-runs { opacity: 0; transition: opacity .2s ease; }
 .slide:has(.key-bld-runs.shown) .bld-runs { opacity: 1; }
-.bld-caption { font-size: 30px; line-height: 1.3; color: var(--text-2); max-width: 1300px; margin-top: -6px; }
-
-/* How I picked the next fix: the loop as five numbered boxes, then one real fix a click at a time. */
-.bld-loop { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 22px; counter-reset: bldloop; }
-.bld-loop li { counter-increment: bldloop; display: flex; flex-direction: column; gap: 6px; padding: 14px 18px 16px; font-size: 24px; line-height: 1.28; color: var(--text-2);
-  background: var(--surface-2); border: 4px solid; border-color: var(--edge-light) var(--edge-dark) var(--edge-dark) var(--edge-light); box-shadow: 0 0 0 4px var(--edge-dark); }
-.bld-loop li::before { content: "0" counter(bldloop); font: 400 22px/1 var(--term); color: var(--accent); }
-.bld-loop b { font: 400 28px/1.2 var(--term); color: var(--text); }
-.bld-ex-label { margin-bottom: -18px; }
-.bld-example { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 22px; }
-.bld-example li { display: flex; flex-direction: column; gap: 6px; padding: 12px 18px 14px; font-size: 24px; line-height: 1.28; color: var(--text-2); background: var(--inset); border-left: 6px solid var(--line); }
-.bld-example time { font: 400 22px/1.2 var(--term); color: var(--text-3); }
-.bld-example b { display: flex; align-items: center; gap: 10px; font: 400 28px/1.2 var(--term); color: var(--text); }
-.bld-example b .px { width: 36px; height: 36px; }
-.bld-example li.done { border-left-color: var(--accent); }
-.bld-example li.done b::before { content: "✓"; font: 700 26px/1 var(--sans); color: var(--accent); }
-
-/* Coding agents wrote the code: who made the commits, how I steered, one evening's fan-out, then the rule. Claude's
-   share is in its own colour (it is its name); the inferred Codex share is hatched grey, because it is inferred. */
-.bld-agents { display: grid; grid-template-columns: 640px minmax(0, 1fr); gap: 48px; align-items: start; margin-top: -14px; }
-.bld-authors { gap: 14px; padding: 18px 28px 22px; }
-.bld-share { display: flex; height: 30px; gap: 3px; }
-.bld-share .cc, .bld-key i.cc { background: var(--claude); }
-.bld-share .cx, .bld-key i.cx { background: repeating-linear-gradient(135deg, var(--series-mute) 0 6px, #4a4659 6px 12px); }
-.bld-key { display: flex; flex-direction: column; gap: 8px; }
-.bld-key p { display: grid; grid-template-columns: 18px 76px minmax(0, 1fr); column-gap: 14px; align-items: baseline; font-size: 24px; line-height: 1.25; color: var(--text-2); }
-.bld-key i { width: 18px; height: 18px; align-self: center; border: 2px solid var(--line); }
-.bld-key i.cc, .bld-key i.cx { border: 0; }
-.bld-key b { font: 400 33px/1 var(--term); color: var(--text); text-align: right; }
-.bld-key small { grid-column: 3; font-size: 20px; color: var(--text-3); }
-.bld-steer { display: flex; flex-direction: column; gap: 12px; }
-.bld-steer p { display: flex; flex-direction: column; gap: 2px; padding-left: 22px; border-left: 8px solid var(--accent); }
-.bld-steer b { font: 400 28px/1.2 var(--term); color: var(--text); }
-.bld-steer span { font-size: 23px; line-height: 1.25; color: var(--text-2); }
-.bld-fan { display: flex; flex-direction: column; gap: 8px; margin-top: -8px; }
-.bld-fan li.done { border-color: var(--accent) var(--accent-dim) var(--accent-dim) var(--accent); background: var(--ok-dim); }
+.bld-caption { font-size: 30px; line-height: 1.3; color: var(--text-2); max-width: 1300px; margin-top: -10px; }
 /* end of part 5: how did I build it? */
