@@ -30,12 +30,12 @@ deliver every part of it.
 |---|---|---|
 | "What does it take" to beat it | The question (14), the six layers (17), the idea (18) | Strong. Slide 14 is nearly the abstract's first sentence. |
 | Empty world to the Ender Dragon | The route and its clips (5), the dragon clip (12), What happened in the run (its timeline) | Strong |
-| Observe, choose actions, respond to what actually happened | I built an MCP server (20), replies the model can trust (27) | Strong |
+| Observe, choose actions, respond to what actually happened | I built an MCP server, replies it can trust (part 6) | Strong |
 | Reliable | The rule on slide 17, how it got reliable (29) | Strong |
-| Long-horizon | One prompt then hands off (13), long actions and the async design (22–23), the timeline on What happened in the run | There, but only the title slide uses the word. Say it on slide 13. |
-| Navigation | A navigate call (21), the Baritone rewrite and its clip (29) | Strong |
-| Resource gathering | One call, one whole job (21): collecting, smelting and crafting from the run; the gear-up phase and the 0:23 tile on What happened in the run | Better since 12 November: three of slide 21's four calls are gathering. |
-| Combat | One body, one lock (24), six reflexes (25), the override (26) | Strong |
+| Long-horizon | One prompt then hands off (13), the async design (A tool call is an async function, part 6), the timeline on What happened in the run | There, but only the title slide uses the word. Say it on slide 13. |
+| Navigation | Part 6 since 16 November: Everything starts with getting there (the Nether fortress walk and its clip), Don't reinvent it: follow Baritone, and Racing Baritone (the benchmark chart) | Strong |
+| Resource gathering | I built an MCP server (part 6): the run's first collect_block on screen, smelting and crafting in its notes; the gear-up phase and the 0:23 tile on What happened in the run | Thinner since 16 November: one gathering call on screen, the rest in notes. |
+| Combat | Reflexes act, the model tunes them (part 6): the lock, the six reflexes and the override on one slide | Strong |
 | Failure and recovery | The "1 in 3 calls went wrong" and "Won anyway" tiles on What happened in the run (one slide since 14 November), the creeper death and getting 47 items back (its notes) | Fine. Recovery is mostly spoken. |
 | Lessons for building agents | Takeaways | Strong |
 | Lessons for evaluating agents | 493 scenarios (29), second takeaway | There, but never called evaluating. Say it on slide 29 (its notes do). |
@@ -61,7 +61,7 @@ better model.
 | 2 | Why try it with AI? | 6 | 7–8 | Games are how people have been testing model capabilities (Ben's wording, 10 November, over "the new models"), and Pokémon is the one everybody watched: the headlines, all six at once in one beat (it took a long time), then one click puts a sticker on each run counting the extras its harness gave it (since 15 November, when part 4's help slide merged in: the early wins had help, Fable 5 had none), then why Minecraft is the harder one, with the example clip as an optional pop on that slide. Two slides since 14 November, were three. |
 | 3 | Can an LLM do it? | 9 | 10–13 | "Bots have beaten it before", one quick line since 14 November (AltoClef's clip only with time to spare): two cards, AltoClef (code decides, beat the dragon ✓) beside an LLM (the model decides, beat the dragon ?). The question mark is what Ben wanted to know: can an LLM do the whole run and make its own calls? Moved here from the end of part 1 on 10 November (Ben's call), so the question is asked and answered in the same part. Then the dragon dying as the stream saw it, with sound: Ben on the webcam counting down the last hits, arms up, "We did it!". Then the prompt and the stats, which read as "here's what you just watched". Since 15 November (Ben: "do the reorder and I'll see how I feel about it") the run slide comes next, moved intact from part 7: "What happened in the run", its kicker now just "The winning run" and no data-chapter. The clip, the numbers, then what it did. To undo it, move the slide back after "Coding agents wrote the code" and give it back its data-chapter and the "Part 7 of 7 · the winning run" kicker (backup `/tmp/deck-backup-1115-035716-flow-pokemon-merge-run-move`). |
 | 4 | How do you approach it? | 14 | 15–17 | "Was that the model, or what I built around it? Let's talk about how you'd even approach it." The card is just the question, with no line under it (Ben, 10 November: "better model, better tools" read oddly and he wouldn't talk to it). Pokémon had the same argument, one line on the card since 15 November (the stickers in part 2 showed it), then playing Pokémon and playing Minecraft, which builds into the six layers, the timing problem and the idea, "Shrink the AI's job". |
-| 5 | What did I build? | 19 | 20–29 | "An MCP server that does what the model can't." Straight to the server (Ben, 12 November): the model has the long horizon, the server has execution and all the control, because the model can't react in real time. Then the design choices: one call per job, long actions and the async design for them, tasks and reflexes sharing one body, the six reflexes, the override, replies the model can trust, the state kept on the server, and how it got reliable. See "Part 5: the MCP server". |
+| 6 | What did I build? | 26.5 | to 39 | "Here's what that process built." Since 16 November, after the process part (Ben: "we go too quickly into describing it"). The control layer on four slides (the MCP server and one whole job; async actions; reflexes and the model's policy; replies and memory), then navigation: everything intentional starts with getting there, Baritone credited and followed, and the race against it. See "Part 6: What did I build?". |
 | 7 | What I'd take from this | none | The fine print, Takeaways, Links and questions | Since 15 November the run slide is in part 3, so part 7 opens on the fine print, which carries the part's data-chapter ("What I'd take from this") and the kicker "Part 7 of 7 · what I'd take from this": the honest limits before the takeaways. Still no card. The takeaways have no kicker; their notes say it is the ending, answer part 4 (tools) and point back at "The idea", the same three cards and icons. Then links and questions. On 14 November part 7 was "What happened in the run?" and the run slide opened it. |
 
 Rules for the cards:
@@ -303,7 +303,18 @@ Three messages:
 2. **Iterate until it's reliable.** Break, reproduce, fix, keep the scenario.
 3. **Integrate.** The best ideas were already out there; the work was making them one toolkit.
 
-Slide 18 shows them as three cards, one a click, each with an icon from the pack in an inventory slot: shears
+Since 16 November "The idea" (slide 17) opens on Ben's dial-back (16 November: "I dialled back and removed any
+harness, direct API calls or harness engineering… and focused only on building an MCP server"): the six layers
+again, small, and its first click splits them into "Bought, not built" (Model, Harness: "Claude Code, on a
+subscription"), "The one thing I built" (Tools, Actions, Client: "an MCP server") and "Left alone" (Game). The
+first version had its own loop calling the model's API every 8 seconds (see "Verified facts"). The cost is said as
+"a subscription instead of paying per API call", with no figure; the $93 on the run slide is API prices, and Ben's
+word "subsidised" stays off the slides and out of the notes. The last notes line hands over to part 5, testing: "So
+all my effort went into one piece. How do I know it works? I test it." Part 4 finishes at 14 (data-by on its four
+slides). For time, slide 16's spoken notes for the packets and Mineflayer were cut to a line a click (16 November),
+with what came out kept as "If asked" lines; no clicks were removed.
+
+The idea shows the three messages as three cards, one a click, each with an icon from the pack in an inventory slot: shears
 ("Break it down"), a repeater ("Iterate") and a map ("Integrate"). The takeaways slide (34) is the same three
 lines with the same three icons, so the end of the talk looks like the idea it started from.
 
@@ -389,8 +400,8 @@ slide. Each slide shows a person's row, then an AI's row a click later, on the s
   position (298 px below the stack) is the AI row's measured top; if the rows' layout changes, re-measure it. Print
   shows the end of the slide: the six layers with their verdicts and the rule. The Model click's notes say what the
   first version was; the verdict notes carry Ben's beat (the whole flow early, whole-agent runs failing, the model out
-  of the tests by 19 July: "the problems were all in a particular area"), with an "if asked" line for the July numbers
-  and one line forward to Mine Labs, which tells that history itself in part 6.
+  of the tests by 19 July: "the problems were all in a particular area"), with an "if asked" line for the July numbers;
+  "The idea" then says what he did about it, and Mine Labs, which tells that history itself, follows in part 5.
 - **The creeper (17, Ben 14 November: "show what that actually looks like"):** on the fuse click a pixel creeper
   (drawn from Pixel Perfection's `creeper.png`, already credited) walks in right of the fuse line, stops, flashes white
   and swells for exactly 1.5 s, and goes off: a pixel burst, smoke, a small crater. Under it a thin bar, "model's turn,
@@ -433,133 +444,144 @@ lays out everything between the model and the game, left to right, and marks wha
   clicks that light them.
 - **The timing problem** is the one gap that isn't a box. It had its own slide until 12 November; now it's the red
   ~3 s bracket and the creeper line earlier on the same slide, and this paragraph is said in its last notes, which point
-  at part 5: "One body, one lock" (24) and "Six reflexes" (25). One lap through all six layers takes about 3 s; the game moves 20 times a second. So reacting has to happen in a short loop at the game end (layers 4 to 6)
-  without the model. It has a second half, covered on "Some actions take minutes" (22) and "A tool call is an async function" (23): some actions run for
+  at part 6: "Reflexes act, the model tunes them". One lap through all six layers takes about 3 s; the game moves 20 times a second. So reacting has to happen in a short loop at the game end (layers 4 to 6)
+  without the model. It has a second half, covered on "A tool call is an async function" (part 6): some actions run for
   minutes, longer than a tool call should block, which is what submit, wait and collect are for.
-- **Part 5 answers the layers.** The MCP server is the tools layer, its actions and reflexes are the actions layer
-  (the short loop is the reflexes: "One body, one lock", 24, and "Six reflexes", 25), and the client fixes come in
+- **Part 6, What did I build?, answers the layers.** The MCP server is the tools layer, its actions and reflexes are the actions layer
+  (the short loop is the reflexes: "Reflexes act, the model tunes them"), and the client fixes come in
   on "How it got reliable" (29). Until 12 November
   three area openers each lit their layers on a small strip.
 - The repo's own five code layers (server, session runtime, action, world, physical; `docs/mcp/concepts.md`) all
   sit inside layers 3 to 5: server and session are the tools layer, action and world are the actions layer,
   physical is the client. Don't put the five on a slide; it's a different cut of the same thing.
 
-## Part 5: the MCP server (slides 19–28)
+## Part 6: What did I build? (the MCP server, then navigation; part 5 until 16 November)
 
-Ben, 12 November: go straight to "I built an MCP server" ("we" until 13 November, when Ben made it "I" like every other heading). Its job has two halves: it handles everything the model
-can't because of latency (part 4 ends on ~3 s a turn against a person's ~0.1 s), and it makes actions as simple and
-reusable as possible. Together they let the model keep to the macro story. The design choices are the heart of the
-part; the code-size chart moved to the appendix. The three area openers and "Who does what" are gone.
+Ben, 16 November: "When we're talking about the MCP server… we go too quickly into describing it. Better to talk
+about the process by which we solved these problems and then what came out of it." So the process part moved up
+to part 5 and this part became part 6, 26 to 39 minutes. It has two halves. First the control layer, about 7
+minutes on four slides: an MCP server handling locking, reflexes, tuning policy and async actions, which is how the
+model gets to influence the actions. Then about 6 minutes on navigation, "the first big problem to solve", because
+basically everything intentional in the game relies on it, and on not reinventing it: Baritone, credited by name.
+The card's notes open "Here's what that process built", and the last slide's notes hand over to the fine print.
 
-Tightened on 14 November for the Monday practice run with Ben's colleague at Google (the preamble was too long, the
-audience is technical, and they asked about iteration, next steps and whether agents wrote the code). Part 5 is
-about 15 minutes now: data-by 18 for 19–23, 22.5 for 24–26 and 26 for 27–28, and 13 clicks instead of 18. Nothing
-factual was cut; the detail went to "If asked" notes. Each design slide with a recorded failure opens with a red
-"✗ What went wrong" line above its heading: 22 (a smelting call outlived the client's five-minute idle timeout;
-README), 24 (3 Aug, the idle hostile guard held the body and refused every task; `aaa912bc`) and 27 (4 Aug, a bot
-respawned 36 blocks away with its gear gone and no explanation; `1d829c39`). 21, 23 and 28 have no recorded
-failure, so they show none; the research found no incident behind the async design and the slide says nothing
-of one. Slide 20 says Ben designed and directed it and coding agents (Codex and Claude Code) wrote the code; Part 6
-tells that story. "How it got reliable" (29) moved to the new Part 6 the same day and is that session's now.
-Three data-titles now match their headings: "One call, one whole job" (was "Simple, reusable actions"), "Some
-actions take minutes" (was "Long actions") and "One body, one lock" (was "Tasks and reflexes").
+The nine control slides of 14 November came down to four on 16 November. Nothing factual was dropped: what left the
+screen is in the "If asked" notes of the slide that absorbed it. Each slide with a recorded failure still opens with
+the red "✗ What went wrong" line (sources in "Verified facts", Part 5's "what went wrong" lines); the MCP server
+slide has none, as before. Earlier history: Ben, 12 November, went straight to "I built an MCP server" ("we" until 13
+November); its two halves are everything the model can't do because of latency, and actions as simple and reusable as
+possible. The three area openers and "Who does what" went on 12 November, the code-size chart to the appendix. On 14
+November the part was tightened to 15 minutes with the failure lines added, and "How it got reliable" left for the
+process part.
 
-- **19, the card.** "An MCP server that does what the model can't."
-- **20, I built an MCP server.** Rewritten 13 November to Ben's spoken script. Two stacked boxes: the model (the
-  long horizon: goals, plans, intention, policy) and the MCP server (execution, and everything in between: moving,
-  reacting, reporting). Then a click each: the model can't react in real time (~3 s a turn, a creeper in 1.5 s); so
-  the server has all the control (pathfinding and combat procedures plan every move, and the model never touches
-  the inputs); and the bar, 18 min of the model thinking against 3 h 38 of the server executing, which Ben reads as
-  the model mostly waiting for actions to finish. The 17.8 min figure stays until Ben settles the open item. Under
-  it, since 14 November, "I designed and directed it; coding agents (Codex and Claude Code) wrote the code. The
-  winning run used Claude Code." The harness line ("used with Claude Code and Codex", Ben, 13 November) is in the
-  "If asked" notes. Never "qualified", "verified" or "works with any harness". The two reasons share one click.
-- **21, One call, one whole job.** Strong primitives with one outcome each,
-  so "done" can be checked. The run's first call, `collect_block` logs × 16 with its rationale, is up from the
-  start; a click lists what that one call does (walk to logs, pick the tool, mine, pick up, next until 16), which
-  is what the model would otherwise steer by hand. Then smelting (24 iron ingots; Ben said "iron bars" out loud
-  once, the notes tell him "ingots"), crafting and navigation as three smaller calls, and last "It almost never says
-  'press this button'." ("never" until 14 November: raw_action, below) with the succeeded / failed / partial line. The reuse number moved to the notes.
-- **22, Some actions take minutes.** Since 13 November only the obsidian bar (one call, 7 min 07 s, for the portal
-  frame) and, on a click, the question it raises: how does the model keep control while it waits? The four-step
-  loop and the "still running" ticks moved to slide 23.
-- **23, A tool call is an async function** (added 13 November, Ben's framing). Three lines of JavaScript as the
-  analogy (submit, await with a timeout, decide). A click brings the four calls the model really sent for the
-  obsidian, with the real tool and argument names and each reply's time and progress. A last click: each time a
-  wait runs out (59 times in the run) the model can keep waiting (`wait_for_action`), look at something first
-  (`view_status`, `query_bot_data`) or cancel (`cancel_foreground_action`). The body does one task at a time, so
-  "do something more important" means cancelling first; the notes say so. The notes carry Ben's story: he found
-  the design by watching the bot get stuck (the five-minute idle timeout), which raised what the model should
-  control and what should be reflexive.
-- **24, One body, one lock** (data-title "Tasks and reflexes" until 14 November). Tasks (`task`, `resumable_task`, the code's own
-  kinds) and reflexes (the survival code's term) as two cards beside the combat loop. Along the bottom, one real
-  handoff: a navigate task, the hostile reflex taking the body for 3.5 s, then navigate carrying on to arrive.
-  Moved up on 13 November (Ben's call) to follow the async slide, so his story about what the model
-  should control leads straight into it. The run's number (17 trips and mining jobs interrupted, 14 finished) is in
-  the "If asked" notes since 14 November, and the reflex and the carry-on come in on one click. The code has no "active" term, so the
-  slide doesn't use one.
-- **25 and 26, Six reflexes and The override.** Unchanged, and kept with One body, one lock as one block. The
-  combat package TODO moved into 25's notes. The override's last note hands over to the replies.
-- **27, Replies the model can trust.** A real Markdown reply from the run, trimmed and marked as trimmed, the ** left
-  in and dimmed so it reads as what the model got. A click each: Markdown by default because a model reads it,
-  JSON on request; what happened around the action comes with it, reflexes that took over and travel while they had
-  the body (the Interruptions and Travel lines light up); one reply carries everything, because MCP gives the
-  server no line into the model, so chat, deaths and fights are merged into the next tool reply (the Notifications
-  lines light up); and truthful, partial progress included, with a second real reply under it: request 283,
-  `collect_block` dirt × 32 at 3:15:09 on a shoreline, `partial`, "Inventory gained: 2", and its observed stop
-  (trimmed, marked). Request 284 walked inland ("so block collection routing works") and 285 got all 32. Reframed on
-  14 November at Ben's request: the bread receipt and its two notes are gone, because it had no clear message on
-  this slide.
-- **28, The server keeps the state.** What lives in SQLite on the server (carried and worn items, every chunk seen,
-  containers, events, notes), and the three tools the model asks with, with their counts. A click brings one real
-  query: the closest dry land to the stronghold, then the walk there 7 s later.
-- **How it got reliable** moved into part 6 on 14 November (see "Part 6: How did I build it?"): its loop is
-  "How I picked the next fix", and the Baritone rewrite is in that part's notes.
+- **Part 6: What did I build?** (card, data-by 26.5). Kicker "Part 6 of 7", data-chapter "What did I build?",
+  lede "An MCP server for control, and the navigation under it."
+- **I built an MCP server** (28, 2 clicks). The model (the long horizon: goals, plans, intention, policy) above the
+  MCP server (execution: moving, reacting, reporting back). Click 1: the model can't react in real time (~3 s a turn,
+  a creeper in 1.5 s), and with it, so the server has all the control. Click 2: "One call, one whole job", the run's
+  first call (`collect_block` logs × 16, 16 of 16 in 1 min 17 s) and what it does in one line. Merged from "One
+  call, one whole job" on 16 November. To the notes: the 18 min / 3 h 38 bar, the smelting, crafting and navigate
+  calls, the reuse count, the June and August history, raw_action, and the agents and harness lines ("I designed and
+  directed it; coding agents (Codex and Claude Code) wrote the code"; part 5 now tells that story). Never
+  "qualified", "verified" or "works with any harness".
+- **A tool call is an async function** (29.5, 2 clicks). The smelting-timeout failure line ("Some actions take
+  minutes", merged in), the three lines of JavaScript, then the four calls the model really sent for the 16 obsidian
+  (7 min 07 s), then the three choices each time a wait runs out (59 times). The obsidian story and "walking 2,000
+  blocks takes minutes too" are in the notes. The notes still say no single incident is behind the design.
+- **Reflexes act, the model tunes them** (31.5, 2 clicks). Ben's "tuning policy". Merged from "One body, one lock",
+  "Six reflexes" and "The override": the 3 Aug lockup failure line, the six-reflex chart (293 in all), "One body, one
+  lock" with the Tasks and Reflexes cards. Click 1: the handoff along the bottom (navigate, the hostile reflex for
+  3.5 s, navigate carries on). Click 2: the override, the model's own words at 3:09 switching the evade reflex off,
+  and "9 times in the run". To the notes: the switch-back quote, 17/14 interruptions, the reflex examples from the
+  build, the combat package TODO, and the two silent loops (combat-loop, monument-loop), which are no longer on screen.
+- **Replies to trust, memory to query** (33, 3 clicks). Merged from "Replies the model can trust" and "The
+  server keeps the state". The 4 Aug respawn failure line, the request 214 reply (trimmed, cuts marked), and the
+  points: Markdown, partial means partial; what happened around the action (Interruptions and Travel light up); one
+  reply carries everything (Notifications lights up); the server keeps the state in SQLite, with the request 293
+  query and the walk 7 s later. To the notes: the request 283 partial reply, the SQL, the table counts, the tool
+  counts and the compaction TODO. Its last note leads into navigation ("That walk is the other thing I built").
+- **Everything starts with getting there** (34.5, 1 click). The 7 s navigation loop (`media/navigation-loop.mp4`,
+  the winning run's request 92: the observer overlay shows `navigate` x -30 y 65 z 89, the bot AI_M1KE, digging and
+  scaffolding through netherrack) beside that call's card with its rationale ("Nether bricks 70 blocks away mark a
+  fortress, the only source of blaze rods."). Click: 24 km walked, 135 of 239 actions moved the bot, 92% of the
+  time spent acting.
+- **Don't reinvent it: follow Baritone** (36, 3 clicks). A credit card: Baritone, by leijurv and contributors, open
+  source since 2018, 9.4k stars, built into clients like Impact, github.com/cabaletta/baritone, LGPL-3.0. Then the
+  three steps: rebuild it in TypeScript (its search, its costs in game ticks, its way of mining), run it natively
+  inside the bot, race it against the original. Wording: Ben says "port"; the code is a rebuild to Baritone's
+  design, not translated source (see "Verified facts"), so the slide says "follow" and "rebuild". Baritone is also
+  on the credits slide.
+- **Racing Baritone: from 60× slower to 3×** (39, 4 clicks). A bar chart of how many times slower our search was
+  than Baritone 1.13.1, in nodes searched per millisecond: 30–60× in the first race (3 Sep, timed by hand), 4.1×
+  the same afternoon (the first scripted benchmark), 11.9× on 8 Sep (amber: paths made physically true), 2.7× on
+  9 Sep (green). Then route C: 249 ms to plan against Baritone's 156, 39.6 s to walk against 37.2: "Slower to think,
+  about as fast to walk." Ben remembered "10 or 30× to about 4×"; the chart uses the measurements. The last note
+  hands over to part 7's fine print.
+- **Appendix: the MCP part is tiny.** The code-size chart, moved from the MCP part, just before the credits; the
+  credits slide also credits Baritone since 16 November.
 - **37, Appendix: the MCP part is tiny.** The code-size chart, moved from part 5, just before the credits.
 
-## Part 6: How did I build it? (added 14 November)
+## Part 5: How did I build it? (added 14 November as part 6; moved up and reworked 16 November)
 
 Why it exists: a colleague of Ben's at Google reviewed the deck and asked "Was there any iteration? When you
 iterate how did you decide the next steps? … you use agents to write the code and you were guiding the code, not
 that you were writing the code 'old school', right?" Ben agreed the talk should be about the process, and Mine
 Labs is its spine: "developing out the mine labs, the test harness was like a big reason behind actually beating
-the game." It sits between part 5 and the run, about 11.5 minutes, and absorbs part 5's old "How it got reliable"
-(its loop is now "How I picked the next fix"; the Baritone tiles and the navigation clip went to notes, see Open
-items). Data-section "6 · How did I build it?"; the card's kicker says "Part 6 of 7". Every fact is in Verified
-facts, "Part 6", with its source.
+the game."
+
+On 16 November Ben put process before the server: this part moved up from part 6 to part 5, right after "The idea"
+and before "Part 5: What did I build?" (now part 6). Part 4 ends on "How do I know it works? I test it", and the
+card's first note picks that up. It runs 14 to 26 minutes (`data-by` 14.5, 16, 18, 19.5, 21.5, 24, 26). Mine Labs
+now gets an introduction in Ben's words (16 November, kept nearly verbatim in the notes): good test infrastructure
+makes reliable software; the tests needed weren't only logic tests but problem-solving scenarios in a 3D world; no
+existing project could run arbitrary logic and verify it worked, so he used AI to build Mine Labs; a scenario is an
+environment in YAML, a bot inside it, control handed to a specified piece of logic, a goal and conditions such as
+a timeout; and running one needs no AI, because the logic under test is deterministic. On the package: "once we
+realised something was valuable, turning it into its own atomic, isolated package, following the Unix philosophy,
+helped compartmentalise and separate concerns into bite-sized pieces." Data-section "5 · How did I build it?";
+the card's kicker says "Part 5 of 7". CSS is one block, prefix `bld-` (was `p6-`, renamed so it can't collide
+with the server part's classes now that part is 6). Every fact is in Verified facts, "Part 6" (the 14 November
+name of this part) and the scenario-example bullet, with its source.
 
 - **The card.** "How did I build it?" with the repeater (the Iterate icon from "The idea" and the takeaways).
   Lede: "Every failure became a test, and coding agents wrote the fixes."
-- **31 attempts before the win.** A staircase of the furthest any attempt had got: overworld only (runs 1–9,
-  3–4 Sep), into the Nether (run 10, 4 Sep), the End with help (run 18, 9 Sep), the End on its own (dragon run 3,
-  11 Sep), the dragon at 118/200 (dragon run 8, 13 Sep), dragon killed (15 Sep). Under it, the two groups: 20 runs
-  to craft 12 Eyes of Ender (3–10 Sep) and 11 runs at the dragon (11–14 Sep). A click: a run takes hours and what
-  broke may never happen the same way again (longest attempt 7 h 49, the win 3 h 56). Not "118 → 190 → win":
-  dragon run 11's dragon was stuck at 190/200 and never landed, so 118 was the closest before the win.
-- **Mine Labs: every failure becomes a test.** The real `survival/breath-reflex.yaml`, SealedDiver's pen only and
-  marked trimmed (description, two fills, the dolphin, the player, two goals; the dolphin's NBT is cut with "…").
-  A click each: a real 1.21.4 server, real physics, the real bot; pass means the outcome was observed; checked both
-  ways (a pen made impossible has to fail). A click (added 14 November, the early
-  folder): the harness's history as seven small cards, the bot (27 Jun) → whole-agent benchmarks (14 Jul, 121 runs
-  on one seed) → model-free arenas (19 Jul) → Scenario Lab (21 Jul) → Mine Labs (13 Aug) → 497 scenarios (15 Sep)
-  → 112, merged (Oct). A last click, "Took the model out": whole-agent runs were slow and noisy, so the arenas
-  call the real actions with zero model calls; the whole-agent card lights amber and the model-free card green.
-  The notes tie it to part 4's "Don't blame the model for a physics bug". `kind: all` is trimmed from the YAML.
-- **The harness grew. The runs got further.** One SVG, two panels on one date axis (13 Aug to 15 Sep): scenario
-  files in the repo each evening (labels 19, 82, 315, 497), then on a click the staircase as a step line. A last
-  click says it is a correlation, and Ben's claim is his ("My read is that the harness is a big reason it got
-  there").
+- **Good tests make reliable software** (data-title "Why a test runner"). Three cards a click each: tests of the
+  logic (we had those too), tests of situations in a 3D world, nothing did that (run any logic in a live world,
+  then check it actually worked). A last click: "So I used AI to build a test runner: Mine Labs."
+- **A scenario: a world, a bot, a goal** (data-title "What a scenario looks like"). The scenario the coordinator
+  and the recorder session chose (16 November), `pathfinder/bucket-drop-route.yaml`, lightly trimmed: its template
+  line, geometry, players, params, goal and goals, without the description, tags, comments and reset line. A click
+  each tags its parts: the world (geometry and players), the logic (params: the server's own navigate action; the
+  template line lights with it, since it brings in the driver), the goal and its time limit (45 s), the check (the
+  five goals). Then "Pass means observed": a card over the lower half of the YAML with "navigate 1.5 s · 5 of 5
+  goals · 8 of 8 runs passed" and the terminal still of the run (`media/minelabs-bucket-drop-pass.png`). A last
+  click: "No model in the loop". On the right, from the start, the recorder's silent loop
+  (`media/minelabs-bucket-drop.mp4`, 7.3 s, a clip figure with `data-mode="loop"`). 6 clicks. The notes end on
+  "This is a navigate call", handing on to part 6's navigation and Baritone.
+- **From a script to its own package.** The history as two eras of cards: inside the bot's repo (the bot 27 Jun,
+  whole agent 14 Jul with 121 runs on one seed, model-free arenas 19 Jul, Scenario Lab 21 Jul) and, on a click,
+  its own package (Mine Labs 13 Aug, 497 files at the win, 112 merged files in Oct). The first click is "Took the
+  model out" (the whole-agent card lights amber, the model-free card green); the package click brings "One job, one
+  package". The notes carry the numbers and tie the first beat to part 4's "Don't blame the model for a physics
+  bug".
+- **The harness grew. The runs got further.** Now also carries "31 attempts", which was its own slide: one SVG,
+  two panels on one date axis (13 Aug to 15 Sep): scenario files in the repo each evening (labels 19, 82, 315,
+  497), then on a click "Furthest any of the 31 attempts had got" as a step line. A last click says it is a
+  correlation, and Ben's claim is his ("My read is that the harness is a big reason it got there"). The notes
+  carry the staircase (Nether 4 Sep, the End with help 9 Sep and alone 11 Sep, the dragon at 118/200 13 Sep, the
+  win 15 Sep), the 20 + 11 split, 7 h 49 and 3 h 56, and why "118, not 190".
 - **How I picked the next fix.** The loop in five boxes (watch a run with the recorder, write down what broke,
   order by how often it bites, fix with a scenario that fails before the fix, keep it or park it in known-failing),
   then the dolphin drowning a click at a time: 23:26 drowned with air 186–200 against a full bar of 20; the cause (a
   dolphin's 6000 air leaking into the bot's oxygen); 23:40 the one-line fork fix, 14 min after the death; 23:47 the
-  scenario; still in the suite today.
+  scenario; still in the suite today as the SealedDiver pen of `survival/breath-reflex.yaml` (the notes describe
+  the pen, since its YAML is no longer on a slide).
 - **Coding agents wrote the code. I steered.** The 829 commits (Jul–Oct) as one bar: 347 with a Claude Code
   co-author line in Claude's colour, 482 without one hatched grey as "most likely Codex, inferred from its session
   records", and 0 found hand-written. A click: how Ben steered (AGENTS.md rules, the human-reviewed package, plans
   from his notes, review before push). A click: 13 Sep, the 5-line note → 761-line plan → 12 agents at 19:38 →
   integration branch at 22:19. A last click, the rule the takeaways' Iterate card points back to: "No fix without a
-  scenario that failed first." The last note hands over to the run.
+  scenario that failed first." The last note hands over to part 6: "Next, here's what that process built."
 - The start date is settled (coordinator, 14 November): the bot started on 27 June 2026, so the part says "late
   June" where it needs a start. Still held back until Ben answers: the agents are named as "coding agents (Codex
   and Claude Code)".
@@ -662,17 +684,12 @@ products of the respective model providers"); TechRadar, 15 August 2025; Anthrop
 | 5 min | Part 2, Why try it with AI? The card, the Pokémon headlines in one beat, why Minecraft is harder (the example clip an optional pop there) | 6–8 |
 | 7.5 min | Part 3, Can an LLM do it? The card, AltoClef in one line, the dragon clip with sound, then the prompt and the stats | 9–12 |
 | 9.5 min | What happened in the run: the timeline and four tiles (moved from part 7 on 15 November) | 13 |
-| 13.5 min | Part 4, How do you approach it? The question, playing Pokémon, then playing Minecraft, which builds into the six layers and their two bug clips (one slide since 13 November, 22 clicks), the thesis | 14–17 |
-| 18.5 min | Part 5, What did I build? The card, I built an MCP server, one call one whole job, some actions take minutes, a tool call is an async function | 18–22 |
-| 23 min | One body, one lock, six reflexes, the override | 23–25 |
-| 26.5 min | Replies the model can trust, the server keeps the state | 26–27 |
-| 28.5 min | Part 6, How did I build it? The card, 31 attempts before the win | 28–29 |
-| 32 min | Mine Labs: every failure becomes a test | 30 |
-| 34 min | The harness grew, the runs got further | 31 |
-| 37 min | How I picked the next fix (the dolphin drowning) | 32 |
-| 39.5 min | Coding agents wrote the code | 33 |
-| 41 min | Part 7, What I'd take from this: the fine print (it carries the part, no card) | 34 |
-| 45 min | Takeaways, links | 35–36 |
+| 14 min | Part 4, How do you approach it? The question, playing Pokémon, then playing Minecraft, which builds into the six layers and their two bug clips (one slide since 13 November, 22 clicks), the thesis; the idea opens on the dial-back (the layers split into bought, built and left alone) before its three cards | 14–17 |
+| 26 min | Part 5, How did I build it? (moved ahead of the server on 16 November) The card, why a test runner, a scenario (the bucket-drop clip and its YAML, pass means observed), from a script to its own package, the harness grew and the runs got further (31 attempts), how I picked the next fix (the dolphin drowning), coding agents wrote the code | 18–24 |
+| 33 min | Part 6, What did I build? The card, I built an MCP server (with one call, one whole job), a tool call is an async function, reflexes act and the model tunes them, replies and memory | 25–29 |
+| 39 min | Navigation: everything starts with getting there, follow Baritone, racing Baritone | 30–32 |
+| 41 min | Part 7, What I'd take from this: the fine print (it carries the part, no card) | 33 |
+| 45 min | Takeaways, links | 34–35 |
 | Questions | Appendix: the run database explorer, the MCP part is tiny, credits | 36–38 |
 
 Each `<section class="slide">` carries its finish-by minute in `data-by`; the speaker view uses it to show pace.
@@ -925,6 +942,23 @@ From the published winning run (Hugging Face dataset `aibengineering/beat-the-ga
     navigation-course, and combat micro-benchmarks that reset scripted arenas, invoke production actions directly,
     retain per-trial metrics and manifests, and enforce zero model calls"; path run `2026-07-19T11-34-33-620Z`
     "satisfied all 12 contracts".
+  - The scenario example (16 November, the bot's repo, read-only): `tests/minecraft/scenarios/pathfinder/bucket-drop-route.yaml`
+    (last changed 20 Oct, `5c792f6`), tagged acceptance. A bedrock floor (-8..8 at y -60) and a bedrock pillar at
+    0,0 from y -59 to -45 (15 blocks); Actor at [0.5, -44, 0.5] with one water bucket; params `action: navigate`,
+    input `{ x: 1, y: -59, z: 0, range: 0, dig: false, scaffold: false }`; goal `kind: all, timeout: 45` with reach
+    [1.5, -59, 0.5] radius 0.75, health 20, hasItem water_bucket 1, completion, survive 1 s. Its comment: "A 15-block
+    fall costs about 12 health without the water, and this world does not regenerate, so the health goal catches a
+    missed or late pour. The bucket goal catches a pour whose water was left behind." Template
+    `templates/flat-single-action-no-regen.yaml` sets `naturalRegeneration: false` and extends
+    `flat-single-action.yaml`, whose client is `bun client-host.ts drivers/single-action.ts`; that driver calls the
+    named action once (`context.call(action, input)`), and Mine Labs checks the world goals separately.
+    The clip and still (the recorder session, 16 November): `minelabs-bucket-drop.mp4` 7.3 s, 1280x720, muted,
+    about 2 s real speed then the drop at 0.4x and a close view at 0.3x, labelled "slow motion"; the yellow line
+    is the planned path, drawn by the block-highlighter mod. The run passed 8 of 8 times: 1 headless with the file
+    unchanged and 7 recorded, the recorded ones from copies with one added line pinning the spectator camera (the
+    default spectator loses the 15-block fall); arena, inventory, action and goals identical. The still shows
+    "navigate succeeded in 1468 ms", "goal satisfied: all(5) passed", "PASS bucket-drop-route 20.4s" (the
+    20.4 s includes server setup; pour to scoop is about 0.2 s).
   - The first version, end to end (checked 16 November, for the marker on "Playing Minecraft"): `bot.log` runs 27 Jun
     04:48:32 to 04:50:36 UTC (14:48 AEST): the bot spawns, calls gpt-5.4-mini on its 8-second cadence, and every turn
     returns one JSON action with a reason (`follow_player` each time); the log's crash trace runs through
@@ -933,7 +967,7 @@ From the published winning run (Hugging Face dataset `aibengineering/beat-the-ga
     MCP server). The win: 15 Sep 2026, 00:43 UTC (`research/process-timeline.md`, milestone 18, from the published
     `run.json`). 27 Jun to 15 Sep is 80 days, 11.4 weeks: "11 weeks" on the slide. The last whole-agent run started
     19 Jul 09:25 UTC and the first model-free one 11:34 UTC the same day (21:34 AEST), 22 days after the first bot.
-- Part 5 (slides 20 to 29), checked 12 November against the run database (`action_requests`, `action_responses`,
+- Part 6, What did I build? (part 5 until 16 November; slide numbers below are those of 12–14 November), checked 12 November against the run database (`action_requests`, `action_responses`,
   `notes`, `events`, `frontier_chunks`). Run times are from the first event, 00:43:38 UTC.
   - The four calls on slide 21, with their rationales word for word: request 3, `collect_block` logs × 16 at 0:00:04,
     succeeded, 16 gained, 76.7 s; request 23, `smelt_item` raw_iron × 24 with coal at 0:12:26, settled through
@@ -976,12 +1010,43 @@ From the published winning run (Hugging Face dataset `aibengineering/beat-the-ga
   with anything else for now." The winning run was Claude Code. Say "used with Claude Code and Codex"; the design
   intent (a standard MCP server any MCP client can connect to) can be said, but never "qualified", "verified" or
   "works with any harness".
+- Part 6 navigation (16 November).
+  - Run numbers, from the published database's `action_executions` (each `terminal` record's `durationMs` and the
+    largest `distanceTravelledBlocks` in it): 239 executed actions, 135 of them moved the bot more than one block,
+    24,490 blocks in all ("24 km", one block is a metre); those 135 took 3.05 h of the 3.30 h summed over all 239
+    (92%). The clip `navigation-loop.mp4` is request 92 (bot AI_M1KE, `navigate` x -30 y 65 z 89, range 1, dig and
+    scaffold on, 0:55:21), whose overlay matches; rationale word for word.
+  - Baritone, from github.com/cabaletta/baritone and its API (read 16 November): LGPL-3.0; created 1 Aug 2018;
+    9,357 stars; README "an updated version of MineBot" (leijurv's repo) and "it's over 30x faster than MineBot";
+    "Baritone is the pathfinding system used in Impact since 4.4"; top contributor leijurv (2,509 commits), then
+    ZeroMemes (747) and ZacSharp (326). The README names no creator in so many words; leijurv's MineBot and commit
+    count are the basis for "by leijurv and contributors". v1.13.1, the version raced, is a release for Minecraft 1.21.4.
+  - Not a port of the source: `dd5b37a6` (26 Aug, "add the Mineflayer-native navigation candidate": "shape follows
+    Baritone where Baritone has already answered the question"), `8ff2e416` (ticks), `cff4dd21` (mining);
+    `minecraft-simple-actions/docs/pathfinder-rewrite/reference-implementations.md` says to port "useful fixtures and
+    invariants, not source code". It became the only pathfinder in `9f57abb1` (3 Sep), replacing mineflayer-pathfinder.
+    Neither repo credits Baritone's authors by name; both are MIT, AI Bengineering.
+  - The race (`mine_ai`). First race, 3 Sep, timed by hand in a Claude Code session (transcript `3da275eb…`,
+    03:20Z and 03:27Z): flat stream world, ours 9.4 nodes/ms against Baritone's ~300 ("roughly 30 times"); hilly
+    test-survival world, ours 5.3–5.9 against 340–390 ("about 60 times more" per node). `9f57abb1`'s message: "from
+    about 5 to about 30 to 50 visited nodes per millisecond over the day, measured in-game beside Baritone 1.13.1".
+    Scripted runs, `mine-ai bench navigation`, seed 8675309, routes A 53, B 107, C 159 blocks, ours on Bun 1.4.0,
+    files in `docs/benchmarks/navigation/runs/` (our `visited` against Baritone's `nodes`, per ms of search
+    compute; median of the three routes because A is each engine's JIT-cold first search):
+    `2026-09-03T05-09-06-079Z` 52.4 vs 216, 4.1× (A 1.9, B 4.9, C 4.1); `2026-09-08T06-54-04-542Z` 15.9 vs 190,
+    11.9× (commit `fdf8fbed` blames head cells, collision geometry and the dig-visibility ray);
+    `2026-09-08T23-09-24-645Z` A 61.3 vs 78.4 (1.28×), B 104.4 vs 339.5 (3.25×), C 93.9 vs 255.6 (2.72×), median
+    2.7×; route C there: search 248.8 ms vs 156 ms, wall time 39.56 s vs 37.25 s. Dates on the slide are AEST (the
+    run files are UTC: 03:27Z and 05:09Z on 3 Sep, 06:54Z on 8 Sep, 23:09Z on 8 Sep = 9 Sep 09:09 AEST).
+    Per node (`docs/benchmarks/navigation/baritone-profile.md`, `838b2c2f`, 9 Sep): Baritone 3–4 µs warm, ours about
+    10; about 60% of Baritone's time is block reads. `where-the-search-stands.md` (`f4becc31`): within 1.3× on flat
+    open ground; a native C core was measured and rejected (the loop is about 1% of a node).
 
 ## Open items
 
 Shown on the slides as dashed yellow TODO chips (press T to hide them).
 
-- [ ] Part 6 (Ben's call): the Baritone tiles (32 files credit Baritone, 15.4k lines of navigation, 4 forks) and
+- [x] Part 5, How did I build it? (Ben's call; done 16 November: navigation and Baritone have three slides in part 6): the Baritone tiles (32 files credit Baritone, 15.4k lines of navigation, 4 forks) and
       the navigation loop clip left the slides when "How it got reliable" became part 6; Baritone is in the notes
       of "The harness grew, the runs got further". Bring them back as a slide or a click if the Integrate takeaway
       needs them on screen.
@@ -989,7 +1054,9 @@ Shown on the slides as dashed yellow TODO chips (press T to hide them).
       file 13:51). "Who I am" says Jun–Sep 2026; its notes have "Started 27 June, a few days before the leave" if asked.
 - [x] First version's date on "Playing Minecraft" (16 November): 27 Jun, 11 weeks before the win, from `bot.log`
       (see "Verified facts"); the TODO chip in its notes ("first couple of days") is gone.
-- [ ] Part 6: the agents named only as "coding agents (Codex and Claude Code)" until Ben says how to name them.
+- [x] Part 5, How did I build it? (16 November): the bucket-drop clip and pass still are on "A scenario: a world,
+      a bot, a goal"; the TODO chip is gone.
+- [ ] Part 5, How did I build it?: the agents named only as "coding agents (Codex and Claude Code)" until Ben says how to name them.
 - [ ] Slide 17: look at what Jev's Minecraft demo actually does before saying more than the one line about it.
 - [x] Intro (10 November): Ben names his employer out loud on the day. In writing it is only ever "Australia's
       largest bank" (slide 2). The name is not written anywhere in this project, because the site, its speaker
@@ -1008,11 +1075,15 @@ Shown on the slides as dashed yellow TODO chips (press T to hide them).
   game with no human input." Ben remembered it as the world's first computer-driven completion. "First bot" is
   what the sources support; "computer-driven" would also take in scripted input replays (TAS), which weren't checked.
 - [x] Area 1: what was tried before the MCP server. Dropped with the area cards on 12 November.
-- [ ] Slide 28: did Claude Code compact its context during the winning run? The notes say compaction loses
+- [ ] "Replies to trust, memory to query" notes: did Claude Code compact its context during the winning run? The notes say compaction loses
       nothing; say it happened only if it did.
 - [ ] Slide 29: were the physics fixes sent upstream, or do they live in the forks?
 - [ ] Slide 29: the Baritone rewrite is the worked example; pick the one break → scenario → fix to tell from it.
-- [ ] Slide 25 notes: confirm the name of the combat package collection.
+- [ ] "Reflexes act, the model tunes them" notes: confirm the name of the combat package collection.
+- [ ] Part 6, Baritone (Ben): he remembered "10 or 30× slower, about 4× after optimising" and called it a port. Measured:
+      30–60× (3 Sep, by hand), 4.1× that afternoon, 11.9× on 8 Sep, 2.7× on 9 Sep; and the code follows Baritone's
+      design without translating its source. The slides use the measurements and say "follow" and "rebuild".
+      Ben to confirm both, and whether to credit anyone besides leijurv by name.
 - [ ] Limits: reruns of the winning commit, and a Gemini attempt, if either happens.
 - [x] Pokémon section: the example clip for slide 7 is in (10 November), cut from a Claude Plays Pokémon clip on
       Twitch. See "Clips". Still Ben's call: whether it goes in the published copy, and whether he'd rather one of

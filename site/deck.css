@@ -570,6 +570,22 @@ pre.prompt::before { content: "> "; color: var(--accent); }
 .ideas .card.step { transform: translateY(28px); transition: opacity .2s ease, transform .25s cubic-bezier(.2, .8, .2, 1); }
 .ideas .card.step.shown { transform: none; }
 @media (prefers-reduced-motion: reduce) { .ideas .card.step { transform: none; } }
+/* The idea (.idb): the six layers again, small, above the cards. Its first click (.k-idb) splits them into what was
+   bought (Model, Harness), the one thing built (Tools, Actions, Client: the MCP server) and what was left alone. */
+.idb-layers { display: flex; gap: 40px; }
+.idb-g { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.idb-buy { flex: 2; } .idb-build { flex: 3; } .idb-keep { flex: 1; }
+.idb-g ol { list-style: none; margin: 0; padding: 0; display: flex; gap: 12px; }
+.idb-g li { flex: 1; min-width: 0; text-align: center; font: 400 26px/1 var(--term); padding: 14px 8px; border: 4px solid var(--line); background: var(--surface); color: var(--text-2);
+  transition: border-color .3s ease, background-color .3s ease, color .3s ease; }
+.idb-g p, .idb-g small { margin: 0; font: 400 22px/1.2 var(--term); white-space: nowrap; transition: opacity .3s ease, color .3s ease; }
+.idb-g p { color: var(--text); }
+.idb-g small { color: var(--text-3); }
+.idb .ideas .card { padding: 24px 32px 28px; }
+.idb:not(:has(.k-idb.shown)) .idb-g :is(p, small) { opacity: 0; }
+.idb:has(.k-idb.shown) .idb-build li { border-color: var(--accent); background: var(--ok-dim); color: var(--text); }
+.idb:has(.k-idb.shown) .idb-build p { color: var(--accent); }
+.idb:has(.k-idb.shown) .idb-buy li { border-style: dashed; color: var(--text-3); }
 
 /* A switch on a quote: which way the model had just flicked a reflex. Amber and to the left is off, green and to the
    right is on, and the word says so too. The on switch slides across as its quote comes in. */
@@ -1262,123 +1278,205 @@ aside.notes { display: none; }
 .p5-pts-src { font-size: 22px; color: var(--text-3); }
 .p5-tight .p5-split-key { gap: 4px; }
 .p5-tight .p5-split-key b { font-size: 33px; }
-
-/* ---------- part 6: how did I build it? (31 attempts before the win, Mine Labs: every failure becomes a test,
-   The harness grew the runs got further, How I picked the next fix, Coding agents wrote the code) ----------
-   Everything here is prefixed p6-. Panels reuse the bevel of .card and the terminal inset of part 5's code panels;
-   .p5-label is borrowed as is. Green is the win or a pass; the scenario line is series 1. */
-/* 31 attempts: the furthest any attempt had got, as a staircase. Each step stands on a riser whose height is its level. */
-.p6-climb { display: flex; flex-direction: column; gap: 14px; }
-.p6-stairs { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; align-items: end; }
-.p6-stairs li { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
-.p6-stairs .slot { width: 76px; height: 76px; margin-bottom: 4px; }
-.p6-stairs .slot .px { width: 52px; height: 52px; }
-.p6-stairs .slot .cube { --s: 32px; }
-.p6-head { width: 62px; height: auto; filter: drop-shadow(0 0 5px rgba(200, 140, 255, .7)); }
-.p6-stairs b { font: 400 28px/1.15 var(--term); color: var(--text); }
-.p6-stairs small { font: 400 22px/1.2 var(--term); color: var(--text-3); }
-.p6-riser { display: block; align-self: stretch; margin-top: 8px; height: calc(22px + var(--lv) * 38px); background: var(--surface-2);
-  border: 4px solid; border-color: var(--edge-light) var(--edge-dark) var(--edge-dark) var(--edge-light); box-shadow: 0 0 0 4px var(--edge-dark); }
-.p6-stairs li.win b { color: var(--accent); }
-.p6-stairs li.win .p6-riser { background: var(--ok-dim); border-color: var(--accent) var(--accent-dim) var(--accent-dim) var(--accent); }
-.p6-groups { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; margin-top: 4px; }
-.p6-groups p { padding-top: 8px; border-top: 4px solid var(--line); font-size: 24px; line-height: 1.25; text-align: center; color: var(--text-2); }
-.p6-groups p.win { border-top-color: var(--accent); color: var(--accent); }
-.p6-cost { display: flex; flex-direction: column; gap: 8px; }
-.p6-cost .lede { font-size: 36px; }
-
-/* Mine Labs: the scenario as written on the left, what makes it a test on the right, its history along the bottom.
-   One grid, so the "took the model out" point can follow the history in the click order and still sit in the right
-   column, under the three points. */
-.p6-lab { display: grid; grid-template-columns: 820px minmax(0, 1fr); grid-template-rows: auto 1fr auto; column-gap: 44px; row-gap: 18px; align-items: start; margin-top: -10px; }
-.p6-yaml { grid-column: 1; grid-row: 1 / 3; display: flex; flex-direction: column; gap: 8px; }
-.p6-yaml .p5-label span { margin-left: 14px; letter-spacing: 0; text-transform: none; color: var(--text-3); }
-.p6-yaml pre { margin: 0; padding: 8px 20px 10px; font: 400 20px/1.25 var(--term); white-space: pre; color: var(--text); background: var(--inset); border: 2px solid var(--accent-dim); }
-.p6-yaml pre .k { color: var(--accent); }
-.p6-yaml pre .s { color: var(--warn); }
-.p6-yaml pre i { font-style: normal; color: var(--text-3); }
-.p6-facts { grid-column: 2; grid-row: 1; display: flex; flex-direction: column; gap: 16px; padding-top: 30px; }
-.p6-facts p, .p6-modelout { display: flex; flex-direction: column; gap: 6px; padding-left: 24px; border-left: 8px solid var(--accent); }
-.p6-facts b, .p6-modelout b { font: 400 33px/1.2 var(--term); color: var(--text); }
-.p6-facts span { font-size: 26px; line-height: 1.3; color: var(--text-2); }
-.p6-modelout { grid-column: 2; grid-row: 2; align-self: end; border-left-color: var(--warn); }
-.p6-modelout span { font-size: 24px; line-height: 1.25; color: var(--text-2); }
-.p6-history, .p6-fan ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 30px; }
-.p6-history li, .p6-fan li { position: relative; display: flex; flex-direction: column; gap: 2px; padding: 8px 18px 10px; font-size: 22px; line-height: 1.25; color: var(--text-2);
+/* Part 6 restructure, 16 November: the control layer condensed to four slides, then navigation and the Baritone port.
+   Still prefixed p5- (this block's prefix); the navigation slides use p5-nav-. */
+.p5-whole { display: flex; flex-direction: column; gap: 10px; }
+.p5-chain { font-size: 24px; line-height: 1.3; color: var(--text-2); }
+.p5-pol { display: grid; grid-template-columns: minmax(0, 1fr) 520px; gap: 48px; align-items: start; }
+.p5-pol .chart { gap: 12px; }
+.p5-pol .chart-title { font-size: 24px; }
+.p5-pol-bars { font-size: 26px; row-gap: 12px; column-gap: 22px; }
+.p5-pol-bars .name .px { width: 40px; height: 40px; }
+.p5-pol-bars .name .px.hud { width: 38px; height: 38px; }
+.p5-pol-bars .bar { height: 18px; }
+.p5-pol-bars .note { font-size: 22px; }
+.p5-pol-side { display: flex; flex-direction: column; gap: 12px; }
+.p5-pol-side .p5-kind { padding: 8px 22px 12px; }
+.p5-pol-side .p5-kind h3 { font-size: 33px; }
+.p5-pol-side .p5-kind p { font-size: 24px; }
+.p5-over { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; padding: 10px 20px 12px; background: var(--inset); border: 2px solid var(--warn); }
+.p5-over-head { display: flex; align-items: center; gap: 16px; }
+.p5-over-head .switch { position: static; }
+.p5-over-head time { margin-left: auto; font: 400 22px/1 var(--term); color: var(--text-3); }
+.p5-over-head time::after { content: " in"; }
+.p5-over .p5-said { font-size: 22px; }
+.p5-over-foot { font-size: 22px; line-height: 1.3; color: var(--text-2); }
+.p5-pol-main { display: flex; flex-direction: column; gap: 30px; }
+.p5-pol-main .p5-handoff { gap: 34px; }
+.p5-pol-main .p5-handoff li { padding: 10px 16px 12px; font-size: 22px; gap: 4px; }
+.p5-pol-main .p5-handoff b { font-size: 24px; }
+.p5-pts .p5-ask { margin-top: 10px; padding: 8px 18px 10px; }
+.p5-pts .p5-ask .p5-call-head code { font-size: 26px; }
+.p5-pts .p5-ask .p5-said { font-size: 22px; }
+.p5-pts .p5-ask .p5-then { font-size: 22px; padding-top: 6px; border-top-width: 2px; }
+/* Navigation. */
+.p5-nav-intro { display: grid; grid-template-columns: 820px minmax(0, 1fr); gap: 44px; align-items: start; }
+.p5-nav-intro .clip { outline: 4px solid var(--edge-dark); }
+.p5-nav-side { display: flex; flex-direction: column; gap: 22px; }
+.p5-nav-facts { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+.p5-nav-facts li { display: flex; flex-direction: column; gap: 2px; padding-left: 22px; border-left: 8px solid var(--accent); font-size: 24px; line-height: 1.3; color: var(--text-2); }
+.p5-nav-facts b { font: 400 40px/1.1 var(--term); word-spacing: -.25em; color: var(--text); text-shadow: .0909em .0909em 0 var(--shadow); }
+.p5-nav-bar { display: grid; grid-template-columns: 640px minmax(0, 1fr); gap: 56px; align-items: start; }
+.p5-nav-credit { gap: 12px; }
+.p5-nav-credit h3 { display: flex; align-items: center; gap: 18px; font-size: 44px; }
+.p5-nav-credit h3 .px { width: 56px; height: 56px; }
+.p5-nav-by { font-size: 30px; color: var(--text-2); }
+.p5-nav-by b { color: var(--text); }
+.p5-nav-credit ul { margin: 0; padding-left: 28px; display: flex; flex-direction: column; gap: 8px; font-size: 26px; line-height: 1.3; color: var(--text); }
+.p5-nav-src { font: 400 22px/1.3 var(--term); color: var(--text-3); }
+.p5-nav-plan { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 22px; counter-reset: plan; }
+.p5-nav-plan li { counter-increment: plan; display: flex; flex-direction: column; gap: 6px; padding: 14px 24px 16px 84px; position: relative; font-size: 26px; line-height: 1.3; color: var(--text-2);
   background: var(--surface-2); border: 4px solid; border-color: var(--edge-light) var(--edge-dark) var(--edge-dark) var(--edge-light); box-shadow: 0 0 0 4px var(--edge-dark); }
-.p6-history li + li::before, .p6-fan li + li::before { content: ">"; position: absolute; left: -27px; top: 50%; width: 20px; margin-top: -11px; text-align: center; font: 400 22px/1 var(--term); color: var(--text-3); }
-.p6-history time, .p6-fan time { font: 400 22px/1.2 var(--term); color: var(--accent); }
-.p6-history b, .p6-fan b { font: 400 27px/1.2 var(--term); color: var(--text); }
-/* On the Mine Labs slide the history is seven small cards from the first bot to today. The whole-agent runs light
-   amber and the model-free arenas green on the "took the model out" click. */
-.p6-lab .p6-history { grid-column: 1 / -1; grid-row: 3; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 18px; }
-.p6-history li { padding: 5px 12px 7px; gap: 0; }
-.p6-history li + li::before { left: -17px; width: 16px; }
-.p6-history time { font-size: 19px; white-space: nowrap; }
-.p6-history b { font-size: 20px; white-space: nowrap; }
-.p6-history span { font-size: 18px; line-height: 1.2; color: var(--text-3); white-space: nowrap; }
-.p6-history li { transition: border-color .2s ease, background-color .2s ease; }
-.slide:has(.p6-modelout.shown) .p6-history li.p6-whole { border-color: var(--warn); background: var(--warn-dim); }
-.slide:has(.p6-modelout.shown) .p6-history li.p6-free { border-color: var(--accent); background: var(--ok-dim); }
-.p6-yaml .p5-label { white-space: nowrap; }
+.p5-nav-plan li::before { content: "0" counter(plan); position: absolute; left: 24px; top: 16px; font: 400 33px/1 var(--term); color: var(--accent); }
+.p5-nav-plan b { font: 400 33px/1.2 var(--term); color: var(--text); }
+.p5-race { font-size: 30px; row-gap: 22px; }
+.p5-race .name { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; line-height: 1.15; }
+.p5-race .name small { font-size: 22px; color: var(--text-3); }
+.p5-race .bar { height: 34px; }
+.p5-race .bar.range { background: linear-gradient(90deg, var(--series-1) 0 50%, var(--series-mute) 50% 100%); }
+.p5-race .bar.warn { background: var(--warn); }
+.p5-race .bar.key { background: var(--accent); }
+.p5-race .val { font: 400 33px/1 var(--term); }
+.p5-race .note { font-size: 24px; }
+.p5-race .val { white-space: nowrap; }
+.p5-race-walk { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; padding: 14px 28px 16px; background: var(--surface-2);
+  border: 4px solid; border-color: var(--edge-light) var(--edge-dark) var(--edge-dark) var(--edge-light); box-shadow: 0 0 0 4px var(--edge-dark); }
+.p5-race-pair { display: flex; align-items: center; gap: 64px; }
+.p5-race-pair > p { display: flex; flex-direction: column; gap: 6px; font-size: 24px; color: var(--text-2); }
+.p5-race-pair b { font: 400 44px/1 var(--term); white-space: nowrap; color: var(--text); text-shadow: .0909em .0909em 0 var(--shadow); }
+.p5-race-pair .p5-race-say { margin-left: auto; max-width: 440px; font: 400 30px/1.25 var(--term); color: var(--accent); }
+
+/* ---------- part 5: how did I build it? (Why a test runner, What a scenario looks like, From a script to a package,
+   The harness grew the runs got further, How I picked the next fix, Coding agents wrote the code) ----------
+   Everything here is prefixed bld-, and nothing outside this block is borrowed except the shared .card, .slot, .cube,
+   .clip and .todo. Green is the win or a pass; the scenario line is series 1; amber is the model taken out.
+   .bld-with is a step's companion: it shows with the step just before it (the :has rules), without a click of its own. */
+.bld-label { font: 400 22px/1.2 var(--term); letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+.bld-label span { margin-left: 14px; letter-spacing: 0; text-transform: none; color: var(--text-3); white-space: nowrap; }
+.bld-with { opacity: 0; transition: opacity .2s ease; }
+
+/* Why a test runner: three needs as cards, then the answer. */
+.bld-why { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 34px; }
+.bld-need { gap: 14px; padding: 28px 32px 34px; font-size: 30px; line-height: 1.3; color: var(--text-2); }
+.bld-need h3 { font-size: 40px; margin-top: 10px; }
+.bld-need.muted h3 { color: var(--text-2); }
+.bld-need.step { transform: translateY(28px); transition: opacity .2s ease, transform .25s cubic-bezier(.2, .8, .2, 1); }
+.bld-need.step.shown { transform: none; }
+.bld-answer, .bld-rule { display: flex; align-items: center; gap: 22px; font: 400 44px/1.2 var(--term); color: var(--accent); text-shadow: .0909em .0909em 0 var(--shadow); }
+.bld-answer { margin-top: 14px; }
+.bld-answer .px, .bld-rule .px { width: 56px; height: 56px; }
+
+/* What a scenario looks like: the YAML on the left, each part tagged as its click comes; the clip running on the right. */
+.bld-scenario { display: grid; grid-template-columns: 846px minmax(0, 1fr); gap: 40px; align-items: start; margin-top: -10px; }
+.bld-yaml { display: flex; flex-direction: column; gap: 8px; }
+.bld-code { display: flex; flex-direction: column; gap: 6px; padding: 8px 0 10px; background: var(--inset); border: 2px solid var(--accent-dim); }
+.bld-part { position: relative; padding: 2px 16px 2px 14px; border-left: 6px solid transparent; transition: border-color .2s ease; }
+.bld-part pre { margin: 0; font: 400 18px/1.3 var(--term); white-space: pre; color: var(--text); }
+.bld-part pre .k { color: var(--accent); }
+.bld-part pre i { font-style: normal; color: var(--text-3); }
+.bld-tag { position: absolute; right: 12px; top: 3px; padding: 2px 10px 3px; font: 400 19px/1 var(--term); color: var(--surface); background: var(--accent); }
+.bld-part:has(.bld-tag.step.shown), .bld-part:has(.bld-tag.step.shown) + .bld-part:has(.bld-with) { border-left-color: var(--accent); }
+.bld-part:has(.bld-tag.step.shown) + .bld-part .bld-with { opacity: 1; }
+/* The template line sits at the top of the file but is part of the logic: it lights with the params click. */
+.bld-code:has(.bld-logic.shown) .bld-tpl { border-left-color: var(--accent); }
+.bld-code:has(.bld-logic.shown) .bld-tpl .bld-with { opacity: 1; }
+.bld-scenario { position: relative; }
+.bld-pass { position: absolute; left: 0; bottom: 0; width: 846px; margin: 0; display: flex; flex-direction: column; gap: 8px; padding: 12px 16px 14px;
+  background: var(--surface-2); border: 4px solid var(--accent); box-shadow: 0 0 0 4px var(--edge-dark), 0 18px 40px rgba(0, 0, 0, .6); }
+.bld-pass img { display: block; width: 100%; height: auto; }
+/* Tall enough to cover the YAML from the params down, so no tag peeks out above it. */
+.bld-pass { min-height: 326px; justify-content: space-between; }
+.bld-pass figcaption { white-space: nowrap; }
+.bld-pass-sum { margin: 0; white-space: nowrap; font: 400 25px/1.2 var(--term); color: var(--text); }
+.bld-run { display: flex; flex-direction: column; gap: 16px; padding-top: 34px; }
+.bld-run .clip { outline: 4px solid var(--edge-dark); }
+.bld-strap, .bld-beat { display: flex; flex-direction: column; gap: 6px; padding-left: 24px; border-left: 8px solid var(--accent); }
+.bld-strap b, .bld-beat b { font: 400 33px/1.2 var(--term); color: var(--text); }
+.bld-beat b { font-size: 36px; }
+.bld-strap span, .bld-beat span { font-size: 25px; line-height: 1.3; color: var(--text-2); }
+.bld-beat span { font-size: 28px; }
+
+/* From a script to a package: two eras of the history, then the two turns. The beats come first in the markup, so
+   "took the model out" is the first click, and sit under the eras by order. */
+.bld-grow { display: flex; flex-direction: column; gap: 56px; margin-top: 24px; }
+.bld-eras { order: 1; display: grid; grid-template-columns: 4fr 3fr; gap: 30px; }
+.bld-beats { order: 2; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 44px; }
+.bld-era { display: flex; flex-direction: column; gap: 14px; }
+.bld-era .bld-history { flex: 1; }
+.bld-era .bld-label { padding-bottom: 8px; border-bottom: 4px solid var(--line); }
+.bld-pkg .bld-label { border-bottom-color: var(--accent); }
+.bld-history, .bld-fan ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 30px; }
+.bld-pkg .bld-history { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.bld-history li, .bld-fan li { position: relative; display: flex; flex-direction: column; gap: 2px; padding: 8px 18px 10px; font-size: 22px; line-height: 1.25; color: var(--text-2);
+  background: var(--surface-2); border: 4px solid; border-color: var(--edge-light) var(--edge-dark) var(--edge-dark) var(--edge-light); box-shadow: 0 0 0 4px var(--edge-dark); }
+.bld-history li + li::before, .bld-pkg .bld-history li:first-child::before, .bld-fan li + li::before { content: ">"; position: absolute; left: -27px; top: 50%; width: 20px; margin-top: -11px; text-align: center; font: 400 22px/1 var(--term); color: var(--text-3); }
+.bld-history time, .bld-fan time { font: 400 22px/1.2 var(--term); color: var(--accent); }
+.bld-history b, .bld-fan b { font: 400 27px/1.2 var(--term); color: var(--text); }
+.bld-history li { padding: 10px 14px 14px; gap: 4px; transition: border-color .2s ease, background-color .2s ease; }
+.bld-history time { font-size: 24px; }
+.bld-history b { font-size: 26px; }
+.bld-history span { font-size: 22px; line-height: 1.25; color: var(--text-3); }
+.bld-history li.bld-now { border-color: var(--accent) var(--accent-dim) var(--accent-dim) var(--accent); background: var(--ok-dim); }
+.bld-modelout { border-left-color: var(--warn); }
+.slide:has(.bld-modelout.shown) .bld-history li.bld-whole { border-color: var(--warn); background: var(--warn-dim); }
+.slide:has(.bld-modelout.shown) .bld-history li.bld-free { border-color: var(--accent); background: var(--ok-dim); }
+.slide:has(.bld-pkg.shown) .bld-unix { opacity: 1; }
 
 /* The harness grew: one SVG, two panels on one date axis. The bottom panel waits for its click. */
-.p6-chart { width: 1300px; height: 505px; overflow: visible; font-family: var(--sans); }
-.p6-chart text { fill: var(--text-2); font-size: 22px; }
-.p6-chart .p6-panel { fill: var(--text); font: 400 24px/1 var(--term); }
-.p6-chart .p6-sub { fill: var(--text-3); font-size: 22px; }
-.p6-chart .p6-tick { fill: var(--text-3); font-size: 22px; }
-.p6-chart .p6-val { fill: var(--text); font: 400 28px/1 var(--term); }
-.p6-chart .p6-note { fill: var(--text-3); font-size: 22px; }
-.p6-chart .p6-none { fill: var(--text-3); font-size: 24px; font-style: italic; }
-.p6-chart .p6-dates text { fill: var(--text-3); font-size: 22px; font-variant-numeric: tabular-nums; }
-.p6-grid { stroke: var(--line); stroke-width: 2; }
-.p6-grid.faint { stroke-dasharray: 4 8; }
-.p6-mark { stroke: var(--text-3); stroke-width: 2; stroke-dasharray: 2 6; }
-.p6-axis { stroke: var(--text-3); stroke-width: 2; }
-.p6-area { fill: var(--series-1); opacity: .22; }
-.p6-line { fill: none; stroke: var(--series-1); stroke-width: 5; stroke-linejoin: round; }
-.p6-dots circle { fill: var(--series-1); stroke: var(--surface); stroke-width: 3; }
-.p6-step { fill: none; stroke: var(--accent); stroke-width: 5; stroke-linejoin: miter; }
-.p6-recs circle { fill: var(--accent); stroke: var(--surface); stroke-width: 3; }
-.p6-recs circle.win { fill: var(--text); stroke: var(--accent); stroke-width: 4; }
-.p6-runs { opacity: 0; transition: opacity .2s ease; }
-.slide:has(.key-p6-runs.shown) .p6-runs { opacity: 1; }
-.p6-caption { font-size: 30px; line-height: 1.3; color: var(--text-2); max-width: 1300px; margin-top: -6px; }
+.bld-chart { width: 1300px; height: 505px; overflow: visible; font-family: var(--sans); }
+.bld-chart text { fill: var(--text-2); font-size: 22px; }
+.bld-chart .bld-panel { fill: var(--text); font: 400 24px/1 var(--term); }
+.bld-chart .bld-tick { fill: var(--text-3); font-size: 22px; }
+.bld-chart .bld-val { fill: var(--text); font: 400 28px/1 var(--term); }
+.bld-chart .bld-note { fill: var(--text-3); font-size: 22px; }
+.bld-chart .bld-none { fill: var(--text-3); font-size: 24px; font-style: italic; }
+.bld-chart .bld-dates text { fill: var(--text-3); font-size: 22px; font-variant-numeric: tabular-nums; }
+.bld-grid { stroke: var(--line); stroke-width: 2; }
+.bld-grid.faint { stroke-dasharray: 4 8; }
+.bld-mark { stroke: var(--text-3); stroke-width: 2; stroke-dasharray: 2 6; }
+.bld-axis { stroke: var(--text-3); stroke-width: 2; }
+.bld-area { fill: var(--series-1); opacity: .22; }
+.bld-line { fill: none; stroke: var(--series-1); stroke-width: 5; stroke-linejoin: round; }
+.bld-dots circle { fill: var(--series-1); stroke: var(--surface); stroke-width: 3; }
+.bld-step { fill: none; stroke: var(--accent); stroke-width: 5; stroke-linejoin: miter; }
+.bld-recs circle { fill: var(--accent); stroke: var(--surface); stroke-width: 3; }
+.bld-recs circle.win { fill: var(--text); stroke: var(--accent); stroke-width: 4; }
+.bld-runs { opacity: 0; transition: opacity .2s ease; }
+.slide:has(.key-bld-runs.shown) .bld-runs { opacity: 1; }
+.bld-caption { font-size: 30px; line-height: 1.3; color: var(--text-2); max-width: 1300px; margin-top: -6px; }
 
 /* How I picked the next fix: the loop as five numbered boxes, then one real fix a click at a time. */
-.p6-loop { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 22px; counter-reset: p6loop; }
-.p6-loop li { counter-increment: p6loop; display: flex; flex-direction: column; gap: 6px; padding: 14px 18px 16px; font-size: 24px; line-height: 1.28; color: var(--text-2);
+.bld-loop { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 22px; counter-reset: bldloop; }
+.bld-loop li { counter-increment: bldloop; display: flex; flex-direction: column; gap: 6px; padding: 14px 18px 16px; font-size: 24px; line-height: 1.28; color: var(--text-2);
   background: var(--surface-2); border: 4px solid; border-color: var(--edge-light) var(--edge-dark) var(--edge-dark) var(--edge-light); box-shadow: 0 0 0 4px var(--edge-dark); }
-.p6-loop li::before { content: "0" counter(p6loop); font: 400 22px/1 var(--term); color: var(--accent); }
-.p6-loop b { font: 400 28px/1.2 var(--term); color: var(--text); }
-.p6-ex-label { margin-bottom: -18px; }
-.p6-example { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 22px; }
-.p6-example li { display: flex; flex-direction: column; gap: 6px; padding: 12px 18px 14px; font-size: 24px; line-height: 1.28; color: var(--text-2); background: var(--inset); border-left: 6px solid var(--line); }
-.p6-example time { font: 400 22px/1.2 var(--term); color: var(--text-3); }
-.p6-example b { display: flex; align-items: center; gap: 10px; font: 400 28px/1.2 var(--term); color: var(--text); }
-.p6-example b .px { width: 36px; height: 36px; }
-.p6-example li.done { border-left-color: var(--accent); }
-.p6-example li.done b::before { content: "✓"; font: 700 26px/1 var(--sans); color: var(--accent); }
+.bld-loop li::before { content: "0" counter(bldloop); font: 400 22px/1 var(--term); color: var(--accent); }
+.bld-loop b { font: 400 28px/1.2 var(--term); color: var(--text); }
+.bld-ex-label { margin-bottom: -18px; }
+.bld-example { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 22px; }
+.bld-example li { display: flex; flex-direction: column; gap: 6px; padding: 12px 18px 14px; font-size: 24px; line-height: 1.28; color: var(--text-2); background: var(--inset); border-left: 6px solid var(--line); }
+.bld-example time { font: 400 22px/1.2 var(--term); color: var(--text-3); }
+.bld-example b { display: flex; align-items: center; gap: 10px; font: 400 28px/1.2 var(--term); color: var(--text); }
+.bld-example b .px { width: 36px; height: 36px; }
+.bld-example li.done { border-left-color: var(--accent); }
+.bld-example li.done b::before { content: "✓"; font: 700 26px/1 var(--sans); color: var(--accent); }
 
 /* Coding agents wrote the code: who made the commits, how I steered, one evening's fan-out, then the rule. Claude's
    share is in its own colour (it is its name); the inferred Codex share is hatched grey, because it is inferred. */
-.p6-agents { display: grid; grid-template-columns: 640px minmax(0, 1fr); gap: 48px; align-items: start; margin-top: -14px; }
-.p6-authors { gap: 14px; padding: 18px 28px 22px; }
-.p6-share { display: flex; height: 30px; gap: 3px; }
-.p6-share .cc, .p6-key i.cc { background: var(--claude); }
-.p6-share .cx, .p6-key i.cx { background: repeating-linear-gradient(135deg, var(--series-mute) 0 6px, #4a4659 6px 12px); }
-.p6-key { display: flex; flex-direction: column; gap: 8px; }
-.p6-key p { display: grid; grid-template-columns: 18px 76px minmax(0, 1fr); column-gap: 14px; align-items: baseline; font-size: 24px; line-height: 1.25; color: var(--text-2); }
-.p6-key i { width: 18px; height: 18px; align-self: center; border: 2px solid var(--line); }
-.p6-key i.cc, .p6-key i.cx { border: 0; }
-.p6-key b { font: 400 33px/1 var(--term); color: var(--text); text-align: right; }
-.p6-key small { grid-column: 3; font-size: 20px; color: var(--text-3); }
-.p6-steer { display: flex; flex-direction: column; gap: 12px; }
-.p6-steer p { display: flex; flex-direction: column; gap: 2px; padding-left: 22px; border-left: 8px solid var(--accent); }
-.p6-steer b { font: 400 28px/1.2 var(--term); color: var(--text); }
-.p6-steer span { font-size: 23px; line-height: 1.25; color: var(--text-2); }
-.p6-fan { display: flex; flex-direction: column; gap: 8px; margin-top: -8px; }
-.p6-fan li.done { border-color: var(--accent) var(--accent-dim) var(--accent-dim) var(--accent); background: var(--ok-dim); }
-.p6-rule { display: flex; align-items: center; gap: 22px; font: 400 44px/1.2 var(--term); color: var(--accent); text-shadow: .0909em .0909em 0 var(--shadow); }
-.p6-rule .px { width: 56px; height: 56px; }
+.bld-agents { display: grid; grid-template-columns: 640px minmax(0, 1fr); gap: 48px; align-items: start; margin-top: -14px; }
+.bld-authors { gap: 14px; padding: 18px 28px 22px; }
+.bld-share { display: flex; height: 30px; gap: 3px; }
+.bld-share .cc, .bld-key i.cc { background: var(--claude); }
+.bld-share .cx, .bld-key i.cx { background: repeating-linear-gradient(135deg, var(--series-mute) 0 6px, #4a4659 6px 12px); }
+.bld-key { display: flex; flex-direction: column; gap: 8px; }
+.bld-key p { display: grid; grid-template-columns: 18px 76px minmax(0, 1fr); column-gap: 14px; align-items: baseline; font-size: 24px; line-height: 1.25; color: var(--text-2); }
+.bld-key i { width: 18px; height: 18px; align-self: center; border: 2px solid var(--line); }
+.bld-key i.cc, .bld-key i.cx { border: 0; }
+.bld-key b { font: 400 33px/1 var(--term); color: var(--text); text-align: right; }
+.bld-key small { grid-column: 3; font-size: 20px; color: var(--text-3); }
+.bld-steer { display: flex; flex-direction: column; gap: 12px; }
+.bld-steer p { display: flex; flex-direction: column; gap: 2px; padding-left: 22px; border-left: 8px solid var(--accent); }
+.bld-steer b { font: 400 28px/1.2 var(--term); color: var(--text); }
+.bld-steer span { font-size: 23px; line-height: 1.25; color: var(--text-2); }
+.bld-fan { display: flex; flex-direction: column; gap: 8px; margin-top: -8px; }
+.bld-fan li.done { border-color: var(--accent) var(--accent-dim) var(--accent-dim) var(--accent); background: var(--ok-dim); }
+/* end of part 5: how did I build it? */
