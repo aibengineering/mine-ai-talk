@@ -49,7 +49,7 @@
     <div class="toasts">
       <div class="toast step"><span class="slot"><img class="px" src="vendor/pixel-perfection/red_bed.png" alt=""></span><span><small>Goal Reached!</small>Long service leave<em>The time off you get after 10 years</em></span></div>
       <div class="toast challenge step"><span class="slot"><img class="dragon-head" src="art/dragon-head.png" alt=""></span><span><small>Challenge Complete!</small>Beat Minecraft with an LLM<em>Limit-testing AI capabilities, Jun–Sep 2026</em><em class="who-agents">I directed coding agents (Codex and Claude Code). They wrote the code.</em></span></div>
-      <div class="toast step"><span class="slot"><img class="px" src="vendor/pixel-perfection/slime_ball.png" alt=""></span><span><small>For fun</small>Games and pickleball<em>Minecraft, League of Legends. Pickleball is new</em></span></div>
+      <div class="toast step"><span class="slot"><img class="px" src="vendor/pixel-perfection/writable_book.png" alt=""></span><span><small>Cited, Oct 2026</small>Google DeepMind's Argon paper<em>Named as one of two community projects with <span style="white-space: nowrap">end-to-end</span> dragon kills</em></span></div>
     </div>
   </div>
   <aside class="notes"><ul>
@@ -60,7 +60,9 @@
     <li>Same click: I designed it and directed it, but I didn't type the code. Coding agents did, Codex and Claude Code. How that worked is part 6.</li>
     <li>If asked: started 27 June, a few days before the leave, with one model call choosing one action at a time.</li>
     <li>Most of the building was offline. The stream was the bot playing while it was still being built: 3 full attempts on stream, plenty more in between.</li>
-    <li>I play Minecraft and League, so I knew what winning takes. Pickleball is the one people can come and talk to you about afterwards.</li>
+    <li>→ Last one: in October, Google DeepMind's Argon paper, four Gemini agents beating Minecraft, cited this project. Its related work names two community projects that had reported end-to-end dragon kills, and this is one of them. Its authors were invited today, so they may be listening.</li>
+    <li>Say it the way the paper does: one of two community projects with a dragon kill. It doesn't say first, so don't.</li>
+    <li>Reference, if asked: Faldor, Singh and Raileanu (Google DeepMind), "A team of Gemini 4 Argon agents beats Minecraft", arXiv 2610.22319 (arxiv.org/abs/2610.22319), 15 October 2026, section 7, Related work: "Two community projects have recently reported end-to-end dragon kills: a single Claude Opus 5 agent calling 37 high-level Minecraft tools on Normal difficulty (AI Bengineering, 2026), and a planner paired with an action-selection model on a fixed speedrun seed in Peaceful difficulty (Malde, 2026)." Its reference list gives the repo, the Hugging Face dataset and the run that defeated the Ender Dragon, 2026-09-15.</li>
     <li>Then → to part 1: "Today we're talking about Minecraft."</li>
   </ul></aside>
 </section>
@@ -911,7 +913,7 @@
   <h2>Where the 3 h 56 went</h2>
   <div class="chart">
     <div class="timeline">
-      <div class="event right" style="left:55.7%"><span><i class="creeper"></i>Killed by a creeper<small>2:11</small></span></div>
+      <div class="event right" style="left:55.7%"><span><i class="creeper"></i>Killed by a creeper<small>2:11</small><em class="after">Respawned, walked back, picked up its gear</em></span></div>
       <div class="event right" style="left:80.2%"><span>Stuck in a monument<small>3:09</small></span></div>
       <div class="event right" style="left:97.9%;--stem:64px"><span><img class="px hud" src="vendor/pixel-perfection/heart_full.png" alt="">Down to 1 heart<small>3:50</small></span></div>
       <div class="phases">
@@ -944,7 +946,8 @@
     <li>And a third of its calls went wrong: 106 of the 328 that finished failed, partly worked, were refused or were cancelled. Don't hide it.</li>
     <li>→ It still won. Every failure came back as an honest result, and the model picked what to try next.</li>
     <li>If asked, the breakdown: 217 worked, 49 failed, 25 partly worked, 19 refused by the runtime before they started, 13 cancelled by the model. Plus 5 cancel requests, the model asking to stop something, so neither.</li>
-    <li>If asked: the creeper got it at 2:11. It walked back and picked up all 47 dropped items, then told the code to keep further away from hostiles.</li>
+    <li>The line under the creeper answers "if it dies, how does the game go on?" You respawn with nothing, and what you carried lies where you died for about five minutes. It respawned about 200 blocks away, walked back, fought off zombies on the way and picked its gear back up: diamond armour, sword and pickaxe, all 7 ender pearls and all 10 blaze rods. Then it told the code to keep further away from hostiles.</li>
+    <li>If asked how many items: the pick-up saw 47 on the ground at first and 49 by the end, and confirmed 39 before its inventory filled. It dropped some junk and got the diamond boots back too. Not every last item, but everything that mattered.</li>
     <li>If asked: 15 minutes fighting the dragon. Its health went 200, 174, 146, 104, 90, 48, 34, 0, and at one point the bot had 1.95 health left out of 20.</li>
     <li>If asked: it guessed a database table name, got "no such table", read the data dictionary and tried again with the right one.</li>
     <li>Then → to the fine print: the honest limits.</li>

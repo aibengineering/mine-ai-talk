@@ -36,7 +36,7 @@ deliver every part of it.
 | Navigation | Part 6: A navigate call never came back (the 24 Aug hang, the rebuild following Baritone, 24 km walked) and Racing Baritone (the benchmark chart) | Strong |
 | Resource gathering | Too slow to hold the controls (part 6): the run's first collect_block on screen, smelting and crafting in its notes; the gear-up phase and the 0:23 tile on What happened in the run | Thinner since 16 November: one gathering call on screen, the rest in notes. |
 | Combat | No legal move (part 6): the lock, the six reflexes, each reflex a death; and the override, Automatic evade keeps seizing the body | Strong |
-| Failure and recovery | The "1 in 3 calls went wrong" and "Won anyway" tiles on What happened in the run (one slide since 14 November), the creeper death and getting 47 items back (its notes) | Fine. Recovery is mostly spoken. |
+| Failure and recovery | The "1 in 3 calls went wrong" and "Won anyway" tiles on What happened in the run (one slide since 14 November), the creeper death, then respawning and walking back for its gear (a line under the creeper marker since 16 November) | Fine. Recovery is mostly spoken. |
 | Lessons for building agents | Takeaways | Strong |
 | Lessons for evaluating agents | 493 scenarios (29), second takeaway | There, but never called evaluating. Say it on slide 29 (its notes do). |
 | Beyond a short demo | Takeaways notes ("for any agent that has to keep running for hours after the demo's over"; the kicker that said it came off on 14 November) | Fine |
@@ -116,8 +116,12 @@ Under a minute, straight after the host hands over. It answers "why should I lis
 the job (one plain line on the left), why he built it, when, and one human thing. The proof is the dragon clip
 on slide 12, so the slide only names it ("Beat Minecraft with an LLM"). The last three arrive as advancement pop-ups, one click each:
 long service leave; "Challenge Complete! Beat Minecraft with an LLM" with "Limit-testing AI capabilities, Jun–Sep
-2026" under it; and "For fun: games and pickleball". The last one is labelled "For fun" because "Advancement Made!"
-read oddly to Ben (10 November).
+2026" under it; and, since 16 November, "Cited, Oct 2026: Google DeepMind's Argon paper", with "Named as one of two community projects
+with end-to-end dragon kills" under it (a writable book icon). It replaced "For fun: games and pickleball", cut after
+the practice run to save time; the talk is at Google and the paper's authors were invited. The wording stays inside
+what the paper says: it lists the project as one of two community dragon kills, and never says first. The full
+reference: Faldor, Singh and Raileanu (Google DeepMind), "A team of Gemini 4 Argon agents beats Minecraft", arXiv 2610.22319 (arxiv.org/abs/2610.22319), 15 October 2026, section 7, Related work: "Two community projects have recently reported end-to-end dragon kills: a single Claude Opus 5 agent calling 37 high-level Minecraft tools on Normal difficulty (AI Bengineering, 2026), and a planner paired with an action-selection model on a fixed speedrun seed in Peaceful difficulty (Malde, 2026)." Its reference list gives the repo, the Hugging Face dataset and the run that defeated the Ender Dragon, 2026-09-15.
+(Checked 16 November against the arXiv HTML and PDF; the affiliation is on the PDF's first page.)
 Since 14 November the challenge toast has a second line, "I directed coding agents (Codex and Claude Code). They
 wrote the code.", so the room knows from the start who typed the code; the new part 6 ("How I built it") is how.
 The dates were Jul–Sep until 14 November. They are Jun–Sep now: the bot's earliest files are from 27 June 2026 (an
@@ -809,7 +813,10 @@ From the published winning run (Hugging Face dataset `aibengineering/beat-the-ga
   figure of about 1.3 s of time to first token per turn isn't reproduced here: the transcript only shows when each
   content block finished (median 2.0 s to the first one), and the result line's `ttft_ms` (1,675) is a single
   value. These are wall-clock timestamps, so they sum to about 19.8 min, the open item below, not the 17.8.
-- 1 death (creeper, 2:11:31). All 47 dropped items recovered.
+- 1 death (creeper, 2:11:31). It respawned about 200 blocks away, walked back and recovered its gear: diamond armour,
+  sword and pickaxe, 7 ender pearls, 10 blaze rods. The pick-up (`pick_up_items` with recoverDeathItems, request 193,
+  result in wait 194) saw 47 items at first and 49 in the end, and confirmed 39 before the inventory filled; it dropped
+  junk (196) and had its diamond boots back by 198. "All 47 recovered" was wrong (corrected 16 November).
 - 293 automatic survival reactions logged. 9 survival-policy changes by the model.
 - Reactions by reflex: hostile 250 (fight 232, evade 15, hide 2, shield 1), hunger 28, dragon 7, breath 3, footing 3, fire 2.
 - Of 328 settled calls, 217 succeeded and 106 did not cleanly succeed (failed 49, partial 25, refused 19, cancelled 13); the other 5 were cancel requests. 59 further responses were "still running".
