@@ -370,7 +370,10 @@ slide. Each slide shows a person's row, then an AI's row a click later, on the s
      sinks away).
      10. Tools, 11. Harness, the same way. 12. Model: the six layers are complete; the heading becomes "From the model
      to the game", the boxes take their stack labels (Client / Physics, talking to the server / Mineflayer; Game /
-     What really happens / Minecraft), and the layer numbers and the two clip thumbnails appear.
+     What really happens / Minecraft), and the layer numbers and the two clip thumbnails appear. Under the stack a
+     one-line marker fades in (Ben, 16 November: "I had an early version of the overall flow"): "First version, end
+     to end: 27 Jun, 11 weeks before the win" (see "Verified facts"). It stays through the verdicts and the clips and
+     gives its row to the trace on the last click.
   Then the six layers' own five clicks, as on their old slide (see "The layers" and "Clips"): 13. ✓ Solved on Model
   and Harness. 14. ✗ Missing on Tools. 15. Space plays bug-drown out of Actions, which turns red, "✗ Unreliable",
   as it lands. 16. bug-stair out of Client, "✗ Had bugs". 17. "Don't blame the model for a physics bug." with the
@@ -384,9 +387,10 @@ slide. Each slide shows a person's row, then an AI's row a click later, on the s
   (`.pop-thumb`, built by deck.js in the stack boxes the figures' data-box names); the build keeps them hidden with
   the rest of those boxes' contents until the last build click. The parked
   position (298 px below the stack) is the AI row's measured top; if the rows' layout changes, re-measure it. Print
-  shows the end of the slide: the six layers with their verdicts and the rule. The notes for step 6 carry Ben's "a
-  pattern very like this in my first couple of days" with a TODO chip for the date: the earliest record found is
-  mine_ai's first commit, 21 July 2026, which already has one model call choosing one action on top of Mineflayer.
+  shows the end of the slide: the six layers with their verdicts and the rule. The Model click's notes say what the
+  first version was; the verdict notes carry Ben's beat (the whole flow early, whole-agent runs failing, the model out
+  of the tests by 19 July: "the problems were all in a particular area"), with an "if asked" line for the July numbers
+  and one line forward to Mine Labs, which tells that history itself in part 6.
 - **The creeper (17, Ben 14 November: "show what that actually looks like"):** on the fuse click a pixel creeper
   (drawn from Pixel Perfection's `creeper.png`, already credited) walks in right of the fuse line, stops, flashes white
   and swells for exactly 1.5 s, and goes off: a pixel burst, smoke, a small crater. Under it a thin bar, "model's turn,
@@ -921,6 +925,14 @@ From the published winning run (Hugging Face dataset `aibengineering/beat-the-ga
     navigation-course, and combat micro-benchmarks that reset scripted arenas, invoke production actions directly,
     retain per-trial metrics and manifests, and enforce zero model calls"; path run `2026-07-19T11-34-33-620Z`
     "satisfied all 12 contracts".
+  - The first version, end to end (checked 16 November, for the marker on "Playing Minecraft"): `bot.log` runs 27 Jun
+    04:48:32 to 04:50:36 UTC (14:48 AEST): the bot spawns, calls gpt-5.4-mini on its 8-second cadence, and every turn
+    returns one JSON action with a reason (`follow_player` each time); the log's crash trace runs through
+    `src/actions.js` `clearMovement` → `bot.setControlState`, so the action code drove Mineflayer's controls. Model,
+    turn loop, action menu, action code, Mineflayer, server: every layer, home-made in one program (no Claude Code, no
+    MCP server). The win: 15 Sep 2026, 00:43 UTC (`research/process-timeline.md`, milestone 18, from the published
+    `run.json`). 27 Jun to 15 Sep is 80 days, 11.4 weeks: "11 weeks" on the slide. The last whole-agent run started
+    19 Jul 09:25 UTC and the first model-free one 11:34 UTC the same day (21:34 AEST), 22 days after the first bot.
 - Part 5 (slides 20 to 29), checked 12 November against the run database (`action_requests`, `action_responses`,
   `notes`, `events`, `frontier_chunks`). Run times are from the first event, 00:43:38 UTC.
   - The four calls on slide 21, with their rationales word for word: request 3, `collect_block` logs × 16 at 0:00:04,
@@ -975,6 +987,8 @@ Shown on the slides as dashed yellow TODO chips (press T to hide them).
       needs them on screen.
 - [x] Start date (14 November): 27 June 2026, from the bot's earliest files (`bot.log` "spawned as CodexBot", first
       file 13:51). "Who I am" says Jun–Sep 2026; its notes have "Started 27 June, a few days before the leave" if asked.
+- [x] First version's date on "Playing Minecraft" (16 November): 27 Jun, 11 weeks before the win, from `bot.log`
+      (see "Verified facts"); the TODO chip in its notes ("first couple of days") is gone.
 - [ ] Part 6: the agents named only as "coding agents (Codex and Claude Code)" until Ben says how to name them.
 - [ ] Slide 17: look at what Jev's Minecraft demo actually does before saying more than the one line about it.
 - [x] Intro (10 November): Ben names his employer out loud on the day. In writing it is only ever "Australia's

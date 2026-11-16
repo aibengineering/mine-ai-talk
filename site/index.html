@@ -443,6 +443,7 @@
           <div class="mcb-face mcb-server"><b>Java server</b><span>Doesn't wait</span><p class="mcb-chip mcb-check"><i class="mcb-mark"></i><span>Possible?</span><span class="mcb-sub">collisions, speed</span></p></div></li>
       </ol>
       <p class="trace"><i></i>Get this end right first</p>
+      <p class="mcb-first">First version, end to end: <b>27 Jun</b>, 11 weeks before the win</p>
       <p class="lede mcb-rule">Don't blame the model for a physics bug.</p>
       <div class="mcb-link">
         <div class="mcb-lane mcb-up">
@@ -509,17 +510,18 @@
     <li>→ On top of that, actions. Pathfinding, so "walk here" gets there, and doing things in the world: chop a tree, cook, gather what you need.</li>
     <li>→ Then the bridge from those actions out to the model: tools. Here that's an MCP server.</li>
     <li>→ The harness that runs the model's turns: Claude Code.</li>
-    <li>→ And the model. That's the whole way from the model to the game.</li>
+    <li>→ And the model. That's the whole way from the model to the game. The line under it: I had a first version of this whole chain on 27 June, eleven weeks before the win. My own loop called the model every 8 seconds, the model picked one action from a menu, like follow the player, and my code did it on top of Mineflayer. All in one program: no Claude Code and no MCP server yet.</li>
     <li>Left to right: the model decides, the harness runs its turns, the tools are its way out, the actions do the thing, the client is the bot's body, and the game is the game.</li>
     <li>For non-players: the client is a program pretending to be a player. It works out its own movement and tells the server, so its physics has to match the game's.</li>
     <li>→ The two green ones. My bet: the model and the harness are solved, or will be soon. A coding agent already does sessions, compaction and memory. So I used Claude Code and didn't build an agent.</li>
     <li>→ The red ones are where the runs were going wrong. First the tools: there was no way for a model to reach the game at all. And once there was, nearly everything that slowed a run down or made the model look dumb was in the actions and the physics: "walk here" not finishing, bugs in the library.</li>
+    <li>That's what I realised early. I had the whole flow working by late June, and from mid-July I ran it as a whole agent over and over, and the runs kept failing. By 19 July, three weeks in, I'd taken the model out of the tests: the failures were in the tools, the actions and the physics, not in what the model decided. Part 6 picks it up from there: Mine Labs.</li>
+    <li>If asked for the numbers: from 14 to 19 July, 121 whole-agent runs, all on one seed with turn and time limits. Get a diamond within 120 turns and 45 minutes: 18 succeeded, 48 failed and 23 didn't finish. The first model-free runs, with zero model calls, were that same evening, 19 July.</li>
     <li>Space: actions. Stream 10, 1 August. I'd asked it to keep navigating to new areas until it found animals. The navigate action took the direct route: straight out into the sea and down to the seabed, and it couldn't get back out. What I said live: "You're drowning, so quickly just navigate somewhere so it swims. Ah, you're dead." The model asked for something sensible; the action had no idea water was a problem. That's not an AI problem, it's an actions problem. We added a water-safety reflex that same afternoon. The clip shrinks into the Actions box when it ends.</li>
     <li>Space: the client. Stream 7, 21 July, my first stream with the bot, on a stone staircase test course. It walks up the stairs fine, then stops one step below the finish and just stands there. What I said live: "He could just jump up here and get to the end, but he doesn't." The bot thought it was a hair slimmer than the server did, so every jump up that step got pushed back. The fix was a rounding tweak in the physics library, not a prompt. → skips either clip and just turns the box red.</li>
     <li>→ So get each layer right starting from the game end, then look at the one before it. Otherwise you end up rewriting prompts to fix a physics bug.</li>
     <li>This is the map for part 5. The missing tools layer is the MCP server I built, and its actions and reflexes fill the actions layer. Part 5 also answers the timing problem from the Minecraft slide: one lap through the model takes about 3 seconds and the game ticks 20 times a second, so the reacting has to happen at the game end, in the actions, without waiting for the model.</li>
     <li>The other half of the timing problem: some actions take minutes, which is too long for a tool call to sit and wait. Part 5 answers that half on "Some actions take minutes", and the too-fast half on "One body, one lock".</li>
-    <li>I had a pattern very like this in my first couple of days with Minecraft: one model call picks one action, and the actions do the work on top of Mineflayer. What was missing was the bridge. <span class="todo">TODO: which days? The earliest record found is mine_ai's first commit, 21 July 2026, which already has this shape.</span></li>
     <li>Sources, if asked: the packet is "Set Player Position", id 0x1C, for Minecraft 1.21.4 (protocol 769), the version Mine AI MCP runs: X, Feet Y and Z as doubles, then a flags byte, 0x01 on the ground (Minecraft Wiki, Java Edition protocol, the 1.21.4 revision). The values are made up; the bytes are what they encode to. Mineflayer's JavaScript version starts with Andrew Kelley's commits of 2 January 2013; the repo goes back to a C++ version he began in January 2011. It's in the PrismarineJS organisation on GitHub now and sits on node-minecraft-protocol, which reads and writes the packets.</li>
   </ul></aside>
 </section>
