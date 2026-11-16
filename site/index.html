@@ -588,6 +588,7 @@
     <li>→ We needed to test problem-solving: put the bot in a specific situation in a 3D world, and see if it gets through.</li>
     <li>→ I couldn't find an existing project that was a good test runner for that: one that could run arbitrary logic in a world and then verify it actually worked.</li>
     <li>→ So I used AI to build one. It's called Mine Labs.</li>
+    <li>Before you move on, ask the room: "Here's one test. A bot on top of a 15-block bedrock pillar, one water bucket, and it isn't allowed to dig or build. How does it get down alive?" Give it a beat, then →. The clip on the next slide starts by itself and shows the answer, and it's over in a second and a half.</li>
     <li>If asked, why not mocks: the bugs that hurt were in the physics, the mobs and the packets. A mock of the world would have had none of them.</li>
   </ul></aside>
 </section>
@@ -628,7 +629,7 @@
     </div>
   </div>
   <aside class="notes"><ul>
-    <li>Mine Labs sets up an environment with a goal and some conditions, a timeout say. Then it watches what happens in the world, and checks whether the bot overcame the challenge, and how. This one is real, lightly trimmed, and it's on a loop on the right.</li>
+    <li>There's the answer: pour water at the landing, drop into it, scoop it back up. Mine Labs sets up an environment with a goal and some conditions, a timeout say. Then it watches what happens in the world, and checks whether the bot overcame the challenge, and how. This one is real, lightly trimmed, and it's on a loop on the right.</li>
     <li>→ Describe the environment in YAML: a bedrock floor, a 15-block bedrock pillar, and a bot on top of it with one water bucket. Bedrock can't be broken.</li>
     <li>→ Hand control to a specified piece of logic. Here that's the server's own navigate action, called once, through the same code the model calls: go to the foot of the pillar, no digging, no building. The template line at the top brings in the driver that makes the call.</li>
     <li>→ The goal and its conditions: be at the foot of the pillar within 45 seconds.</li>
