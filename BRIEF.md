@@ -777,16 +777,18 @@ products of the respective model providers"); TechRadar, 15 August 2025; Anthrop
 
 | Finish by | Section | Slides |
 |---|---|---|
-| 1.5 min | Opening: the title while Ben is introduced, then who I am (coding agents wrote the code) | 1–2 |
-| 3.5 min | Part 1, What is Minecraft? The card, show of hands, the route in one line (its clip only if few hands stay up) | 3–5 |
-| 6.5 min | Part 2, Why try it with AI? The card, the Pokémon headlines in one beat, why Minecraft is harder (the example clip an optional pop there) | 6–8 |
+| 2 min | Opening: the title while Ben is introduced, then who I am (coding agents wrote the code) | 1–2 |
+| 4 min | Part 1, What is Minecraft? The card, show of hands, the route in one line (its clip only if few hands stay up) | 3–5 |
+| 8 min | Part 2, Why try it with AI? The card, the Pokémon headlines in one beat, why Minecraft is harder (the example clip an optional pop there) | 6–8 |
 | 10.5 min | Part 3, Can an LLM do it? The card, AltoClef in one line, the dragon clip with sound, then the prompt and the stats | 9–12 |
-| 16.5 min | Part 4, How do you approach it? The question, playing Pokémon, then playing Minecraft, which builds into the six layers and their two bug clips (one slide, 20 clicks since 17 November: the Mineflayer card on its own click for the Andrew Kelley question, no green), then the staircase bug on its own slide in three quick clicks, the thesis, which opens by crossing out the home-made harness; the idea opens on the dial-back before its three cards | 13–17 |
-| 22 min | Part 5, How did I build it? Cut to the card and two slides after the 16 November practice run: an integration test in a 3D world (a lava stepping-stones course: the stock mineflayer-pathfinder bot dies, ours passes), then the loop and who wrote the code (the dolphin drowning, the commit split, review before push) | 18–20 |
-| 34 min | Part 6, What did I build? The "We died…" ladder: the card (312 deaths), the model asks for one whole job at a time, we died in the middle of a job, repeatedly to a spider, we got stuck under the ocean, how a pathfinder finds the way (A*), we died of boredom, because a reflex wouldn't let us leave | 21–28 |
-| 38.5 min | Still part 6, the payoff (both moved here on 16 November): the harness grew and the runs got further (31 attempts), then what happened in the winning run | 29–30 |
-| 40.5 min | Part 7, What I'd take from this: the fine print (it carries the part, no card) | 31 |
+| 21 min | Part 4, How do you approach it? The question, playing Pokémon, then playing Minecraft, which builds into the six layers and their two bug clips (one slide, 20 clicks since 17 November: the Mineflayer card on its own click for the Andrew Kelley question, no green), then the staircase bug on its own slide in three quick clicks, the thesis, which opens by crossing out the home-made harness; the idea opens on the dial-back before its three cards | 13–17 |
+| 25 min | Part 5, How did I build it? Cut to the card and two slides after the 16 November practice run: an integration test in a 3D world (a lava stepping-stones course: the stock mineflayer-pathfinder bot dies, ours passes), then the loop and who wrote the code (the dolphin drowning, the commit split, review before push) | 18–20 |
+| 37 min | Part 6, What did I build? The "We died…" ladder: the card (312 deaths), the model asks for one whole job at a time, we died in the middle of a job, repeatedly to a spider, we got stuck under the ocean, how a pathfinder finds the way (A*), we died of boredom, because a reflex wouldn't let us leave | 21–28 |
+| 40.5 min | Still part 6, the payoff (both moved here on 16 November): the harness grew and the runs got further (31 attempts), then what happened in the winning run | 29–30 |
+| 42.5 min | Part 7, What I'd take from this: the fine print (it carries the part, no card) | 31 |
 | 45 min | Takeaways, links | 32–33 |
+
+(The finish-by minutes above and each slide's data-by were reset on the evening of 17 November to the pace of that evening's run-through, which took 44 min 35 s: part 4 really takes about 10 and a half minutes, not 6, and the opening, part 2 and the ending absorb it. Only the speaker view, the S key, shows them.)
 
 (Evening of 17 November, dictated by Ben. The fine print is four lines with no TODO chips: 37 tools (the Argon paper's number, and the count in docs/mcp/tools.md at the beat-the-game tag; 34 were called in the winning run) and 4 only for the dragon fight; the prompt came with a lot of strategy; one win by one model, reliability and other models not measured; plenty of the game still missing, and it still can't carve a pumpkin. Takeaways keeps its three icons with new wording: strong code-first primitives the AI can use; AI keeps getting better at building and testing them given a scenario that accurately reflects reality; hard-won ingenuity is already out there in papers and open-source projects and AI is good at finding and reusing it. The closing click: the next challenge is fewer tools, which takes fast, low-latency decisions and starts to carry over into robotics and the real world.)
 

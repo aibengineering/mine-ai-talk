@@ -534,9 +534,12 @@ function tick() {
   const pace = document.getElementById('speaker-pace');
   const over = elapsed - by;
   pace.classList.toggle('behind', over > 0);
+  // A signed m:ss against this slide's finish-by minute: +1:20 is time in hand, −2:15 is how far behind (Ben, 17 November:
+  // "show like a minus number to show how far behind I'm running").
+  const signed = t => `${Math.floor(t / 60)}:${String(Math.floor(t % 60)).padStart(2, '0')}`;
   pace.textContent = !started ? 'Timer starts when you leave the first slide.'
-    : over > 0 ? `Behind: this section should have ended ${Math.ceil(over / 60)} min ago.`
-    : `${Math.floor(-over / 60)} min ${Math.floor(-over % 60)} s left in this section.`;
+    : over > 0 ? `−${signed(over)} behind: this should have ended by minute ${slides[index].dataset.by}.`
+    : `+${signed(-over)} left before minute ${slides[index].dataset.by}.`;
 }
 
 // ---------- input ----------

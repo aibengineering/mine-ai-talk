@@ -852,7 +852,7 @@ body.speaker #speaker {
   display: grid; position: absolute; left: calc(52vw + 48px); right: 24px; top: 24px; gap: 18px; font-size: 18px; color: var(--text-2);
 }
 #speaker .clock { font-size: 56px; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; line-height: 1; }
-#speaker .pace { font-size: 18px; }
+#speaker .pace { font-size: 26px; font-variant-numeric: tabular-nums; }
 #speaker .pace.behind { color: var(--warn); }
 #speaker button { font: inherit; padding: 6px 14px; background: var(--surface-2); color: var(--text); border: 1px solid var(--line); cursor: pointer; }
 #speaker .next { border-top: 1px solid var(--line); padding-top: 14px; }
