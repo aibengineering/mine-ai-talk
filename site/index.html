@@ -513,7 +513,7 @@
     <li>Space: the client. Stream 7, 21 July, my first stream with the bot, on a stone staircase test course. It walks up the stairs fine, then stops one step below the finish and just stands there. What I said live: "He could just jump up here and get to the end, but he doesn't." → skips either clip and just turns the box red.</li>
     <li>→ So get each layer right starting from the game end, then look at the one before it. Otherwise you end up rewriting prompts to fix a physics bug. Next: what was going on with that step, in three clicks.</li>
     <li>This is the map for part 6. The missing tools layer is the MCP server I built, and its actions and reflexes fill the actions layer. Part 6 also answers the timing problem from the Minecraft slide: one lap through the model takes about 3 seconds and the game ticks 20 times a second, so the reacting has to happen at the game end, in the actions, without waiting for the model.</li>
-    <li>The other half of the timing problem: some actions take minutes, which is too long for a tool call to sit and wait. Part 6 answers that half on "We died of boredom", and the too-fast half on "The model asks for one whole job at a time" and "We died in the middle of a job".</li>
+    <li>The other half of the timing problem: some actions take minutes, which is too long for a tool call to sit and wait. Part 6 answers that half on "We were locked out while a job was running", and the too-fast half on "The model asks for one whole job at a time" and "We died in the middle of a job".</li>
     <li>Sources, if asked: the packet is "Set Player Position", id 0x1C, for Minecraft 1.21.4 (protocol 769), the version Mine AI MCP runs: X, Feet Y and Z as doubles, then a flags byte, 0x01 on the ground (Minecraft Wiki, Java Edition protocol, the 1.21.4 revision). The values are made up; the bytes are what they encode to. Mineflayer's JavaScript version starts with Andrew Kelley's commits of 2 January 2013; the repo goes back to a C++ version he began in January 2011. It's in the PrismarineJS organisation on GitHub now and sits on node-minecraft-protocol, which reads and writes the packets.</li>
   </ul></aside>
 </section>
@@ -725,7 +725,7 @@
 </section>
 
 <section class="slide top" data-section="6 · What did I build?" data-by="24" data-title="The model asks for one whole job at a time">
-  <div class="p5-rung"><ol class="p5-ladder"><li class="on">Controls</li><li>Reflexes</li><li>Replies</li><li>Navigation</li><li>Waiting</li><li>Policy</li></ol><span class="p5-when plain">Since 21 Jul</span></div>
+  <div class="p5-rung"><ol class="p5-ladder"><li class="on">Controls</li><li>Reflexes</li><li>Reporting</li><li>Navigation</li><li>Waiting</li><li>Policy</li></ol><span class="p5-when plain">Since 21 Jul</span></div>
   <h2 class="p5-wrong">The model asks for one whole job at a time</h2>
   <p class="p5-label">The first call of the winning run</p>
   <div class="p5-job p5-job-first">
@@ -749,9 +749,9 @@
   </ul></aside>
 </section>
 
-<section class="slide top" data-section="6 · What did I build?" data-by="26" data-title="We died in the middle of a job">
-  <div class="p5-rung"><ol class="p5-ladder"><li class="done">Controls</li><li class="on">Reflexes</li><li>Replies</li><li>Navigation</li><li>Waiting</li><li>Policy</li></ol><span class="p5-when">✗ 28 Aug</span></div>
-  <h2 class="p5-wrong">We died in the middle of a job</h2>
+<section class="slide top p5-beat" data-section="6 · What did I build?" data-by="26" data-title="We died in the middle of a job">
+  <div class="p5-rung"><ol class="p5-ladder"><li class="done">Controls</li><li class="on">Reflexes</li><li>Reporting</li><li>Navigation</li><li>Waiting</li><li>Policy</li></ol><span class="p5-when">✗ 28 Aug</span></div>
+  <h2 class="p5-wrong">We died<span class="p5-ell">…</span><span class="step p5-tail"> in the middle of a job</span></h2>
   <div class="p5-ev">
     <p class="p5-quote">“I died during the diamond run and respawned empty”</p>
   </div>
@@ -776,6 +776,7 @@
   </div>
   <aside class="notes"><ul>
     <li>A whole job like that takes minutes, and in Minecraft a lot can happen in a few minutes.</li>
+    <li>(The slide arrives on “We died…” with nothing under it. Say those two words, wait, then → brings in the rest of the headline and the slide.)</li>
     <li>On 28 August a skeleton shot the bot three minutes and 44 seconds into a diamond-mining job, and the job just kept going for another two minutes with nobody home, until the bot came back and told us it died during the diamond run and respawned empty.</li>
     <li>So we added reflexes, where the server can step into the middle of a job, deal with the danger, and then hand the job back so it carries on where it left off.</li>
     <li>These are the six reflexes in the code today and how often each one fired in the winning run, and nearly all of it is fighting, then eating, and then a handful for the dragon, breathing, footing and fire.</li>
@@ -790,9 +791,9 @@
   </ul></aside>
 </section>
 
-<section class="slide top" data-arrive data-section="6 · What did I build?" data-by="27.5" data-title="We died again and again, and nobody told the model">
-  <div class="p5-rung"><ol class="p5-ladder"><li class="done">Controls</li><li class="done">Reflexes</li><li class="on">Replies</li><li>Navigation</li><li>Waiting</li><li>Policy</li></ol><span class="p5-when">✗ 3 Aug</span></div>
-  <h2 class="p5-wrong">We died again and again, and nobody told the model</h2>
+<section class="slide top" data-arrive data-section="6 · What did I build?" data-by="27.5" data-title="We died repeatedly to a spider">
+  <div class="p5-rung"><ol class="p5-ladder"><li class="done">Controls</li><li class="done">Reflexes</li><li class="on">Reporting</li><li>Navigation</li><li>Waiting</li><li>Policy</li></ol><span class="p5-when">✗ 3 Aug</span></div>
+  <h2 class="p5-wrong">We died<span class="p5-ell">…</span><span class="step p5-tail"> repeatedly to a spider</span></h2>
   <div class="p5-swap">
     <div class="p5-replay">
       <ol class="p5-chat">
@@ -811,29 +812,32 @@
     </div>
   <div class="p5-grew step">
     <div class="p5-reply">
-      <p class="p5-reply-head">A reply in the winning run, 2:33 in · trimmed</p>
-      <pre><span class="h">## `navigate`</span>
-<i>**</i>Status:<i>**</i> succeeded
-<span class="saw"><i>**</i>Interruptions:<i>**</i> `[HOSTILE_CONTACT] fight response for creeper#28397 …`</span>
+      <p class="p5-reply-head">The reply when it died in the winning run, 2:11 in · trimmed</p>
+      <pre><span class="h">## `collect_mob_drop`</span>
+<i>**</i>Status:<i>**</i> failed
+<span class="saw"><i>**</i>Interruptions:<i>**</i> … `[HOSTILE_CONTACT] evade response for creeper#23863 at -128,48,197 (7.1 blocks) …`</span>
 <em>…</em>
-<span class="ev"><span class="h">## Notifications</span>
-<i>**</i>178 unread notifications.<i>**</i></span>
-<em>…</em></pre>
+<i>**</i>Vitals:<i>**</i> Health 0/20; hunger 20/20.
+<span class="ev"><i>**</i>Survival:<i>**</i> The bot died.</span>
+<em>…</em>
+<span class="h">## Notifications</span>
+<span class="ev">- AI_M1KE died at -110.5233209676283, 32.2...</span></pre>
     </div>
     <div class="p5-grew-list">
-      <p class="p5-label">Where replies grew to</p>
-      <p><time>20–21 Aug</time>Its memory in SQLite, and its own SQL queries</p>
-      <p><time>23 Aug</time>Markdown replies that carry every unread event: chat, deaths, fights</p>
+      <p class="p5-label">Two seconds later it asks for its status</p>
+      <p><time>the model’s reason</time>“I died and need to know where I respawned and what equipment remains before item recovery.”</p>
+      <p><time>view_status</time>Last death: -110.52, 32.23, 194.62 in overworld (AI_M1KE was blown up by Creeper) · Inventory: 0 of 36 slots used</p>
     </div>
   </div>
   </div>
-  <p class="p5-fix p5-fix-late"><b>✓ So we added</b><span>its status now says where it died and what it was carrying <small class="p5-fixwhen">· 4 Aug</small></span></p>
+  <p class="p5-fix p5-fix-late"><b>✓ So now</b><span>its status says where it died and what it was carrying <small class="p5-fixwhen">· 4 Aug</small></span></p>
   <aside class="notes"><ul>
     <li>Once reflexes and jobs are doing things the model never asked for, the model has to be told what actually happened.</li>
-    <li>(On arrival the seven death lines from the server log come up like chat over about six seconds, then the fix line. The model's line lands after the fourth death because that's when it said it, 14:50:18; the two marked "told" are the deaths it got a PLAYER_DIED result for. Arriving any other way shows it finished.)</li>
+    <li>(The slide arrives on “We died…” while the seven death lines from the server log come up like chat over about six seconds, then the fix line. → brings in the rest of the headline, and the next → the death reply from the winning run. The model's line lands after the fourth death because that's when it said it, 14:50:18; the two marked "told" are the deaths it got a PLAYER_DIED result for. Arriving any other way shows it finished.)</li>
     <li>On 3 August one bot died seven times in 98 seconds, respawning into the same mobs, and the model was only told about two of those deaths, so it decided something was wrong with the world and that the builder's position just resets.</li>
     <li>So we made its status say where it died and what it was carrying, and from there the replies kept growing until every tool reply carried everything that had happened since the last call, the chat, the deaths and the fights.</li>
-    <li>→ This is a real reply from the winning run, where the navigate succeeded, a creeper interrupted it on the way, and 178 notifications rode along, and all of it also went into a SQLite database that the bot can query as its own memory.</li>
+    <li>→ This is what the model is told now. It’s the one death in the winning run, two hours eleven in: the reply says the hunt failed, that a creeper interrupted it, and that the bot died. Two seconds later the model asks for its status, which says where it died and that it’s carrying nothing, and three seconds after that it’s on its way back for its gear. All of this also goes into a SQLite database that the bot can query as its own memory.</li>
+    <li>Sources for the click: the run database, request 191 (wait_for_action on the pearl hunt, failed, 02:55:06Z; the creeper line is the last of 14 interruptions and the reply is 8,842 characters), request 192 (view_status, 02:55:08Z) and request 193 (pick_up_items with recover_death_items, 02:55:11Z). Off the slide since 17 November: the 2:33 navigate reply with 178 notifications, and the list “20–21 Aug, its memory in SQLite; 23 Aug, Markdown replies that carry every unread event”.</li>
     <li>Careful: a death during a running action was already reported. What the model missed were the deaths between its calls, which was most of the time. The fix (4 Aug) is older than reflexes (2 Sep); the handover is logic, not order.</li>
     <li>If asked: the bots had filed it as a critical engine failure, in the commit's words "a bot standing 36 blocks away at full health with its gear gone and no explanation anywhere". On 20 and 21 August its memory went into SQLite, every chunk it has seen, containers, events, its own notes. On 23 August replies became Markdown that carries every unread event, because MCP gives the server no way to speak until a tool is called. Those later steps had no single incident behind them.</li>
     <li>If asked, my favourite query: three hours twenty in it had found the stronghold under an ocean, wrote SQL for the closest chunk with under 20% water, and walked there 7 seconds later. 373 of the 387 replies carried notifications. A partial reply at 3:15 said it got 2 of 32 dirt and why it stopped; it walked inland and got all 32.</li>
@@ -842,7 +846,7 @@
 </section>
 
 <section class="slide top" data-section="6 · What did I build?" data-by="29" data-title="We got stuck under the ocean and couldn't get out">
-  <div class="p5-rung"><ol class="p5-ladder"><li class="done">Controls</li><li class="done">Reflexes</li><li class="done">Replies</li><li class="on">Navigation</li><li>Waiting</li><li>Policy</li></ol><span class="p5-when">✗ 5 Aug</span></div>
+  <div class="p5-rung"><ol class="p5-ladder"><li class="done">Controls</li><li class="done">Reflexes</li><li class="done">Reporting</li><li class="on">Navigation</li><li>Waiting</li><li>Policy</li></ol><span class="p5-when">✗ 5 Aug</span></div>
   <h2 class="p5-wrong p5-wrong-long">We got stuck under the ocean and couldn’t get out</h2>
   <div class="p5-ev">
     <p class="p5-quote">“Safe route to shaft failed again: noPath/timeout after 58k nodes”</p>
@@ -871,7 +875,7 @@
 </section>
 
 <section class="slide top astar" data-arrive data-section="6 · What did I build?" data-by="30.5" data-title="How a pathfinder finds the way">
-  <div class="p5-rung"><ol class="p5-ladder"><li class="done">Controls</li><li class="done">Reflexes</li><li class="done">Replies</li><li class="on">Navigation</li><li>Waiting</li><li>Policy</li></ol><span class="p5-when plain">Navigation, continued</span></div>
+  <div class="p5-rung"><ol class="p5-ladder"><li class="done">Controls</li><li class="done">Reflexes</li><li class="done">Reporting</li><li class="on">Navigation</li><li>Waiting</li><li>Policy</li></ol><span class="p5-when plain">Navigation, continued</span></div>
   <h2>How a pathfinder finds the way</h2>
   <div class="ast">
     <div class="ast-map">
@@ -898,11 +902,16 @@
         <li><i class="sw dr"></i>drop<b>9.3</b></li>
         <li><i class="sw wa"></i>swim<b>9.1</b></li>
       </ul>
-      <ul class="ast-calls">
-        <li class="step">Every move is priced in game ticks, so the cheapest route is also the quickest one to walk.</li>
-        <li class="step">Each kind of move has its own code to plan it and to walk it, so it only plans moves it knows how to make.</li>
-        <li class="step">A long trip is planned in pieces, and the next piece is searched while the bot walks this one.</li>
-      </ul>
+      <div class="ast-vs">
+        <div class="ast-vs-g step">
+          <p class="ast-vs-head"><span></span><b>Baritone</b><b>mineflayer-<br>pathfinder</b></p>
+          <p><span>Prices moves in game ticks</span><i class="y">✓</i><i class="n">✗</i></p>
+          <p><span>Own code to walk each move</span><i class="y">✓</i><i class="n">✗</i></p>
+          <p><span>Opens doors</span><i class="y">✓</i><i class="n">✗</i></p>
+          <p><span>Falls 20 blocks with a bucket</span><i class="y">✓</i><i class="n">✗</i></p>
+        </div>
+        <p class="ast-vs-no step"><span>Runs outside the Java client</span><i class="n">✗</i><i class="y">✓</i></p>
+      </div>
     </div>
   </div>
   <div class="ast-fix step">
@@ -912,51 +921,62 @@
   <aside class="notes"><ul>
     <li>A pathfinder works on a budget of tries: from where the bot is standing it always tries the square that looks cheapest so far, and you can watch it pile up against the wall before it finds the way round.</li>
     <li>Every step is a real movement with a price, walking, jumping up, dropping down or swimming, and the route it draws is the cheapest set of moves it found, which here is up over the ridge, down the other side and across two squares of river.</li>
-    <li>The best pathfinder in Minecraft is Baritone, a Java library started by leijurv, and there are three things it does really well that I wanted.</li>
-    <li>→ It prices every move in game ticks, so the cheapest route is also the quickest one to walk.</li>
-    <li>→ Each kind of move has its own code to plan it and to walk it, so it only plans moves the bot knows how to make, and if your bot can't swim, it won't plan a route through water.</li>
-    <li>→ And a long trip is planned in pieces, so the next piece is searched while the bot is walking this one.</li>
+    <li>The pathfinder most Mineflayer bots use is mineflayer-pathfinder, and that’s what we started on. The best one in Minecraft is Baritone, a Java project started by leijurv, so here are the two side by side.</li>
+    <li>→ Baritone prices every move in game ticks, so the cheapest route is also the quickest one to walk, where mineflayer-pathfinder counts plain units, one to walk and two to jump. Baritone has separate code to walk each kind of move, where mineflayer-pathfinder walks them all with one shared routine. It opens doors, where the stock one has that switched off, and ours used to break the door down. And it will take a twenty-block fall by putting a water bucket down under itself, where the stock one stops at four blocks.</li>
+    <li>→ The catch is that Baritone is a mod that runs inside the Java game client, and my bot is a Node.js program that never opens the game, so I couldn’t just use it.</li>
     <li>→ So we rebuilt navigation in TypeScript, following Baritone's design, running natively inside the bot, and credit to leijurv and Baritone's contributors.</li>
     <li>The animation plays once when you arrive with →, about 13 seconds: 121 squares tried, then the route. Arriving any other way shows the finished route. It's a real A* run on this little map with Baritone's costs (walk 4.6 ticks, jump up 6.6, drop one block 9.3, swim 9.1): 27 moves, 141 ticks.</li>
     <li>Careful: say "rebuilt" or "followed", never "ported": it's new TypeScript written to Baritone's design, not translated Java. Don't say it's faster than mineflayer-pathfinder: the only matched comparison, 26 August, found the same speed within about 6%; ours passed a door course the old one failed 0 of 2, because the old one broke the door.</li>
     <li>If asked how mineflayer-pathfinder differs: its costs are plain units, 1 to walk, 2 to jump up, the square root of 2 diagonally and 1 more in water (lib/movements.js in 2.4.5), not ticks; and it plans each kind of move separately but walks them all with one shared routine (monitorMovement in index.js). It also walks a partial route while it keeps searching, so the third point isn't a difference.</li>
     <li>If asked about speed: we raced our rebuild against Baritone itself and went from about 60 times slower to about 3 times slower in nodes searched per millisecond; the race is in the appendix if anyone asks.</li>
+    <li>Careful: don’t say Baritone supports more kinds of move. It has eight movement classes (traverse, ascend, descend, fall, diagonal, parkour, pillar, downward) and mineflayer-pathfinder 2.4.5 has seven generators (forward, jump up, drop down, diagonal, parkour, up, down). The difference is how each move is priced and walked, plus doors and the bucket fall. “Stock” matters for the doors row: mineflayer-pathfinder has door code, switched off by default with the comment “Causes issues”.</li>
+    <li>Off the slide since the evening of 17 November: “A long trip is planned in pieces, and the next piece is searched while the bot walks this one.” It’s true of Baritone and of ours, but mineflayer-pathfinder also walks a partial route while it keeps searching, so it isn’t a difference.</li>
+    <li>Sources for the table, read 17 November: Baritone master, Moves.java (the eight classes), MovementTraverse.java (BlockDoor, BlockFenceGate, isDoorPassable), MovementFall.java (willPlaceBucket), Settings.java (allowWaterBucketFall true, maxFallHeightBucket 20, maxFallHeightNoWater 3), README (it ships as Forge and Fabric mod jars). mineflayer-pathfinder 2.4.5: lib/movements.js (canOpenDoors = false, maxDropDown = 4, no bucket code, costs in plain units) and index.js (monitorMovement). Ours: execution/opened-passages.ts, movements/bucket-drop.test.ts, mineflayer/water-landing.ts.</li>
     <li>Sources: Baritone (github.com/cabaletta/baritone, master, read 17 November): ActionCosts.java, "These costs are measured roughly in ticks", walk 20/4.317, water 20/2.2, jump and fall from the gravity formula, plus jumpPenalty 2 in Settings.java; every movement class has its own calculateCost and updateState (Movement.java, MovementAscend.java, MovementTraverse.java); PathingBehavior.java plans the next path in a new thread while the current one is walked, from planningTickLookahead (150 ticks) in Settings.java; a search stops at primaryTimeoutMS (500 ms) and returns the best partial path (AbstractNodeCostSearch.java, bestSoFar). Ours, the beat-the-game tag: movements/catalogue.ts ("The movement's total cost in ticks"), execution/movement-controller.ts and water-movement-controller.ts, orchestration/navigation-run.ts ("Baritone plans its next segment while walking the current one"). New navigation dd5b37a6 (26 Aug 12:21), the default in 8c7826bc (22:55); the only pathfinder from 3 September. Navigation is 15,380 of 58,294 lines.</li>
   </ul></aside>
 </section>
 
-<section class="slide top" data-section="6 · What did I build?" data-by="32" data-title="We died of boredom">
-  <div class="p5-rung"><ol class="p5-ladder"><li class="done">Controls</li><li class="done">Reflexes</li><li class="done">Replies</li><li class="done">Navigation</li><li class="on">Waiting</li><li>Policy</li></ol><span class="p5-when">✗ 7 Sep</span></div>
-  <h2 class="p5-wrong">We died of boredom</h2>
+<section class="slide top" data-section="6 · What did I build?" data-by="32" data-title="We were locked out while a job was running">
+  <div class="p5-rung"><ol class="p5-ladder"><li class="done">Controls</li><li class="done">Reflexes</li><li class="done">Reporting</li><li class="done">Navigation</li><li class="on">Waiting</li><li>Policy</li></ol><span class="p5-when">✗ 24 Aug</span></div>
+  <h2 class="p5-wrong">We were locked out while a job was running</h2>
   <div class="p5-ev">
-    <p class="p5-quote">“…the collect has stopped progressing, so the time is better spent on the portal.”</p>
+    <p class="p5-quote">“[ACTION_BUSY] simple_navigate has been running since …; no new action started.”</p>
   </div>
-  <p class="p5-fix"><b>✓ So now</b><span>an action runs in the background, and the model can wait a set time, check progress or cancel <small class="p5-fixwhen">· 13 Sep</small></span></p>
+  <p class="p5-fix"><b>✓ So now</b><span>a job runs in the background, and the model can wait a set time, check progress or cancel <small class="p5-fixwhen">· 13 Sep</small></span></p>
+  <div class="p5-async">
+    <p class="p5-label">Walking back to the Nether portal in the winning run: one call, 5 min 38 s</p>
+    <ol class="p5-seq p5-seq-big p5-seq-wide">
+      <li><time>0:00</time><code>navigate to the portal</code><span>2:14 still running · 254 blocks to go</span></li>
+      <li><time>2:16</time><code>wait_for_action</code><span>4:30 still running · 91 blocks to go</span></li>
+      <li class="done"><time>4:32</time><code>wait_for_action</code><span>5:38 arrived</span></li>
+    </ol>
+  </div>
   <div class="p5-async step">
-    <p class="p5-label">16 obsidian in the winning run: one call, 7 minutes</p>
-    <ol class="p5-seq p5-seq-big">
-      <li><time>0:00</time><code>collect_block obsidian × 16</code><span>2:11 still running</span></li>
-      <li><time>2:13</time><code>wait_for_action</code><span>4:28 still running · 2 of 16</span></li>
-      <li><time>4:33</time><code>wait_for_action</code><span>6:47 still running · 14 of 16</span></li>
-      <li class="done"><time>6:49</time><code>wait_for_action</code><span>7:07 16 of 16</span></li>
+    <p class="p5-label">And when it changes its mind, an hour into the run</p>
+    <ol class="p5-seq p5-seq-big p5-seq-wide">
+      <li><time>1:03</time><code>cancel_foreground_action</code><span>“…time is better spent hunting endermen.”</span></li>
     </ol>
   </div>
   <aside class="notes"><ul>
     <li>Once the bot could get where it was going, jobs ran for minutes, and while one was running the model could only sit there and wait.</li>
-    <li>On 7 September it asked for obsidian, the chat client gave up on the call after five minutes, and the model checked the status six times in a minute and a half before it got bored and cancelled, because it decided the job had stopped making progress.</li>
-    <li>Thirteen seconds later the bot was in lava, because that job was the thing keeping it out of the lava it was standing next to.</li>
-    <li>So we made actions run in the background, where the model asks for a job and waits a set time, and when the wait runs out it can keep waiting, look at the progress, or cancel.</li>
-    <li>→ Here's the same job in the winning run, 16 obsidian, where the model waited about two minutes at a time, saw 2 of 16 and then 14 of 16, and it finished at seven minutes.</li>
-    <li>Careful: the cancel is what left the bot unprotected next to the lava. A cancelled job left the body where it stood with nothing keeping it safe; the run's own write-up says "Patience worked; the cancel killed the bot", and later in that run the same kind of job settled by itself at 14 of 14. The five-minute limit was the chat client's idle timeout, not ours.</li>
+    <li>A tool call used to hold the model until the job finished, so if a walk across the world took fifteen minutes the model waited fifteen minutes, and if the job got stuck the model was stuck with it. This is what it got back on 24 August when a navigate never returned: every call after it, even one to read its own status, was refused.</li>
+    <li>So now every action is async by default, and I think of it like async and await in JavaScript: the model asks for a job and says how long it’s willing to wait, and when that time is up the job keeps running and the model gets control back.</li>
+    <li>Here’s the walk back to the Nether portal in the winning run. It’s one navigate call that took five and a half minutes, and the model checked in every two minutes, saw 254 blocks to go and then 91, and chose to keep waiting both times.</li>
+    <li>While a job runs it can still look at blocks, query its database or read its status, and the body still does one job at a time.</li>
+    <li>→ And when it changes its mind it can cancel: an hour in, it stopped a blaze hunt because nine rods was already enough and ender pearls had become the bottleneck.</li>
+    <li>Careful: no death on this slide. The 24 August lock-out was a pathfinder hang that was fixed the same day; async actions came on 13 September (2685082). The handover is logic, not order. Before 13 September the model could already cancel a job once the chat client had given up on the call, so don’t say it had no way out at all.</li>
+    <li>If asked for a death: on 7 September, in a practice run that wasn’t streamed, the model asked for obsidian, the chat client gave up on the call after five minutes, and the model checked the status six times in a minute and a half and then cancelled because “…the collect has stopped progressing, so the time is better spent on the portal.” Thirteen seconds later the bot was in lava, because that job was what kept it out of the lava it stood next to. The run’s write-up: “Patience worked; the cancel killed the bot.” This was the slide’s headline, “We died of boredom”, until the evening of 17 November.</li>
+    <li>If asked for another long call: 16 obsidian in the winning run was one collect_block call that took 7 minutes 7 seconds, with waits that saw 2 of 16 and then 14 of 16 (requests 49 to 52). That table was on this slide until 17 November.</li>
     <li>If asked: each time a wait ran out, 59 times in the winning run, the model chose to keep waiting, look at something first, or cancel. Earlier, on 2 September, we had already removed our own 60-second deadline after the bot began splitting a smelt into "timeout-safe batches" (b2510ed6). Async actions are 2685082 (13 Sep 00:08); the tools are wait_for_action and cancel_foreground_action, and the body still does one task at a time.</li>
-    <li>If asked about a model locked out entirely: on 24 August a navigate call never came back, and every call after it, even reading the status, got "[ACTION_BUSY] simple_navigate has been running since …; no new action started." That was a pathfinder hang, fixed the same day.</li>
-    <li>Sources: the bot's database for world eyes-of-ender-20260907n: request 67, collect_block obsidian at 16:44:11; request 68 at 16:49:22, "The obsidian collect exceeded the client idle timeout but keeps running server-side"; status checks 68 to 73; request 74, cancel_foreground_action at 16:50:54, with the rationale on the slide. Server log 2026-09-07-1.log.gz: "EnderSeeker tried to swim in lava" at 16:51:08. Write-up: tools/playthrough/summaries/eyes-run-14-summary.md, "Death 1".</li>
+    <li>Where Ben explained this on stream: the winning-run stream of 15 September at 1:21:09 to 1:23:42, while the bot was on this same walk back to the portal: “I’ve actually made it async by default … he typically operates in two-minute blocks … so our AI isn’t blocked by an action that runs for a very long time, like navigating across the entire world.” Stream 15 on 2 September doesn’t mention it; async didn’t exist yet.</li>
+    <li>Sources for the slide: the run database, request 133 (navigate to the return portal, 1:11:26, wait_timeout_ms 120000, pending at 1:13:40), request 134 (wait_for_action at 1:13:42, reason “254 blocks remain to the return portal; wait for the route to progress.”, pending at 1:15:56), request 135 (wait_for_action at 1:15:58, reason “91 blocks left to the portal; wait for arrival.”, succeeded at 1:17:04); request 107 (cancel_foreground_action at 1:03:30, rationale “Ender pearls are now the bottleneck, so time is better spent hunting endermen.”, reason “9 blaze rods carried gives 18 blaze powder, more than enough for Eyes of Ender.”). The winning run has 59 wait_for_action calls and 5 cancel_foreground_action calls. The ACTION_BUSY line is the 24 August reply quoted on this slide’s earlier versions.</li>
+    <li>Sources for the 7 September death: the bot's database for world eyes-of-ender-20260907n: request 67, collect_block obsidian at 16:44:11; request 68 at 16:49:22, "The obsidian collect exceeded the client idle timeout but keeps running server-side"; status checks 68 to 73; request 74, cancel_foreground_action at 16:50:54, with the rationale on the slide. Server log 2026-09-07-1.log.gz: "EnderSeeker tried to swim in lava" at 16:51:08. Write-up: tools/playthrough/summaries/eyes-run-14-summary.md, "Death 1".</li>
   </ul></aside>
 </section>
 
-<section class="slide top" data-section="6 · What did I build?" data-by="34" data-title="We died because a reflex wouldn't let us leave">
-  <div class="p5-rung"><ol class="p5-ladder"><li class="done">Controls</li><li class="done">Reflexes</li><li class="done">Replies</li><li class="done">Navigation</li><li class="done">Waiting</li><li class="on">Policy</li></ol><span class="p5-when">✗ 6 Sep</span></div>
-  <h2 class="p5-wrong">We died because a reflex wouldn’t let us leave</h2>
+<section class="slide top p5-beat" data-section="6 · What did I build?" data-by="34" data-title="We died because a reflex wouldn't let us leave">
+  <div class="p5-rung"><ol class="p5-ladder"><li class="done">Controls</li><li class="done">Reflexes</li><li class="done">Reporting</li><li class="done">Navigation</li><li class="done">Waiting</li><li class="on">Policy</li></ol><span class="p5-when">✗ 6 Sep</span></div>
+  <h2 class="p5-wrong">We died<span class="p5-ell">…</span><span class="step p5-tail"> because a reflex wouldn’t let us leave</span></h2>
   <div class="p5-ev">
     <p class="p5-quote">“The agent had the right plan and no way to execute it.”</p>
   </div>
@@ -978,6 +998,7 @@
   </div>
   <aside class="notes"><ul>
     <li>Now the model could step in, but a reflex could still hold on to the body and overrule it.</li>
+    <li>(The slide arrives on “We died…” with nothing under it. Say those two words, wait, then → brings in the rest of the headline and the slide.)</li>
     <li>On 6 September, in the Nether, the model ordered a retreat to camp, magma cubes kept the hostile reflex busy, and every retry for three minutes was refused until the bot died, and the run's write-up says the agent had the right plan and no way to execute it.</li>
     <li>So the model sets the policy for its reflexes, always with a reason and an expiry.</li>
     <li>→ In the winning run, three hours nine minutes in, the evade reflex kept swimming the bot deeper into an ocean monument, so the model turned off hiding and retreat for three minutes so it could get itself north to land.</li>
@@ -1082,7 +1103,7 @@
     <div class="tile won step"><span class="value"><img class="dragon-head" src="art/dragon-head.png" alt="">Still won</span><span class="label">Free the End at 3&nbsp;h&nbsp;56</span></div>
   </div>
   <aside class="notes"><ul>
-    <li>The last attempt on that chart is the one that won. Here's where its 3 h 56 went, and by now you know the parts: the reflexes, the replies, the navigation, the policy. Three facts, then a click.</li>
+    <li>The last attempt on that chart is the one that won. Here's where its 3 h 56 went, and by now you know the parts: the reflexes, the reporting, the navigation, the policy. Three facts, then a click.</li>
     <li>Diamond armour by 23 minutes. Gathering is the part that's solved: wood, stone, iron, diamonds, all code once the model picks what it wants.</li>
     <li>The longest stretch is the boring one: 99 minutes finding enough endermen. It explored about 1,560 Nether chunks looking for a better biome and didn't find one.</li>
     <li>And a third of its calls went wrong: 106 of the 328 that finished failed, partly worked, were refused or were cancelled. Don't hide it.</li>
@@ -1147,7 +1168,7 @@
   </ul>
   <p class="small">The code, the winning run's transcript and database, and the recording.</p>
   <aside class="notes"><ul>
-    <li>Held back for questions: pathfinding internals, the repo's five code layers, the MCP protocol, the code-size chart (appendix). The SQL memory is in the notes of "We died again and again, and nobody told the model", and the required rationale in the notes of "The model asks for one whole job at a time".</li>
+    <li>Held back for questions: pathfinding internals, the repo's five code layers, the MCP protocol, the code-size chart (appendix). The SQL memory is in the notes of "We died repeatedly to a spider", and the required rationale in the notes of "The model asks for one whole job at a time".</li>
     <li>The QR code is the first link, the repo. Its README links to the other two.</li>
     <li>Next slide is the Baritone race, if someone asks how fast the navigation is; then the run database, if someone asks "what did it actually do when…".</li>
     <li>Credits for the icons and fonts are the last slide.</li>

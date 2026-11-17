@@ -1673,6 +1673,17 @@ h2.p5-wrong { font-size: 46px; line-height: 1.22; }
 .ast-costs .sw.wa { background: #2b5fa8; }
 .ast-calls { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
 .ast-calls li { padding-left: 20px; border-left: 6px solid var(--accent); font-size: 27px; line-height: 1.3; color: var(--text); text-wrap: balance; }
+/* Evening of 17 November (Ben: "baritone vs stock mineflayer-pathfinder ... tick tick but put cross - runs inside the java
+   client"): the three callouts became a comparison. Four rows on one click, the row Baritone loses on the next. */
+.ast-vs, .ast-vs-g { display: flex; flex-direction: column; gap: 6px; }
+.ast-vs { margin-top: 2px; }
+.ast-vs p { display: grid; grid-template-columns: minmax(0, 1fr) 88px 120px; gap: 10px; align-items: center; margin: 0; padding: 5px 0 5px 18px; border-left: 6px solid var(--accent); font-size: 24px; line-height: 1.25; color: var(--text); }
+.ast-vs p.ast-vs-head { align-items: end; padding-top: 0; border-left-color: transparent; }
+.ast-vs-head b { font: 400 18px/1.15 var(--term); text-align: center; color: var(--text-2); }
+.ast-vs i { font: 700 28px/1 var(--sans); font-style: normal; text-align: center; }
+.ast-vs i.y { color: var(--accent); }
+.ast-vs i.n { color: var(--gap); }
+.ast-vs p.ast-vs-no { border-left-color: var(--gap); }
 .ast-fix { display: flex; flex-direction: column; gap: 8px; }
 .ast-credit { display: flex; align-items: center; gap: 12px; font: 400 22px/1.3 var(--term); color: var(--text-3); }
 .ast-credit b { font-weight: 400; color: var(--text-2); }
@@ -1738,6 +1749,8 @@ h2.p5-wrong-long { font-size: 44px; }
 .p5-seq-big li { grid-template-columns: 72px minmax(0, 1fr) 520px; padding: 8px 18px; }
 .p5-seq-big time { font-size: 24px; }
 .p5-seq-big code, .p5-seq-big span { font-size: 26px; }
+/* The Waiting rung, 17 November: a wider right column so each call's outcome stays on one line. */
+.p5-seq-wide li { grid-template-columns: 72px minmax(0, 1fr) 760px; }
 .p5-pcalls { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
 .p5-pcalls .p5-args { font-size: 24px; }
 .p5-pcalls .p5-said { font-size: 26px; }
@@ -1832,3 +1845,10 @@ h2.p5-wrong-long { font-size: 44px; }
 .slide:has(.key-bld-runs.shown) .bld-runs { opacity: 1; }
 .bld-caption { font-size: 30px; line-height: 1.3; color: var(--text-2); max-width: 1300px; margin-top: -10px; }
 /* end of part 5: how did I build it? */
+/* The refrain, 17 November (Ben: "a transition we died... and then a keypress to reveal"): the four rungs whose headline
+   opens "We died" arrive on those two words, and one press brings in the rest of it. On .p5-beat slides the slide under the
+   headline waits for the same press; the Reporting rung keeps its body, so the death lines play under "We died…". */
+.p5-ell:has(+ .p5-tail.shown) { display: none; }
+.p5-beat > :not(.p5-rung, h2) { transition: opacity .25s ease; }
+.p5-beat:not(:has(.p5-tail.shown)) > :not(.p5-rung, h2) { opacity: 0; }
+@media print { .p5-ell { display: none; } .p5-beat:not(:has(.p5-tail.shown)) > :not(.p5-rung, h2) { opacity: 1; } }
