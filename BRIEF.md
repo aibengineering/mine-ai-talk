@@ -6,7 +6,8 @@ The contract for this deck. Change this file first when the talk changes, then t
 
 - **What:** Ben presenting Mine AI MCP (`../2609_mine_ai_mcp`) at Google, solo, 18 November 2026.
 - **Announced as:** "Beating Minecraft with an LLM: Engineering a Reliable Long-Horizon Agent" (see "What was
-  promised"). That is the title slide. "Shrink the AI's job" is the thesis and first shows on slide 18.
+  promised"). That was the title slide; since Ben's copy pass (17 November) its subtitle reads "What I had to build so
+  Claude could finish the game". "Shrink the AI's job" is the thesis and first shows on slide 18.
 - **Slot:** 09:30 to 10:55 Sydney time, so 85 minutes are booked. The invite has a video call on it, so some of
   the audience may be remote.
 - **Length:** 45 minutes of talk, 15 minutes of questions.
@@ -30,13 +31,13 @@ deliver every part of it.
 |---|---|---|
 | "What does it take" to beat it | The question (14), the six layers (17), the idea (18) | Strong. Slide 14 is nearly the abstract's first sentence. |
 | Empty world to the Ender Dragon | The route and its clips (5), the dragon clip (12), What happened in the run (its timeline) | Strong |
-| Observe, choose actions, respond to what actually happened | Too slow to hold the controls, gear gone and no explanation (part 6) | Strong |
+| Observe, choose actions, respond to what actually happened | We died while the model was still thinking, we died again and again and nobody told the model (part 6) | Strong |
 | Reliable | The rule on slide 17, how it got reliable (29) | Strong |
-| Long-horizon | One prompt then hands off (13), the async design (Timeout-safe batches, part 6), the timeline on What happened in the run | There, but only the title slide uses the word. Say it on slide 13. |
-| Navigation | Part 6: A navigate call never came back (the 24 Aug hang, the rebuild following Baritone, 24 km walked) and Racing Baritone (the benchmark chart) | Strong |
-| Resource gathering | Too slow to hold the controls (part 6): the run's first collect_block on screen, smelting and crafting in its notes; the gear-up phase and the 0:23 tile on What happened in the run | Thinner since 16 November: one gathering call on screen, the rest in notes. |
-| Combat | No legal move (part 6): the lock, the six reflexes, each reflex a death; and the override, Automatic evade keeps seizing the body | Strong |
-| Failure and recovery | The "1 in 3 calls went wrong" and "Won anyway" tiles on What happened in the run (one slide since 14 November), the creeper death, then respawning and walking back for its gear (a line under the creeper marker since 16 November) | Fine. Recovery is mostly spoken. |
+| Long-horizon | One prompt then hands off (13), the async design (We died of boredom, part 6), the timeline on What happened in the run | There, but no slide uses the word since the title's subtitle changed (17 November). Say it on slide 13. |
+| Navigation | Part 6: We died on the way home (the 24 Aug trip home and hang, the rebuild following Baritone, 24 km walked) and Racing Baritone (the benchmark chart) | Strong |
+| Resource gathering | We died while the model was still thinking (part 6): the run's first collect_block on screen, smelting and crafting in its notes; the gear-up phase and the 0:23 tile on What happened in the run | Thinner since 16 November: one gathering call on screen, the rest in notes. |
+| Combat | We died in the middle of a job (part 6): the six reflexes, the shared fighting engine, Dragon dodges; and the override, We died because a reflex wouldn't let us leave | Strong |
+| Failure and recovery | The "1 in 3 calls went wrong" and "Still won" tiles on What happened in the run (one slide since 14 November), the creeper death, then respawning and walking back for its gear (a line under the creeper marker since 16 November) | Fine. Recovery is mostly spoken. |
 | Lessons for building agents | Takeaways | Strong |
 | Lessons for evaluating agents | 493 scenarios (29), second takeaway | There, but never called evaluating. Say it on slide 29 (its notes do). |
 | Beyond a short demo | Takeaways notes ("for any agent that has to keep running for hours after the demo's over"; the kicker that said it came off on 14 November) | Fine |
@@ -58,7 +59,7 @@ better model.
 |---|---|---|---|---|
 | | | | 1–2 | The title is up while the host introduces Ben. Then who he is: three months of long service leave, and a project to see how far AI could be pushed, with coding agents writing the code while he designed and directed it. |
 | 1 | What is Minecraft? | 3 | 4–5 | "Today we're talking about Minecraft." A show of hands, then the route in one line. Its clip plays only if few hands stay up (the plan since 14 November, not the exception). |
-| 2 | Why try it with AI? | 6 | 7–8 | Games are how people have been testing model capabilities (Ben's wording, 10 November, over "the new models"), and Pokémon is the one everybody watched: the headlines, all six at once in one beat (it took a long time), then one click puts a sticker on each run counting the extras its harness gave it (since 15 November, when part 4's help slide merged in: the early wins had help, Fable 5 had none), then why Minecraft is the harder one, with the example clip as an optional pop on that slide. Two slides since 14 November, were three. |
+| 2 | Why try it with AI? | 6 | 7–8 | People have been using games to test what models can do (the chapter card since Ben's copy pass, 17 November), and Pokémon is the one everybody watched: the headlines, all six at once in one beat (it took a long time), then one click puts a sticker on each run counting the extras its harness gave it (since 15 November, when part 4's help slide merged in: the early wins had help, Fable 5 had none), then why Minecraft is the harder one, with the example clip as an optional pop on that slide. Two slides since 14 November, were three. |
 | 3 | Can an LLM do it? | 9 | 10–13 | "Bots have beaten it before", one quick line since 14 November (AltoClef's clip only with time to spare): two cards, AltoClef (code decides, beat the dragon ✓) beside an LLM (the model decides, beat the dragon ?). The question mark is what Ben wanted to know: can an LLM do the whole run and make its own calls? Moved here from the end of part 1 on 10 November (Ben's call), so the question is asked and answered in the same part. Then the dragon dying as the stream saw it, with sound: Ben on the webcam counting down the last hits, arms up, "We did it!". Then the prompt and the stats, which read as "here's what you just watched". Since 15 November (Ben: "do the reorder and I'll see how I feel about it") the run slide comes next, moved intact from part 7: "What happened in the run", its kicker now just "The winning run" and no data-chapter. The clip, the numbers, then what it did. To undo it, move the slide back after "Coding agents wrote the code" and give it back its data-chapter and the "Part 7 of 7 · the winning run" kicker (backup `/tmp/deck-backup-1115-035716-flow-pokemon-merge-run-move`). |
 | 4 | How do you approach it? | 14 | 15–17 | "Was that the model, or what I built around it? Let's talk about how you'd even approach it." The card is just the question, with no line under it (Ben, 10 November: "better model, better tools" read oddly and he wouldn't talk to it). Pokémon had the same argument, one line on the card since 15 November (the stickers in part 2 showed it), then playing Pokémon and playing Minecraft, which builds into the six layers, the timing problem and the idea, "Shrink the AI's job". |
 | 6 | What did I build? | 26.5 | to 38 | "Here's what that process built." A ladder since Ben's practice run on 16 November: six things that broke, each slide's headline the failure in the words it was written down in, the fix under it (controls, reflexes, replies, navigation and the race against Baritone, waiting, policy). See "Part 6: What did I build?". |
@@ -114,16 +115,46 @@ yet, so click once before starting. With no room audio, `?silent` on the URL swa
 
 Under a minute, straight after the host hands over. It answers "why should I listen to this person about this?" with four things:
 the job (one plain line on the left), why he built it, when, and one human thing. The proof is the dragon clip
-on slide 12, so the slide only names it ("Beat Minecraft with an LLM"). The last three arrive as advancement pop-ups, one click each:
+on slide 12, so the slide only names it ("Beat Minecraft with an LLM"). The last three arrive as advancement pop-ups, one click each (the third after the paper, below):
 long service leave; "Challenge Complete! Beat Minecraft with an LLM" with "Limit-testing AI capabilities, Jun–Sep
-2026" under it; and, since 16 November, "Cited, Oct 2026: Google DeepMind's Argon paper", with "Named as one of two community projects
-with end-to-end dragon kills" under it (a writable book icon). It replaced "For fun: games and pickleball", cut after
+2026" under it; and, since 16 November, "Cited, Oct 2026: Google DeepMind's Argon paper", with "It lists this as one of two community projects
+that killed the dragon end to end" under it (a writable book icon). It replaced "For fun: games and pickleball", cut after
 the practice run to save time; the talk is at Google and the paper's authors were invited. The wording stays inside
 what the paper says: it lists the project as one of two community dragon kills, and never says first. The full
 reference: Faldor, Singh and Raileanu (Google DeepMind), "A team of Gemini 4 Argon agents beats Minecraft", arXiv 2610.22319 (arxiv.org/abs/2610.22319), 15 October 2026, section 7, Related work: "Two community projects have recently reported end-to-end dragon kills: a single Claude Opus 5 agent calling 37 high-level Minecraft tools on Normal difficulty (AI Bengineering, 2026), and a planner paired with an action-selection model on a fixed speedrun seed in Peaceful difficulty (Malde, 2026)." Its reference list gives the repo, the Hugging Face dataset and the run that defeated the Ender Dragon, 2026-09-15.
 (Checked 16 November against the arXiv HTML and PDF; the affiliation is on the PDF's first page.)
-Since 14 November the challenge toast has a second line, "I directed coding agents (Codex and Claude Code). They
-wrote the code.", so the room knows from the start who typed the code; the new part 6 ("How I built it") is how.
+Since 17 November (Ben: "include a link to that paper on that slide, and then maybe have a little transition or
+animation that shows the title of the page and then does a little scroll down and highlights my AI Bengineering
+reference") the tile ends with the link arxiv.org/abs/2610.22319 (a new tab), and one more click brings up the paper.
+Reworked the same day (Ben: "more like a popup and for it to scroll through the whole paper down to the bottom - i
+think that's how they'd show it on like a youtube video"), and again (Ben: "I would like the Google DeepMind paper
+pop-up thing to happen before the animation in of the citing. And I would like the scroll to happen on a key press so
+I can kind of control it by pressing the next button"). Then again (Ben: "Let's scroll to the bit above that, where I'm actually named in the paper, like AI Bengineering has
+been called out as having a community project that has beaten the game, and I'll be like, that's me. Not the reference
+bit."). The clicks are now: the long service leave tile; the challenge tile; the paper pops up as a window over the
+dimmed slide and holds on the top of page 1 (header, title, authors, Google DeepMind) with no timer; the next press
+scrolls down through pages 1 to 14 of the 17, accelerating so the middle is a blur, and stops on page 14, section 7,
+Related work, on the paragraph "Two community projects have recently reported end-to-end dragon kills: a single Claude
+Opus 5 agent calling 37 high-level Minecraft tools on Normal difficulty (AI Bengineering, 2026), and a planner paired
+with an action-selection model on a fixed speedrun seed in Peaceful difficulty (Malde, 2026)."; the window widens while
+the page zooms in on it (its text about 28 px), with the end of the paragraph before and four lines after in frame, and
+slide 7's highlighter yellow sweeps "a single Claude Opus 5 agent ... (AI Bengineering, 2026)" over its two lines,
+placed from the PDF's own character boxes, leaving "Two community projects have recently reported end-to-end dragon
+kills:" unmarked above it. About 4.8 s in all, then it holds; the next press pops the paper away and the Cited tile,
+with its link, slides in on the same click. So the Cited tile isn't on screen until the paper has closed. A press during
+the scroll jumps to its end rather than moving on. Each motion plays only for a single → onto its click: ← from the
+Cited tile lands on the highlighted hold, ← from the hold lands on the title, and jumps or the speaker window land on the
+resting state (deck.js: `argon-play`, `argon-scrolling`, `argon-closing`, like the creeper). The two paper clicks and
+the Cited tile are one unit in the markup (`<div class="who-cite">`, display: contents), so putting the citation before
+"Challenge Complete!" is moving that div above the challenge tile; nothing else depends on the order. Everything in the
+window is the PDF's own pages rendered headless with pdfium, nothing retyped: `media/argon-p01.webp` (page 1, sharp),
+`argon-p02` to `argon-p14` (small, they only fly past) and `argon-cite.webp` (a sharp crop of page 14's paragraph, laid
+over it for the zoom), about 0.8 MB in all. They load after the deck's first paint, page 1 first; if the scroll is asked
+for before the rest are decoded, it holds on the title until they are. The reference-list entry on page 15 ("AI
+Bengineering. Mine AI MCP: beating Minecraft with an LLM agent. ...") is no longer shown. The arXiv abs page gives the licence as CC BY 4.0, which the credits slide cites; page 1's own footer
+says "© 2026 Google. All rights reserved", and goes past at page scale.
+Since 14 November the challenge toast has a second line, "Codex and Claude Code wrote all the code, with me
+steering" (its wording since 17 November), so the room knows from the start who typed the code; the new part 6 ("How I built it") is how.
 The dates were Jul–Sep until 14 November. They are Jun–Sep now: the bot's earliest files are from 27 June 2026 (an
 early project folder, `bot.log` "spawned as CodexBot", first file 13:51 that day). The long service leave card
 stays as it is, since the project may have started a few days before the leave; the notes say so if asked.
@@ -187,8 +218,8 @@ the harness parallel (15). Since 15 November the harness parallel is one click o
   headlines get one click: a sticker on each run's card with the count from the old slide, 4, 5, 3 and 4 extras on
   Claude 3.7 Sonnet, Gemini 2.5 Pro, GPT-5 and Opus 4.7 (the LessWrong card), and a green "0 extras · screenshots
   only" on Fable 5. Gemini 3 Pro's Crystal card has none: the old slide didn't compare its harness. A line under the
-  2025 cards says what they mean: "Early wins had help: extras from the harness, beyond screenshots and memory.
-  Fable 5 had none." The chips, the sources and the rest of the old notes are in the headlines' notes as "If asked".
+  2025 cards says what they mean: "The earlier wins gave the model extra help on top of screenshots and memory,
+  and Fable 5 won without any." (copy pass, 17 November) The chips, the sources and the rest of the old notes are in the headlines' notes as "If asked".
   CSS prefix `extras`; the old slide's `.runs` and `.helps` rules are still in `deck.css`.
 - **Slide 15, the help (gone since 15 November, above).** "Early Pokémon wins needed a lot of help". Five runs in date order with what each one
   managed, "3 of 8 badges" through to "Beat FireRed". Each model name has its maker's mark beside it in the maker's
@@ -296,7 +327,7 @@ only the decisions that need judgement are left.
 
 The question the talk asks (slide 14): *how do you approach it?* Ben's framing, said rather than shown: is
 the hard part the decisions the model makes, or carrying those decisions out in the game? The answer is carrying them out. The model and the harness were fine; the gaps were
-further down (see "The layers"). The takeaways slide comes back to it: "The model already made good enough calls. Most of the work was carrying them out."
+further down (see "The layers"). The takeaways slide comes back to it: "The model's decisions were already good enough, and most of my work went into carrying them out."
 
 The old question, "did the model beat Minecraft, or did 58,000 lines of code?", is off the slides (10 November).
 The 58,294 figure still appears on "The MCP part is tiny", an appendix slide since 12 November.
@@ -309,8 +340,11 @@ Three messages:
 
 Since 16 November "The idea" (slide 17) opens on Ben's dial-back (16 November: "I dialled back and removed any
 harness, direct API calls or harness engineering… and focused only on building an MCP server"): the six layers
-again, small, and its first click splits them into "Bought, not built" (Model, Harness: "Claude Code, on a
-subscription"), "The one thing I built" (Tools, Actions, Client: "an MCP server") and "Left alone" (Game). The
+again, small, with "Vercel AI SDK" (the six layers' Harness label) large under Model and Harness. Its first
+click (k-idb-drop, 17 November; the cross-out was briefly the last click of "Playing Minecraft") strikes it
+through in red and brings in "Claude Code, on a subscription" under it, also large: the failures were in the tools,
+actions and client, so Ben stopped building the model and harness and paid for them. The next click splits them into "What I paid for" (Model, Harness: "Claude Code, on a
+subscription"), "What I built" (Tools, Actions, Client: "an MCP server") and "What I didn't touch" (Game). The
 first version had its own loop calling the model's API every 8 seconds (see "Verified facts"). The cost is said as
 "a subscription instead of paying per API call", with no figure; the $93 on the run slide is API prices, and Ben's
 word "subsidised" stays off the slides and out of the notes. The last notes line hands over to part 5, testing: "So
@@ -319,8 +353,13 @@ slides). For time, slide 16's spoken notes for the packets and Mineflayer were c
 with what came out kept as "If asked" lines; no clicks were removed.
 
 The idea shows the three messages as three cards, one a click, each with an icon from the pack in an inventory slot: shears
-("Break it down"), a repeater ("Iterate") and a map ("Integrate"). The takeaways slide (34) is the same three
-lines with the same three icons, so the end of the talk looks like the idea it started from.
+("Break the game"), a repeater ("Keep working") and a map ("Borrow"). Since Ben's copy pass (17 November) each card
+is one sentence with its first words in the old head's style: "Break the game into small problems you can program
+and test", "Keep working on each one until it's reliable", "Borrow the best ideas that already exist". The takeaways slide (34) has the same three
+icons, so the end of the talk looks like the idea it started from; since Ben's copy pass each icon sits beside one
+sentence with its first words bold: "If you can program and test something, do that instead of asking the AI.",
+"Turn each failure into a test, fix it, and keep the test.", "Borrow from what's already out there, like Mineflayer
+and Baritone."
 
 Say "programmable and repeatably testable", not "deterministic".
 
@@ -342,8 +381,8 @@ slide. Each slide shows a person's row, then an AI's row a click later, on the s
   same height on 16 and 17.
 - **Playing Minecraft (17):** a person (decides in about a quarter of a second), keys and mouse (a steady stream of
   input), the Java client, the Java server at 20 ticks a second. Then the same AI setup. After the timings, a line on
-  its own click from the cut timing slide: "A creeper blows up 1.5 seconds after it gets to you." A last click: fast "System 1"
-  models like Jev are arriving, quick enough but not yet smart enough. Then the build below answers what goes
+  its own click from the cut timing slide: "A creeper blows up 1.5 seconds after it gets to you." A last click: 'Fast "System 1"
+  models like Jev are quick enough, but they aren't smart enough yet.' Then the build below answers what goes
   between the model and the game, on this slide.
 - **The build (17, Ben 12 November):** "take people from somewhere familiar (how a person plays a game) to somewhere
   unfamiliar (Mineflayer and MCP)". Since 13 November (Ben's call) the build and what was
@@ -352,7 +391,7 @@ slide. Each slide shows a person's row, then an AI's row a click later, on the s
   it's one continuous picture: the same boxes travel from step to step, with no cross-fades between copies, and ←
   runs each move backwards. Then "don't feel physical": boxes arrive on a spring with a small overshoot (a few px),
   a chain moves 50 ms apart from the incoming box rightwards, a moving box lifts 6 px with a shadow, and the pushed
-  client gets a small shove before it goes. Twelve more clicks after System 1:
+  client gets a small shove before it goes. Eleven more clicks after System 1 (2 and 3 below have been one click since 16 November):
   1. Strip it down: the AI row's Java client and Java server rise out of the row and grow, the client to the far
      left and the server to the far right, while everything else fades and sinks. The four columns between them are
      the wire, in two lanes (Ben, 12 November: "the packets must travel between the two boxes").
@@ -362,7 +401,7 @@ slide. Each slide shows a person's row, then an AI's row a click later, on the s
   4. The packet (Ben, 12 November: the server isn't told "W is held"; the client runs the physics and sends the
      result): the Set Player Position card launches from the client, small, and grows as it travels the upper lane
      to the server, the lane's rail drawing behind it; "Minecraft's own binary protocol, over TCP" under the wire.
-     "What the server hears: not the key, the result." 0x1C, x 12.5, feet y 64.0, z -37.25 (doubles), flags 0x01
+     "The server never sees the key press, only where you ended up." 0x1C, x 12.5, feet y 64.0, z -37.25 (doubles), flags 0x01
      on ground (a byte), its 27 bytes underneath. As it lands the server's check chip comes up, "? Possible?
      collisions, speed" (the check was its own click; merged, since it's the arrival). Ben had said "protobuf
      messages"; it isn't protobuf, so the slide never says protobuf or gRPC; the notes give Ben "think protobuf
@@ -374,25 +413,71 @@ slide. Each slide shows a person's row, then an AI's row a click later, on the s
      lands, the client's x snaps back from 12.50 to 12.40, in red. The notes point ahead to the staircase clip later on the slide.
   6. The swap: the Java client flickers off and dims, its "Draws the world" line goes, and Mineflayer drops into its
      place and shoves it down and out: "Does the same job (physics, packets), but programmable. Built for bots.",
-     "Andrew Kelley, 2013. Now PrismarineJS". The cards and the check sink away.
+     "Andrew Kelley, 2013. Now PrismarineJS". The cards and the check sink away. The card stops there with no physics
+     panel or code yet: Ben pauses on it for an on-the-spot question about Andrew Kelley (17 November; it had shared
+     a click with 7 since 16 November).
   7. Mineflayer's side of the same beat (Ben, 13 November: "show real Mineflayer code"): a code card in the empty
      lower lane, "// hold W, in code" over `bot.setControlState('forward', true)`, and half a second later the same
      "physics applied" panel inside Mineflayer, x 12.40 → 12.50.
   8. The same Set Player Position card (the same element: same fields, same bytes) flies the same upper lane again,
-     its caption swapped for "Same packet, byte for byte.", and its edge turns green as it lands. No Player Input
+     its caption swapped for "Mineflayer sends exactly the same packet.", and its edge turns green as it lands. No Player Input
      card: Mineflayer doesn't send one for walking (see "Verified facts"), so the notes say so instead.
   9. Actions slides in from the left and the client and server close up beside it (the wire and everything on it
      sinks away).
      10. Tools, 11. Harness, the same way. 12. Model: the six layers are complete; the heading becomes "From the model
-     to the game", the boxes take their stack labels (Client / Physics, talking to the server / Mineflayer; Game /
-     What really happens / Minecraft), and the layer numbers and the two clip thumbnails appear. Under the stack a
-     one-line marker fades in (Ben, 16 November: "I had an early version of the overall flow"): "First version, end
-     to end: 27 Jun, 11 weeks before the win" (see "Verified facts"). It stays through the verdicts and the clips and
-     gives its row to the trace on the last click.
-  Then the six layers' own five clicks, as on their old slide (see "The layers" and "Clips"): 13. ✓ Solved on Model
-  and Harness. 14. ✗ Missing on Tools. 15. Space plays bug-drown out of Actions, which turns red, "✗ Unreliable",
-  as it lands. 16. bug-stair out of Client, "✗ Had bugs". 17. "Don't blame the model for a physics bug." with the
-  "Get this end right first" trace. 22 clicks on the slide in all.
+     to the game", the boxes take their stack labels (Model / Claude · ChatGPT and Harness / Vercel AI SDK since
+     17 November, Ben: the first version's own stack, "Vercel AI SDK" standing for the home-made harness; Client /
+     Physics, talking to the server / Mineflayer; Game / What really happens / Minecraft), and the layer numbers and
+     the two clip thumbnails appear. Under the stack a one-line marker fades in (Ben, 16 November: "I had an early
+     version of the overall flow"): "I built the first version on 27 Jun, 11 weeks before the win". It says "built",
+     not "ran end to end", because built is what the commits show (see "Verified facts"); for part of 17 November it
+     had a second sentence on GPT and the Vercel AI SDK, which the boxes now say. It stays through the verdicts and
+     the clips and gives its row to the trace on the rule's click.
+  Then the six layers' own clicks (see "The layers" and "Clips"). No green since 17 November (Ben: focus on the
+  failures; Model and Harness aren't "solved", they're not the bit to focus on), so no "✓ Solved" click: 13. ✗ Missing
+  on Tools (and Game's "Left alone"). 14. Space plays bug-drown out of Actions, which turns red, "✗ Unreliable", as it
+  lands. 15. bug-stair out of Client, "✗ Had bugs". 16. "A smarter model wouldn't have got up this step." with the "I had
+  to get this end working first" trace. 20 clicks on the slide in all. The harness cross-out was a last click here for
+  part of 17 November; at Ben's request it opens "The idea" instead, after the staircase bug. The staircase bug's cause
+  and fix (its own click here from 16 November) are the next slide since 17 November.
+- **Why it couldn't get up the step** (17 November): the slide after "Playing Minecraft", three clicks, told as a jump in
+  slide 15's packet picture, with a side-on drawing (shown at 1.6x) of the clip's own course, the upper flight of
+  "westbound_switchback_regression" climbed toward negative X, in the Mineflayer box. Its one point, in Ben's words: "A
+  collision is defined by something solid being in front of you, which doesn't apply if you're inside it. And this
+  floating point comparison error was a bug that put our bot inside the wall, inside the staircase, and the server
+  correctly said, no, that is not a valid position to be in, and sends you back. And then it turns into an infinite
+  loop." So a key line stays under the title for the whole slide, one line at 34px: "A collision is something solid in
+  front of you. It doesn't apply once you're inside it." The comparison's question answers it: "step in front of the
+  bot?" (it was "clear of the step?", then "step in the way?"). One caption at a time under the lanes, at 28px:
+  - Opening: the working jump first, on a loop Ben can talk over (Ben: "show what the good case is before we go and talk
+    about the bug", then "it happens as soon as I go onto the slide, and then I can't replay it"). While the slide is at
+    step 0, however it was reached, the box starts at the foot of the step touching the face ("block face, x = 4", "<-
+    west (-x)"), goes up the face until its feet clear the top, over onto the step along the faint dashed L into the
+    faint box, rests a second, fades back to the foot and goes again (CSS only; 4.6 s a round). Print and thumbnails
+    show it on the step. "The step is in front of the bot, so it holds the bot back until it's high enough to go over."
+  - Click 1 (k-stb-check): on a single → the box blinks back to the foot; for half a second its edge sits a hair past the
+    face (drawn larger, a red sliver under the "overlap drawn larger" label, with the sum that made the number: "bot's edge = 4 + 0.3005 - 0.3005 = 3.9999999999999996", tagged "face" and
+    "half-width", the field note's two steps, through click 2); then
+    it rises partway and cuts forward into the block (the red corner-cut; 0.75 of a block up, tick 154, feet below the
+    top). Then `3.9999999999999996 >= 4`, "step in front of the bot?" false; Mineflayer's "✓ Possible?", and Set Player
+    Position goes; the server's chip asks "?". "A floating point error put the bot's edge a hair inside the step.
+    Nothing was in front of it any more, so Mineflayer moved it forward too early."
+  - Click 2 (k-stb-loop): the server's chip ✗ (✓ on the left, ✗ on the right), Synchronize Player Position, "No you're
+    not: back here.", comes back and the box drops to the foot of the step; "repeats every tick"; on a single → the loop
+    goes round three times. "The server said that isn't a valid position and sent it back. That repeated every tick."
+  - Click 3 (k-stb-fix): `3.9999999999999996 >= 4 - 1e-7`, "step in front of the bot?" true; the box rises along the
+    face until its feet clear the top, then goes over onto the step; both chips ✓; the wire dims. "Fix: a tolerance of a
+    ten-millionth of a block (our physics fork, 24 Jul), so touching still counts as in front."
+  The notes carry Ben's spoken line for each beat ("So why couldn't he get up that step?" … "A smarter model wouldn't
+  have fixed that.") and the "If asked" lines: the code, why only sideways, the getPlayerBB / setPositionToBB round trip,
+  and the number. ←, jumps and the speaker window land on resting states; print shows the fixed state. Checked against
+  prismarine-physics commit d627c18 (24 Jul, "Tolerate floating-point drift at AABB contacts": `blockBB.computeOffsetX(
+  playerBB, dx)` clamps a negative move only when `other.minX >= this.maxX`, the player wholly outside; that and the Y
+  and Z tests become `>= this.maxX - COLLISION_EPSILON`, 1e-7) and the field note (`mine_ai` docs/field-notes/
+  mineflayer-pathfinder-westbound-switchback.md, ticks 152-155). The exact 3.9999999999999996 is from the trace that
+  found the bug (23 Jul), a probe on that course with the half-width set to 0.3005 (4 + 0.3005 = 4.3004999999999995,
+  minus 0.3005); at the stock 0.3 that sum is exactly 4, so the frame is never labelled as the clip's moment or the
+  stock width.
   How: the boxes seen as the AI row's Java client and server are faces laid over the stack's Client and Game boxes
   and parked over the row (the row's own two boxes are invisible stand-ins), so they're the same elements all the
   way; one CSS variable sets how many columns left of their place in the six layers the boxes sit (during the client-server link, the client and server have their own, to open the wire between them). All CSS transitions,
@@ -444,62 +529,74 @@ lays out everything between the model and the game, left to right, and marks wha
   model for a physics bug.
 - **Gaps are red, fine is green,** each with a tick or cross and a word, never colour alone. The boxes carry
   that themselves ("✓ Solved", "✗ Missing"), so the slide has no legend lines under it. The only sentence on it
-  is "Don't blame the model for a physics bug." What the green and the red mean is in the notes, said on the two
+  is "A smarter model wouldn't have got up this step." What the green and the red mean is in the notes, said on the two
   clicks that light them.
 - **The timing problem** is the one gap that isn't a box. It had its own slide until 12 November; now it's the red
   ~3 s bracket and the creeper line earlier on the same slide, and this paragraph is said in its last notes, which point
-  at part 6: "No legal move". One lap through all six layers takes about 3 s; the game moves 20 times a second. So reacting has to happen in a short loop at the game end (layers 4 to 6)
-  without the model. It has a second half, covered on "Timeout-safe batches" (part 6): some actions run for
+  at part 6: "We died in the middle of a job". One lap through all six layers takes about 3 s; the game moves 20 times a second. So reacting has to happen in a short loop at the game end (layers 4 to 6)
+  without the model. It has a second half, covered on "We died of boredom" (part 6): some actions run for
   minutes, longer than a tool call should block, which is what submit, wait and collect are for.
 - **Part 6, What did I build?, answers the layers.** The MCP server is the tools layer, its actions and reflexes are the actions layer
-  (the short loop is the reflexes: "No legal move"), and the client fixes come in
+  (the short loop is the reflexes: "We died in the middle of a job"), and the client fixes come in
   on "How it got reliable" (29). Until 12 November
   three area openers each lit their layers on a small strip.
 - The repo's own five code layers (server, session runtime, action, world, physical; `docs/mcp/concepts.md`) all
   sit inside layers 3 to 5: server and session are the tools layer, action and world are the actions layer,
   physical is the client. Don't put the five on a slide; it's a different cut of the same thing.
 
-## Part 6: What did I build? (a ladder since 16 November, second pass; part 5 until 16 November)
+## Part 6: What did I build? (the "We died…" ladder since 17 November; a ladder of failures from 16 November; part 5 until 16 November)
 
-Ben's practice run, 16 November: this part ran 20 minutes against 12, the order was hard to follow, and the reviewer
-only understood the server slides once he noticed the small red "What went wrong" line. So Ben approved a ladder:
-each slide is a real failure, then what was added to fix it. The failure is the headline, big, in the words it was
-written down in (quote marks where it is a quote); the date is a small red label in the top right; the green
-"✓ Added" line is the fix. A strip of six rungs across the top (Controls, Reflexes, Replies, Navigation, Waiting,
-Policy) shows where the talk is. Story order follows the dates except where noted, and no slide states a date
-order that didn't happen. Ben mirrors his laptop with no notes screen and much of the audience is on a video call,
-so whatever he must say is on the slide in large type; the notes still carry the detail and the "If asked" lines.
-26 to 38 minutes, 20 clicks.
+Ben, 17 November: "I can turn this into a pattern, like we died doing X, Y, Z. That can be the motto to tie each slide
+together." So every rung opens the same way. The headline is how we died; under it one sentence of what happened, with
+its date; then the words it was written down in (the bot's, the model's, the server log's or the record's); then the
+fix, labelled "✓ So we added" (or "So we rebuilt", "So we removed", "So the model sets the policy"), with its date as a
+small grey tag at the end of the line. The red label top right is the date of the death. The six-rung strip stays.
+The six moments are not in date order (1 Aug, 28 Aug, 3 Aug, 24 Aug, 2 Sep, 6 Sep), so the notes tell Ben not to
+say "and then" between rungs. Ben's standing rule: one natural sentence on screen, no clipped punchline pairs, no
+"X, not Y", no slogans. Sources for every line are in "Verified facts", "Part 6 ladder sources". 22.5 to 34.5 min,
+21 clicks with the race slide.
 
-- **Part 6: What did I build?** (card, 26.5). Lede "Six things that broke, and what I added for each." Notes open
-  "Here's what that process built".
-- **Too slow to hold the controls** (28, 1 click). Rung 1, "✗ From the start" (no incident: one job at a time is
-  already in the first snapshot in git, `86503aa9`, 21 Jul). ~3 s for a turn against 1.5 s for a creeper. Click: the
-  server holds the controls and does one whole job at a time, with the run's first call (`collect_block` logs × 16)
-  and what it does (finds, walks, picks the tool, chops, 16 of 16 in 1 min 17 s).
-- **No legal move** (30, 2 clicks). Rung 2, 3 Aug. "two of them sat at health 1-7 with no legal move" (`aaa912bc`).
-  Fix: a task outranks the idle guard, and the guard gets a deadline. The six-reflex chart from the winning run
-  (293). Click 1: the creeper handoff at 2:31. Click 2: "Each reflex is a death": "EnderSeeker tried to swim in lava"
-  (4 Sep) → lava and fire escape; "drowned mining iron at the bottom of a lake" → breath reflex, 5 Sep. Not paired
-  with policy any more: the model could set a hostile policy from 27 Jul (`bf451ed3`, `set_hostile_policy`).
-- **Gear gone, no explanation** (31.5, 1 click). Rung 3, 4 Aug. "a bot standing 36 blocks away at full health with
-  its gear gone and no explanation anywhere" (`1d829c39`). Fix that day: where it died and what it carried, in its
-  status. Click: where replies grew to (no incident claimed): SQLite memory and its own queries (20–21 Aug), Markdown
-  replies carrying every unread event (23 Aug), beside a trimmed reply from the run.
-- **A navigate call never came back** (33.5, 1 click). Rung 4, 24 Aug. The `ACTION_BUSY` line from the investigation
-  report, word for word. Fix: navigation rebuilt in TypeScript following Baritone, 26 Aug, the default that night;
-  the Baritone credit (leijurv and contributors, LGPL-3.0). Click: 24 km, 135 of 239 actions. "Rebuild", never "port".
-- **Racing Baritone: from 60× slower to 3×** (35, 4 clicks). Rung 4 continued, label "Navigation, continued". The
-  chart as before; the 8 Sep bar now says only "slower again", because no cause is recorded (see Verified facts).
-- **Timeout-safe batches** (36.5, 1 click). Rung 5, 2 Sep. The bot "began splitting work into 'timeout-safe
-  batches'" after a 60 s client timer cancelled an eight-item smelt (`b2510ed6`). Fixes: no client deadlines (2 Sep),
-  then submit, wait with a limit, see the progress, or cancel (13 Sep, `2685082`). Click: the obsidian call's four
-  steps and "59 times in the run". The README's five-minute timeout line is gone.
-- **Automatic evade keeps seizing the body** (38, 2 clicks). Rung 6, "✗ In the winning run". The model's own words
-  at 3:09 (request 267). Fix: the model sets the policy, with a reason and an expiry (survival policy, 12 Sep,
-  `75d820b`). The two real `set_survival_policy` calls (3:09 off, 3:11 back on, request 273) and "9 times in the
-  run". The headline is from the run, after the tool existed; the slide says "In the winning run", not "then added".
+- **Part 6: What did I build?** (card, 22.5). Lede "We died at least 312 times during development", small print "bot
+  deaths in real play, 29 Jul to 15 Sep, counted from the server logs". The cause split and the count's scope are in
+  its notes.
+- **We died while the model was still thinking** (24, 1 click). Rung 1, "✗ From the start". "On 1 August the server
+  handed control back with the bot in water, and it drowned 21 seconds later while the model was still taking its
+  turns." The model's words at the handback. ~3 s a turn and 60 game ticks. Click: "So we added an MCP server: it does
+  the fast part, and the model asks for one whole job at a time", with the run's first collect_block. The death is an
+  example of the problem; one job at a time was in the first version (21 Jul), hence "From the start".
+- **We died in the middle of a job** (26, 2 clicks). Rung 2, 28 Aug. "On 28 August a skeleton shot the bot 3 min 44 s
+  into a diamond-mining job, and the job kept running for two more minutes." "I died during the diamond run and
+  respawned empty". "So we added reflexes: the server interrupts the job, deals with the danger, then picks the job
+  back up · 2 Sep". The chart "The six reflexes in the code today, by how often each fired in the winning run" (293).
+  Click 1: the creeper handoff at 2:31. Click 2: "One fighting engine handles everything except the End: a mob that
+  comes at us triggers it as a reflex, and a hunt walks into range and hands it the target." and "The 7 Dragon firings
+  are dodges. The model fights the dragon with its own End actions." The "Every reflex was added after a death" box
+  (lava, drowning) went to the notes for room. The 3 Aug "no legal move" material left this slide.
+- **We died again and again, and nobody told the model** (27.5, 1 click). Rung 3, 3 Aug. "On 3 August a bot died 7
+  times in 98 seconds. The model was told about 2 of those deaths and blamed the world:" "…the builder's position
+  resets". "So we added its status now says where it died and what it was carrying · 4 Aug". Click: the run's reply
+  and "Where replies grew to". The "36 blocks away… gear gone" quote is in the notes.
+- **We died on the way home** (29.5, 1 click). Rung 4, 24 Aug. "On 24 August a trip home ran for two minutes, ended
+  farther from home and was cancelled. 24 seconds later:" "AIVolunteer was slain by Zombie". A smaller line: "Later
+  that day a navigate call never came back, and every action after it got this:" and the ACTION_BUSY text. "So we
+  rebuilt navigation in TypeScript, following Baritone; it was the default that night · 26 Aug". The Baritone credit;
+  click: 24 km, 135 of 239.
+- **Racing Baritone: from 60× slower to 3×** (31, 4 clicks). Unchanged.
+- **We died of boredom** (32.5, 1 click). Rung 5, 2 Sep. "A 60-second client timer cancelled an eight-item smelt. The
+  bot" "began splitting work into 'timeout-safe batches'". "So we removed the client deadlines · 2 Sep"; "Then an action
+  runs in the background, and the model can wait a set time, check progress or cancel · 13 Sep". Click: the obsidian
+  call. Nobody died of this one; the notes say "no timeout killed us", never "nobody died while waiting".
+- **We died because a reflex wouldn't let us leave** (34.5, 2 clicks). Rung 6, 6 Sep. "On 6 September, in the Nether,
+  the model ordered a retreat and the hostile reflex kept hold of the bot for three minutes, until it died." "The agent
+  had the right plan and no way to execute it." "So the model sets the policy with a reason and an expiry · 12 Sep".
+  Click 1: "In the winning run, 3:09 in the ocean monument:" with the monument quote and the 3:09 call. Click 2: the
+  3:11 call and "It changed its own policy 9 times in the run." The 3 Aug lockout is in its notes as an earlier case.
   Its last note leads into the run breakdown that follows the section.
+
+Before 17 November (16 November, second pass) each headline was the failure in its own words ("two of them sat at
+health 1-7 with no legal move", "Automatic evade keeps seizing the body…"), titled Too slow to hold the controls, No
+legal move, Gear gone no explanation, A navigate call never came back, Timeout-safe batches and Automatic evade keeps
+seizing the body.
 
 Before the ladder (first pass, 16 November): four control slides plus three navigation slides, 26.5 to 39; before
 that (14 November) nine slides with a small red failure line over each heading; on 12 November Ben went straight to
@@ -525,29 +622,36 @@ video call, so whatever he must say is on the slide; the notes still carry it, p
 Now a card and three slides, 14 to 22 minutes (`data-by` 14.5, 17.5, 20.5, 22), data-section "5 · How did I build
 it?", card kicker "Part 5 of 7", CSS one block with prefix `bld-`:
 
-- **The card.** "How did I build it?" with the repeater. Lede: "Every failure became a test, and coding agents
-  wrote the fixes." Its note picks up part 4's "How do I know it works? I test it."
+- **The card.** "How did I build it?" with the repeater. Lede: "By watching it die a lot" (a tease since 17 November) Its note picks up part 4's "How do I know it works? I test it."
 - **An integration test, in a 3D world** (data-title "An integration test in a 3D world"; kicker "Mine Labs · the
   test runner I had AI build"). Merges "Good tests make reliable software" and "A scenario: a world, a bot, a
-  goal". It opens on the question, on screen: "A bot on a 15-block bedrock pillar, one water bucket, no digging,
-  no building. How does it get down alive?", beside the bucket-drop clip, which no longer starts by itself: it is
-  a played clip (`data-mode="play"`), so Space starts it and the deck shows "▶ Space to play"; Space again moves
-  on once it has finished, and → skips it. Click 1: the YAML, trimmed to nine lines with "…" for what's cut,
-  tagged the world, the action (navigate), the checks (reach, health 20, the bucket). Click 2: "No model in the
-  loop" (navigate is code, so a run needs no AI) and "Pass means observed" (seen in the game, 8 of 8 runs passed).
+  goal". Since 17 November it shows an obstacle course, run twice (Ben: "our old code was mineflayer-pathfinder at
+  first, can we simply add a course that it would fail at that ours passes at?"; the bucket drop was "reflexive and
+  very timing dependent", needing slow motion). It opens on the question, on screen: "A bot has to cross a lava lake
+  on stepping stones, without digging or building. Can it reach the gold pad?", beside one frame showing the course
+  with "▶ Space to play". Two held pop clips share that frame (`data-box="bld-clip"`, `data-hold`, the first two
+  steps): Space grows the stock bot's run over the slide (caption "Stock mineflayer-pathfinder · Catches fire on
+  the hops and dies · FAIL in 17 of 17 runs", red) and it holds on its last frame; Space cuts straight to ours (caption "Our
+  navigation · 13 of 13 runs pass", green) and it holds; Space shrinks it back into the frame and brings up click 3.
+  R replays the one on screen; → passes each without playing. Click 3: the YAML, trimmed to nine lines with "…" for
+  what's cut, tagged the world (a lava lake, 6 soul-sand stones, a gold finish), the action (navigate, dig and
+  scaffold false), the checks (reach, health 12 "# starts on 12", survive 1 s). Click 4: "No AI needed" (navigate is plain code, so
+  the test runs without a model) and "A pass is checked in the game itself" (13 of 13 runs passed).
   The terminal still and the full YAML are gone (unreadable on a call); the "ask the room" note on the slide
   before went with that slide.
-- **Every failure becomes a test** (data-title "The loop, and who wrote the code"). Merges "How I picked the next
+- **I turned every failure into a test** (data-title "The loop, and who wrote the code"). Merges "How I picked the next
   fix" and "Coding agents wrote the code". The loop as five boxes: watch a run, write down what broke, make a
-  scenario that fails, fix it till it passes, repeat. Click 1, the dolphin in one line: run 12 on 5 Sep drowned
-  with its air reading fine; any entity's air overwrote the bot's and a dolphin has 6000; one-line fix in the
+  scenario that fails, fix it till it passes, repeat. Click 1, the dolphin in one line: run 12 on 5 Sep: "The bot
+  drowned while its air meter said it was fine. Any nearby entity's air was overwriting the bot's, and a dolphin has
+  6000."; one-line fix in the
   Mineflayer fork (`c15b3ef7`) 14 minutes later; the scenario is still in the suite. Click 2: the 829 commits
-  (347 Claude Code, 482 most likely Codex, 0 hand-written) and "I steered: plans from my notes; every commit
-  reviewed before push". Click 3: "No fix without a scenario that failed first." The standing rules, the
+  (347 Claude Code, 482 Codex, 0 hand-written; "most likely" dropped on 17 November on Ben's word that Codex and Claude Code were the only tools he used) and "I steered: plans from my notes; every commit
+  reviewed before push". Click 3: "A fix only went in once a scenario had failed without it." The standing rules, the
   human-reviewed core, the 13 September fan-out (5-line note, 761-line plan, 12 agents, merged 22:19) and why
   "most likely" Codex are "If asked" notes.
-- **The harness grew. The runs got further.** Unchanged chart (scenario files per evening, then on a click the
-  furthest of the 31 attempts, then the correlation caption), with one line added under the title: "Earlier: the
+- **As the harness grew, the runs got further.** Unchanged chart (scenario files per evening, then on a click the
+  furthest of the 31 attempts, then the caption "Both went up over the same four weeks. That doesn't prove one caused the other, but I think the
+  harness is a big reason it got there."), with one line added under the title: "Earlier: the
   first bot, 27 Jun · the model out of the tests, 19 Jul". It stands on its own (no "as we just saw"), since the
   coordinator may move it after part 6 as the payoff. The dropped package timeline lives in its notes: whole-agent
   runs from 14 Jul (121, one seed), model-free arenas 19 Jul, the Scenario Lab 21 Jul, its own repo 13 Aug (the
@@ -564,7 +668,7 @@ the calls that were made along the way (his to overrule). The slide numbers here
 
 - **11, Bots have beaten it before.** Two cards like slide 9 instead of a list. Left: a command block, "AltoClef",
   "Code decides" (every step hand-written, no LLM), "✓ Beat the dragon". Right: a book and quill, "An LLM",
-  "The model decides", "? Beat the dragon", "That's what I wanted to know". Under AltoClef's tick is the date
+  "The model decides", "? Beat the dragon", "That's what I wanted to find out". Under AltoClef's tick is the date
   and the claim, "24 May 2021. The first bot to finish the game with no human input." (see "Verified facts").
   Space then plays AltoClef's own kill as a pop clip (Ben, 11 November): 26 s of TacoTechnica's stream, with the
   stream's sound since 12 November (Ben: "no sound on the altoclef clip?"), which is Taco commentating over the
@@ -654,13 +758,13 @@ products of the respective model providers"); TechRadar, 15 August 2025; Anthrop
 | 3.5 min | Part 1, What is Minecraft? The card, show of hands, the route in one line (its clip only if few hands stay up) | 3–5 |
 | 6.5 min | Part 2, Why try it with AI? The card, the Pokémon headlines in one beat, why Minecraft is harder (the example clip an optional pop there) | 6–8 |
 | 10.5 min | Part 3, Can an LLM do it? The card, AltoClef in one line, the dragon clip with sound, then the prompt and the stats | 9–12 |
-| 16.5 min | Part 4, How do you approach it? The question, playing Pokémon, then playing Minecraft, which builds into the six layers and their two bug clips (one slide, 21 clicks; the staircase bug's cause and fix on a click since 16 November), the thesis; the idea opens on the dial-back before its three cards | 13–16 |
-| 22 min | Part 5, How did I build it? Cut to the card and two slides after the 16 November practice run: an integration test in a 3D world (the pillar question on screen, the bucket-drop clip waits for Space), then the loop and who wrote the code (the dolphin drowning, the commit split, review before push) | 17–19 |
-| 34.5 min | Part 6, What did I build? A ladder: the card, too slow to hold the controls, no legal move, gear gone and no explanation, a navigate call never came back, racing Baritone, timeout-safe batches, automatic evade keeps seizing the body | 20–27 |
-| 38.5 min | Still part 6, the payoff (both moved here on 16 November): the harness grew and the runs got further (31 attempts), then what happened in the winning run | 28–29 |
-| 40.5 min | Part 7, What I'd take from this: the fine print (it carries the part, no card) | 30 |
-| 45 min | Takeaways, links | 31–32 |
-| Questions | Appendix: the run database explorer, the MCP part is tiny, credits | 36–38 |
+| 16.5 min | Part 4, How do you approach it? The question, playing Pokémon, then playing Minecraft, which builds into the six layers and their two bug clips (one slide, 20 clicks since 17 November: the Mineflayer card on its own click for the Andrew Kelley question, no green), then the staircase bug on its own slide in three quick clicks, the thesis, which opens by crossing out the home-made harness; the idea opens on the dial-back before its three cards | 13–17 |
+| 22 min | Part 5, How did I build it? Cut to the card and two slides after the 16 November practice run: an integration test in a 3D world (a lava stepping-stones course: the stock mineflayer-pathfinder bot dies, ours passes), then the loop and who wrote the code (the dolphin drowning, the commit split, review before push) | 18–20 |
+| 34.5 min | Part 6, What did I build? The "We died…" ladder: the card (312 deaths), we died while the model was still thinking, in the middle of a job, again and again and nobody told the model, on the way home, racing Baritone, of boredom, because a reflex wouldn't let us leave | 21–28 |
+| 38.5 min | Still part 6, the payoff (both moved here on 16 November): the harness grew and the runs got further (31 attempts), then what happened in the winning run | 29–30 |
+| 40.5 min | Part 7, What I'd take from this: the fine print (it carries the part, no card) | 31 |
+| 45 min | Takeaways, links | 32–33 |
+| Questions | Appendix: the run database explorer, the MCP part is tiny, credits | 34–36 |
 
 Each `<section class="slide">` carries its finish-by minute in `data-by`; the speaker view uses it to show pace.
 
@@ -694,7 +798,7 @@ Pokémon section, which does some of its setting up.
 
 **Skipped by default since 14 November:** the route's clip, the Pokémon example clip and AltoClef's clip (each one → past it).
 **If it runs long, cut in this order:** the pearl-hunt detail, the scenario slide down to one line, the
-attempts story. **Never cut:** the dragon clip, the six layers, too slow to hold the controls, the monument override, the limits slide.
+attempts story. **Never cut:** the dragon clip, the six layers, we died while the model was still thinking, the monument override, the limits slide.
 **Questions only:** pathfinding internals, the repo's five code layers, the MCP protocol, the code-size chart (appendix).
 
 ## Verified facts
@@ -898,7 +1002,7 @@ From the published winning run (Hugging Face dataset `aibengineering/beat-the-ga
     thread index, research milestone 17).
   - Authorship (research section D): 829 unique non-merge commits Jul–Oct across `mine_ai`, `mine-ai-mcp`,
     `clean-mine-ai-mcp`, `mine-labs` and the highlighter; 347 (42%) carry `Co-Authored-By: Claude`; the rest are
-    most likely Codex, inferred from Codex's thread records and `codex/*` branches (it leaves no trailer); no commit
+    Codex on Ben's own account (the only other tool he used), consistent with Codex's thread records and `codex/*` branches (it leaves no trailer); no commit
     found that is demonstrably hand-written. AGENTS.md (`mine_ai`): "A successful result must mean the requested
     outcome was actually observed"; "The maintainers intend to understand every authored line in the human-reviewed
     surface". Review before push: `clean-mine-ai-mcp/reports/commit-review/server.ts`.
@@ -932,6 +1036,32 @@ From the published winning run (Hugging Face dataset `aibengineering/beat-the-ga
     default spectator loses the 15-block fall); arena, inventory, action and goals identical. The still shows
     "navigate succeeded in 1468 ms", "goal satisfied: all(5) passed", "PASS bucket-drop-route 20.4s" (the
     20.4 s includes server setup; pour to scoop is about 0.2 s).
+    Off the slide since 17 November (replaced by the lava course below); the files stay in `site/media/`.
+  - The lava course and the stock bot (17 November, written for the recording; scratch only, not in the bot's repo or
+    the suite, Ben's call later). Course `lava-steps.yaml`: a bedrock basin two blocks deep full of lava, a stone start
+    (x -7..0), six soul-sand stones two blocks long with one lava cell between each (x 2..18), a gold finish pad
+    (x 20..22); Runner at [-4.5, -60, 0.5]; ours is `navigate { x: 21, y: -60, z: 0, range: 0, dig: false, scaffold:
+    false }`; goals reach [21.5, -60, 0.5] radius 1, health 20, completion, survive 1 s; regeneration off. Built
+    after trying the stock bot on the gauntlet-lava-parkour fixture, where it cleared the maximum gaps but clipped the
+    lava at the soul-sand hop (the fixture rebuilt from a real death on 8 September) and burned. Stock bot: about 60
+    lines of JavaScript speaking Mine Labs' client protocol, npm `mineflayer` 4.39.0, `mineflayer-pathfinder` 2.4.5,
+    `prismarine-physics` 1.11.0 (pinned with an npm override; the field note's baseline pair), default `Movements`,
+    one `GoalBlock` on the pad, no reflexes; it reports success 4 s after arriving. It failed 7 of 7 on this course:
+    4 died in the lava (server: "Runner tried to swim in lava"; Mine Labs: "all failed: Runner failed: died"), 3
+    reached the pad on 1 or 2 health, still burning (health check failed). Each hop off soul sand overlaps the lava
+    cell: 4 damage and set alight. Ours passed 12 of 12 (8 headless, 4 recorded), full health, navigate about 6.8 s.
+    Mineflayer-pathfinder is what the first versions used. Clips: one fixed spectator camera, real time,
+    `minelabs-lava-steps-stock.mp4` 6.9 s and `minelabs-lava-steps-ours.mp4` 6.8 s, cut from one capture of the
+    17 November runs.
+    Re-recorded the same day with Ben (17 November, later): both bots now start on 12 health of 20 (`players[].health:
+    12`, health goal 12), Ben's choice, because at full health the stock bot died in only 4 of 7. Eight stones at full
+    health made the stock bot die every time but our navigation then failed on the eighth hop in a row (4 of 4,
+    "[FIRE] contact … fire escape did not establish safe footing"; seven hops pass): a real bug, kept for a scenario
+    later. On the 12-health course the stock bot died 17 of 17 (4 headless, 13 recorded) and ours passed 13 of 13
+    (4 headless, 9 recorded). The stock bot now runs with mineflayer's `respawn: false`, so a death stays on screen
+    instead of popping it back to the start. Camera behind the start looking down the course (`tp -14 -54 6 -111 23`),
+    window captured at 3840x2054 and cropped 2400x1350 at 400,704 to 1280x720, no letterbox. Stock clip 5.0 s from
+    `take-course-5.mkv` 17.75 s; ours 6.0 s from `take-course-4.mkv` 23.4 s.
   - The first version, end to end (checked 16 November, for the marker on "Playing Minecraft"): `bot.log` runs 27 Jun
     04:48:32 to 04:50:36 UTC (14:48 AEST): the bot spawns, calls gpt-5.4-mini on its 8-second cadence, and every turn
     returns one JSON action with a reason (`follow_player` each time); the log's crash trace runs through
@@ -940,6 +1070,10 @@ From the published winning run (Hugging Face dataset `aibengineering/beat-the-ga
     MCP server). The win: 15 Sep 2026, 00:43 UTC (`research/process-timeline.md`, milestone 18, from the published
     `run.json`). 27 Jun to 15 Sep is 80 days, 11.4 weeks: "11 weeks" on the slide. The last whole-agent run started
     19 Jul 09:25 UTC and the first model-free one 11:34 UTC the same day (21:34 AEST), 22 days after the first bot.
+    Since 17 November the marker says "built" and what it ran on (coordinator, from the repo): first commit 27 Jun 16:00
+    on the plain OpenAI SDK with gpt-5.4-mini through a ChatGPT login; the Vercel AI SDK agent loop (generateText,
+    11 tools) added 17:54 the same day and used until 9 Jul; the home-made loop retired 3 Aug, when Codex CLI became
+    the first off-the-shelf harness to play; Claude Code's first tool calls 4 Aug. All of that is in the slide's notes.
 - Part 6, What did I build? (part 5 until 16 November; slide numbers below are those of 12–14 November), checked 12 November against the run database (`action_requests`, `action_responses`,
   `notes`, `events`, `frontier_chunks`). Run times are from the first event, 00:43:38 UTC.
   - The four calls on slide 21, with their rationales word for word: request 3, `collect_block` logs × 16 at 0:00:04,
@@ -1016,41 +1150,76 @@ From the published winning run (Hugging Face dataset `aibengineering/beat-the-ga
     Per node (`docs/benchmarks/navigation/baritone-profile.md`, `838b2c2f`, 9 Sep): Baritone 3–4 µs warm, ours about
     10; about 60% of Baritone's time is block reads. `where-the-search-stands.md` (`f4becc31`): within 1.3× on flat
     open ground; a native C core was measured and rejected (the loop is about 1% of a node).
-- Part 6 ladder sources (16 November, second pass; every quote opened at its source).
-  - `86503aa9` (21 Jul 09:43, "Initial Mine AI snapshot") is the first commit; one job at a time predates it.
-  - `aaa912bc` (3 Aug 20:44): "The idle hostile guard rejected every foreground action with SESSION_BUSY while it
-    ran, and it had no time budget of its own… Three bots reached that state on 2026-08-03; two of them sat at
-    health 1-7 with no legal move until their agent loops gave up". Fix: "a foreground request now outranks it" and
-    "The guard also gets the deadline handle_hostiles would receive". `bf451ed3` (27 Jul) already has
-    `set_hostile_policy` ("The model can change this mid-session").
-  - Lava: `docs/field-notes/eyes-of-ender-nether-death-2026-09-04.md` quotes the game message "EnderSeeker tried to
-    swim in lava" and says the bot "fought on the lip of a lava lake in basalt deltas and walked in". Lava escape
-    scenarios (`lava-escape-to-water.yaml`, `lava-interrupts-mining.yaml`) are in `05334fb4` (8 Sep); "Escape active
-    fire and resume" is `cb65c281` (11 Sep). Drowning: `docs/plans/survive-the-night.md` ("Breathing is a reflex
-    too"): "the eighth playthrough's bot drowned mining iron at the bottom of a lake inside its first ten minutes";
-    added in `8e85cee2` (5 Sep), which also adds `hunger-reflex.ts` and the `drowning-bot-surfaces` scenario. The
-    six reflex files as they are now (`survival/reflexes/*.ts`) date from the 10 Sep reorganisation (`0473f157`);
-    footing and dragon have no earlier landing date confirmed, so the slide gives none.
-  - `1d829c39` (4 Aug 02:01): "The next check-in showed a bot standing 36 blocks away at full health with its gear
-    gone and no explanation anywhere." Fix: "surface it as lastDeath on the check-in, the environment snapshot and
-    session status". Later steps without an incident: `fa47e1c8` (20 Aug, frontier persisted) and `3c479f67` (21 Aug,
-    `simple_query_bot_data`); `ab52bc0e` (23 Aug, Markdown and JSON responses) and `5348ddbe` (23 Aug, "durable
-    events, notification consumption, MCP response notices"). Vitals in every reply (10 Sep) was not confirmed and
-    is not on the slide.
-  - 24 Aug: `docs/field-notes/investigation-simple-navigate-host-stall-2026-08-24.md`: request 451 failed with
-    Pathfinder's "Took to long to decide path to goal!"; request 452 (`simple_navigate`, 06:45:59Z) was accepted and
-    never answered; requests 453–457 were all rejected with "[ACTION_BUSY] simple_navigate has been running since
-    2026-08-24T06:45:59.235Z; no new action started." The immediate fix was mineflayer-pathfinder PR #365. New
-    navigation: `dd5b37a6` (26 Aug 12:21), default in `8c7826bc` (26 Aug 22:55).
-  - `b2510ed6` (2 Sep 12:36): "The live bot hit the 60 s one on an eight-item smelt and began splitting work into
-    \"timeout-safe batches\"." `2685082` (old `mine-ai-mcp` history, 13 Sep 00:08): "Implement asynchronous
-    foreground actions with bounded waits and Markdown progress". `75d820b` (12 Sep 23:53): "Unify survival policy…".
+- Part 6 ladder sources ("We died…", 17 November; every line checked at its source; times AEST unless marked UTC).
+  - The count. 312 bot deaths in real play, 29 Jul to 15 Sep: Minecraft's own death lines (`<name> <death message>`,
+    matched against the full list of death messages) in the live dev server's logs (`mine_ai/.local-server/logs/
+    *.log.gz`, dated by file name, plus the undated `mine_ai/logs/processes/server.out.log`, its restart segments
+    matched to the dated files) and the eleven dragon-goal Docker runs including the win (`mine-ai-data/runs/*`, WSL
+    `~/mine-ai-data/runs/*`). Every `player_death` event in the run databases matches a log line to the second, so the
+    databases add none; duplicates removed by bot, second and message. Causes: mobs 220 (zombie 80, skeleton 54, spider
+    21), drowning 25, falls 22, creepers 21, lava and fire 19, other 5 (4 suffocated in a wall, 1 lightning), starvation
+    0. By campaign: Codex role loops in August 104, Eyes of Ender playthroughs 64, dragon-goal runs and the win 63,
+    Nether runs 40, TestBot and AIVolunteer sessions 21, hands-free survival 17, survival-20260911a 3. Not counted:
+    27 Jun to 14 Jul (no logs survive), the July benchmark ladder (20), test-fixture bots in scenarios (563 or more),
+    human players. All 31 attempts have a surviving log. The per-death table and the method are in the side-session
+    notes folder (`deaths-real-play.csv`, `deaths-SOURCES.md`).
+  - Controls, 1 Aug: Codex session log `~/.codex/sessions/2026/08/01/rollout-2026-08-01T20-01-21-019fbcc5….jsonl.zst`
+    (zstd; Node 24's `zlib.zstdDecompressSync` opens it): navigate returned `suspended` with `EMERGENCY_AIR` at 10:10:13Z;
+    at 10:10:19Z the model: "Because the action has returned and survival takes priority, I'm inspecting immediately
+    before deciding whether a separate recovery action is necessary."; a recovery navigate started 10:10:26Z and
+    returned at 10:10:34Z. Server log `[20:10:34] CodexMCP drowned` (`server.out.log:454`), 21 s after the handback.
+    Turns then took 5 to 25 s. One job at a time is in `86503aa9` (21 Jul 09:43), so the label stays "From the start".
+  - Reflexes, 28 Aug: `.local-server/logs/2026-08-28-6.log.gz`: `[21:49:27] TestBot was shot by Skeleton`; `[21:52:24]
+    <TestBot> I died during the diamond run and respawned empty; I need to recover a pickaxe from the chest before mining
+    again.` The job, `simple_collect_block` for 21 diamond_ore, started 21:45:43 and returned partial at 21:51:39 (Codex
+    session `rollout-2026-08-24T12-34-48-01a0319e….zst`). Ben on Stream 14, 29 Aug (`AIBengineering/2026-08-29 - Stream
+    14/Post Stream/transcripts/2026-08-29_12-46-15.md`), at 2:09:25: "I'm gonna go and add combat into our MCP so it stops
+    dying to skeletons". Fix `f9d7a13d` (2 Sep 09:12): "navigate, collect-block and explore-frontier declare their
+    requests safe to repeat and are resumed after a kill". The July code had a hostile reflex that interrupted actions
+    (`86503aa9`, `src/safety.ts`); the Simple Actions rewrite (`33733037`, 12 Aug) started without one. Lava: field note
+    `eyes-of-ender-nether-death-2026-09-04.md` ("EnderSeeker tried to swim in lava"); drowning: `docs/plans/
+    survive-the-night.md` (`8e85cee2`, 5 Sep), a different death from slide 20's dolphin (run 12, 5 Sep 23:26).
+  - Reflexes in the code that won (`mine-ai-mcp` tag `beat-the-game`, de4fef3): six attached in `runtime/
+    minecraft-runtime.ts`, all six fired in the run (hostile 250, hunger 28, dragon 7, breath 3, footing 3, fire 2, from
+    `events` rows `survival_outcome` by source). Hunts: `actions/hunt-mob/hunt-mob.ts:197` calls `combat.engage(...)`
+    itself, the same controller the hostile reflex's fight uses; the reflex only considers hostile mobs, so it never
+    fights cows, sheep or pigs; the run's hunts made 65 kills with 296 swings. Dragon: `reflexes/dragon.ts` only evades
+    (breath, fireballs, the body's path or a perch); all 7 firings were evades. The dragon and crystals are fought with
+    model-called actions (`attack_dragon_perch`, `shoot_dragon`, `destroy_end_crystal`, `prepare_dragon_perch`), and the
+    hostile reflex filters the dragon out (`control/combat/observation.ts:64`).
+  - Replies, 3 Aug: `server.out.log:4129–4135`, CodexBuilder slain by Spider ×4 and Zombie ×3 from 14:49:24 to 14:51:02.
+    Codex session `rollout-2026-08-03T13-07-34-019fc597….zst`: two `[PLAYER_DIED]` results (04:49:25Z, 04:50:37Z); at
+    04:50:18Z the model: "The drop cluster is unstable: exact entity IDs vanish between fresh inspections and the
+    builder's position resets, so repeated pickup attempts are no longer safe or reliable." A death during a running
+    action was already reported; deaths between calls were not. Fix `1d829c39` (4 Aug 02:01): "The next check-in showed a
+    bot standing 36 blocks away at full health with its gear gone and no explanation anywhere." … "surface it as
+    lastDeath on the check-in, the environment snapshot and session status". Later steps without an incident: `fa47e1c8`
+    and `3c479f67` (20–21 Aug), `ab52bc0e` and `5348ddbe` (23 Aug).
+  - Navigation, 24 Aug: `docs/field-notes/investigation-simple-navigate-host-stall-2026-08-24.md`: request 192,
+    `simple_navigate` home, started 15:29:34, "Cancelled after 120,009 ms", by then "farther from home"; `.local-server/
+    logs/2026-08-24-4.log.gz`: `[15:31:58] AIVolunteer was slain by Zombie`. The same note: request 451 "Took to long to
+    decide path to goal!", request 452 accepted at 06:45:59Z and never answered, then "[ACTION_BUSY] simple_navigate has
+    been running since 2026-08-24T06:45:59.235Z; no new action started." The rebuild spec (`pathfinder-rewrite/README.md`,
+    25 Aug) cites the stall. New navigation `dd5b37a6` (26 Aug 12:21), default `8c7826bc` (22:55).
+  - Waiting, 2 Sep: `b2510ed6` (12:36): "The live bot hit the 60 s one on an eight-item smelt and began splitting work into
+    \"timeout-safe batches\"." `2685082` (old `mine-ai-mcp`, 13 Sep 00:08). No death was caused by a timeout; on 24 Aug
+    the bot died 24 s after the 120 s client deadline cancelled its trip home, killed by a zombie ("the timed-out return
+    did not preserve the 2 raw iron").
+  - Policy, 6 Sep: `mine_ai/tools/playthrough/summaries/eyes-run-13-summary.md`, bug 19 "reflex lockout (killed the
+    run)": "every retry for three minutes returned `[ACTION_BUSY] hostile_reflex has been running since …; no new action
+    started` while the reflex re-engaged the same cubes. The bot died inside that loop. The agent had the right plan and
+    no way to execute it." Server log `2026-09-06-6.log.gz`: `[22:49:30] EnderSeeker was slain by Magma Cube` (world
+    eyes-of-ender-20260906m). `75d820b` (12 Sep 23:53): "Unify survival policy…"; the record doesn't tie bug 19 to it,
+    and `bf451ed3` (27 Jul) already had `set_hostile_policy`. Earlier case, `aaa912bc` (3 Aug 20:44): "Three bots reached
+    that state on 2026-08-03; two of them sat at health 1-7 with no legal move until their agent loops gave up".
   - The monument calls in the published database: request 261 at 3:09:17 (`engagement: defend_only`, 10 min), 267
     at 3:09:35 (`hide: never`, `retreat: false`, 3 min; reason "Automatic evade keeps seizing the body and swimming me
     deeper into the ocean monument; I need manual control to route north to land."), 273 at 3:11:15 (`engagement:
     respond_to_threats`, `hide: when_recovery_possible`, `retreat: true`, session; reason "Escaped the ocean monument
     onto land at full health; normal defensive behaviour should resume for the stronghold dig and End trip.").
     `set_survival_policy` was called 9 times (requests 96, 121, 141, 199, 207, 261, 267, 273, 323), all succeeded.
+  - "60 game ticks" on the controls slide is 20 ticks a second (as on "Minecraft is a harder problem" and "Playing
+    Minecraft") times the ~3 s turn.
 
 ## Open items
 
@@ -1062,10 +1231,11 @@ Shown on the slides as dashed yellow TODO chips (press T to hide them).
       needs them on screen.
 - [x] Start date (14 November): 27 June 2026, from the bot's earliest files (`bot.log` "spawned as CodexBot", first
       file 13:51). "Who I am" says Jun–Sep 2026; its notes have "Started 27 June, a few days before the leave" if asked.
-- [x] First version's date on "Playing Minecraft" (16 November): 27 Jun, 11 weeks before the win, from `bot.log`
+- [x] First version's date on "Playing Minecraft" (16 November; "built", plus GPT and the Vercel AI SDK, 17 November): 27 Jun, 11 weeks before the win, from `bot.log`
       (see "Verified facts"); the TODO chip in its notes ("first couple of days") is gone.
 - [x] Part 5, How did I build it? (16 November): the bucket-drop clip and pass still are on "A scenario: a world,
-      a bot, a goal"; the TODO chip is gone.
+      a bot, a goal"; the TODO chip is gone. Replaced on 17 November by the lava course before/after.
+- [ ] Part 5: whether the lava course (and the one-off stock bot) joins the bot's scenario suite is Ben's call.
 - [ ] Part 5, How did I build it?: the agents named only as "coding agents (Codex and Claude Code)" until Ben says how to name them.
 - [ ] Slide 17: look at what Jev's Minecraft demo actually does before saying more than the one line about it.
 - [x] Intro (10 November): Ben names his employer out loud on the day. In writing it is only ever "Australia's
@@ -1085,11 +1255,11 @@ Shown on the slides as dashed yellow TODO chips (press T to hide them).
   game with no human input." Ben remembered it as the world's first computer-driven completion. "First bot" is
   what the sources support; "computer-driven" would also take in scripted input replays (TAS), which weren't checked.
 - [x] Area 1: what was tried before the MCP server. Dropped with the area cards on 12 November.
-- [ ] "Gear gone, no explanation" notes: did Claude Code compact its context during the winning run? The notes say compaction loses
+- [ ] "We died again and again, and nobody told the model" notes: did Claude Code compact its context during the winning run? The notes say compaction loses
       nothing; say it happened only if it did.
 - [ ] Slide 29: were the physics fixes sent upstream, or do they live in the forks?
 - [ ] Slide 29: the Baritone rewrite is the worked example; pick the one break → scenario → fix to tell from it.
-- [ ] "No legal move" notes: confirm the name of the combat package collection.
+- [ ] "We died in the middle of a job" notes: confirm the name of the combat package collection.
 - [ ] Part 6, Baritone (Ben): he remembered "10 or 30× slower, about 4× after optimising" and called it a port. Measured:
       30–60× (3 Sep, by hand), 4.1× that afternoon, 11.9× on 8 Sep, 2.7× on 9 Sep; and the code follows Baritone's
       design without translating its source. The slides use the measurements and say "follow" and "rebuild".
@@ -1122,17 +1292,24 @@ sound. A missing file shows a labelled placeholder.
 | `how-to-win.mp4` | 5 | route (Space plays it through) | 48 s, 24 hard-cut shots across the eight steps, for people who have never played. All first-person shots from two YouTube guides (CC BY), because the bot crafts without opening a screen and its run can't show most steps clearly. Ben talks over it. |
 | `bug-drown.mp4` | 17 | pop (Space) | The actions example. 13.5 s, Stream 10 (1 August), about 0:38:38 on stream: Ben asks the bot to keep navigating to new areas to find animals; the navigate action walks it out into the sea, it sinks to the seabed and stands there until chat reads "HandsFreeBot drowned" (the observer, off-frame, shows NAVIGATION_FAILED and the hearts falling). Ben, live: "And drowning... you're drowning, so quickly just navigate somewhere so it swims. Ah, you're dead." Three shots from the 4K display recording, game window only, below the voice HUD: 2341.5–2346.5 s (walking out to sea), 2368–2374 s (on the seabed), 2386.5–2390 s (the death line in chat; seagrass hides the bot by then). The water-safety reflex was added later that stream. Runner-up: the bot tunnelling out of its sand shelter into water and flooding the shaft (same stream, 1:35:44; `bugsctions-shelter-flood.mp4`). Previous pick, kept in `site/media/bug-sand.mp4`: 10.9 s of the sand collect action filtering out blocks with sand on top (Stream 13, 3:38), which shows the action thinking, not failing. |
 | `bug-stair.mp4` | 17 | pop (Space) | The client example. 13 s, Stream 7 (21 July), Ben's first stream with the bot, test course "westbound_switchback_regression": a stone staircase in the sky with a glowstone finish pad at the top. The bot walks up the stairs (first 4 s), then stops one step below the pad and stands there for the rest. One take from the display recording, 1274.4–1287.4 s; the camera drifts a little twice. The game's chat line naming the course shows bottom left for the first 9 s. Ben, live, about 0:21:22 on the stream: "You see him sitting right there, not moving… He could just jump up here and get to the end, but he doesn't." The cause, traced later that stream: the bot's idea of its own width was a hair under the server's, so the server kept correcting it off the step. Fixed on 23–24 July as a contact rounding fix in prismarine-physics (pathfinder fork commits 9db0cde to 2598cd7). The same course was still stuck at 3:00 on that stream. Alternative kept in `bugs\` as `client-stair-bounce.mp4`: 8.6 s of the bot jumping again and again at a one-block step in a dark corridor ("alternating_two_drop_pillars", same stream, 0:22:36). |
+| `minelabs-lava-steps-stock.mp4` | 19 | pop (Space), held | The before. 6.9 s, real time, silent: the stock mineflayer-pathfinder bot (written 17 November for this) on the lava stepping-stones course. It clips the lava on each hop, catches fire and dies in the lava after the fifth stone; it ends on the chat lines "Runner tried to swim in lava", "Runner left the game". One fixed spectator camera, cropped below the Mine Labs overlay and letterboxed to 1280x720. Raw, cut script, course and stock bot in `Google Talk Clips/minelabs/lava-steps/` (`take-course-2.mkv`, 24.1–31.0 s). |
+| `minelabs-lava-steps-ours.mp4` | 19 | pop (Space), held | The after. 6.8 s, real time, silent: our navigation on the same course, same camera; across all six stones onto the gold pad at full health (the yellow line is its planned path, from the block-highlighter mod). Raw in the same folder (`take-course-2.mkv`, 14.1–20.9 s). |
 | `navigation-loop.mp4` | 29 | silent loop | 5–10 s crossing awkward terrain. |
 | `combat-loop.mp4` | 24 | silent loop | 5–10 s defending itself with no tool call. |
 | `monument-loop.mp4` | 26 (optional, not wired in) | silent loop | The monument escape, run time 3:09–3:11. |
 
-A pop clip (AltoClef, the Pokémon example on "Minecraft is a harder problem", and slide 17) is a step. Each one has a thumbnail in its box from the start (its first frame, dimmed, with
+A pop clip (AltoClef, the Pokémon example on "Minecraft is a harder problem", slide 17, and the lava course's two runs in part 5) is a step. Each one has a thumbnail in its box from the start (its first frame, dimmed, with
 a ▶), so you can see where it lives. Space on the step before it plays it big over the slide, growing out of that
 thumbnail, which is left as an empty slot; when it ends it shrinks back into the thumbnail and fades, the thumbnail shows
 the frame it stopped on, and the box turns red (slide 11's card turns green). ← puts it back to waiting. → reaches the step without playing it
 (the box just turns red), and → during the clip lands it and moves on. On slide 17, Tools turns red on its own click;
 Actions and Client turn red as their clips land. Both clips are cut by `cut_bugs.sh` in `Google Talk Clips\bugs\`.
 On slide 11 the AltoClef clip lands in the AltoClef card instead, which gets a green edge (`.credit` on the figure).
+A pop with `data-hold` (the lava course's two runs on "An integration test, in a 3D world", 17 November) doesn't land
+when it ends: it stays up on its last frame, R replays it, and the next Space or → lands it and moves on. Its box can sit
+in any `.pop-home` (not only a `.stack` or `.compare`), and thumbnails are drawn up to 640 px wide so a large one stays
+sharp. Two pops can share one box (the first builds the thumbnail, the next reuses it); playing the next while a held
+one is up is a cut, so the dimmed slide never shows between them.
 
 A played clip waits with a "Space to play" label. Space starts and pauses it, and moves on once it has finished;
 the arrows always move, so → skips a clip. It runs in the speaker window too, kept in step with the audience one
@@ -1287,3 +1464,7 @@ room gets decided once the presenting setup is known.
 - One idea per slide. Charts use the five-colour palette in `deck.css` in fixed order (checked against the new
   surface with the dataviz validator); text never takes a series colour. Chart marks are square-ended to match.
   `--series-mute` is a grey for bars that are there for scale and aren't the point (slides 32 and 37).
+
+## Part-card subtitles are teases (17 November)
+
+Ben: "i am wondering if these subtitles SHOULD be giving the answer? should this be more fun?" The six part cards now carry a short tease instead of a summary, with no full stop: 1 "No tutorial included", 2 "Because Pokémon was taken", 3 "Spoiler: yes", 4 "Badly, at first" (this card had none before), 5 "By watching it die a lot", 6 "Whatever broke that week". Earlier lines in this file that quote the old summaries describe the cards before this change. On the same day card 6 became "We died at least 312 times during development", with a line of small print giving the count's scope, when part 6 became the "We died…" ladder.

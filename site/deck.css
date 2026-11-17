@@ -95,6 +95,8 @@ h3 { font: 400 33px/1.25 var(--term); }
 .lede { font-size: 42px; color: var(--text-2); max-width: 1250px; }
 .muted { color: var(--text-2); }
 .small { font-size: 26px; color: var(--text-3); }
+/* Title slide byline: the repo link, styled like the paper link on "Who I am". 17 November */
+.byline a { color: var(--accent); text-decoration: underline; text-underline-offset: 4px; }
 .mono { font-family: var(--term); }
 strong { font-weight: 700; color: var(--text); }
 ul.points { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 22px; }
@@ -419,6 +421,7 @@ pre.prompt::before { content: "> "; color: var(--accent); }
 .toast small { display: block; font-size: 22px; color: var(--warn); }
 .toast .dragon-head { width: 64px; }
 .toast em { display: block; font: 400 24px/1.3 var(--sans); color: var(--text-2); }
+.toast em.who-agents, .slide[data-title="Part 1: What is Minecraft?"] .chapter-head .lede, .slide[data-title="One prompt, then hands off"] h2 { text-wrap: balance; } /* 17 November */
 .toast .slot { width: 88px; height: 88px; }
 /* The game gives its hardest advancements a pink heading. */
 .toast.challenge small { color: #f08ae6; }
@@ -427,6 +430,73 @@ pre.prompt::before { content: "> "; color: var(--accent); }
 .who > div:first-child { display: flex; flex-direction: column; gap: 30px; }
 .toasts { display: flex; flex-direction: column; gap: 30px; }
 .toasts .toast { display: flex; }
+/* 17 November, reworked three times that day after Ben watched it ("more like a popup", "scroll through the whole paper
+   down to the bottom", "before the animation in of the citing", "the scroll to happen on a key press", then "scroll to
+   the bit above that, where I'm actually named"): the paper on "Who I am". Its two clicks and the Cited tile are one unit (.who-cite) after the challenge tile: .k-paper pops the
+   paper up in a window over the dimmed slide and holds on the top of page 1; .k-scroll scrolls down through fourteen
+   pages to the Related work paragraph on page 14 that names the project, widens the window, zooms in on it and
+   highlights "a single Claude Opus 5 agent ... (AI Bengineering, 2026)" a line at a time (about 4.8 s), then holds; the Cited tile (.k-paper-x) pops the paper away as it slides in.
+   Everything in the window is the arXiv PDF's own pages, rendered: page 1 sharp (media/argon-p01.webp), pages 2 to 14
+   small (argon-p02 to -p14; they only fly past) and a sharp crop of page 14's Related work paragraph (argon-cite.webp)
+   laid exactly over it for the landing. The resting styles are the title hold and :has(.k-scroll.shown) the end; deck.js adds
+   .argon-play (the pop-in), .argon-scrolling (the motion) and .argon-closing (the pop-out) only for a single → onto
+   that click, and .argon-wait holds the start of the scroll until the pages are decoded. Geometry: a page is
+   820 x 1160.4 px with 14 px between, so page 14 starts at 15267.2 and the strip ends at 16427.6; the scroll stops with
+   the strip's end at the window's foot. The landing is centred on y 604.6 pt of page 14 (16100.4 px; x 298 pt, 410.7 px),
+   just above the highlighted line, so the window's top and foot fall in the gaps between lines; at 2.056 the paragraph
+   is 1340 px wide and its 10 pt text about 28 px. */
+.who-cite { display: contents; }
+.who-cite > i.step { display: none; }
+.toast em.who-link a { color: var(--accent); text-decoration: underline; text-underline-offset: 4px; }
+.argon { display: none; position: absolute; inset: 0; z-index: 5; background: rgb(12 10 18 / .72); }
+.slide:has(.k-paper.shown):not(:has(.k-paper-x.shown)) .argon { display: block; }
+.argon-win { position: absolute; left: 50%; top: 50%; translate: -50% -48%; width: 820px; height: 760px; background: #56585c;
+  box-shadow: 0 0 0 6px #efe9dc, 14px 14px 0 6px var(--edge-dark); }
+.argon-where { position: absolute; left: -6px; bottom: calc(100% + 14px); margin: 0; font: 400 22px/1.2 var(--term); color: var(--text-2); }
+.argon-clip { position: absolute; inset: 0; overflow: hidden; }
+.argon-cam { position: absolute; left: 0; top: 0; width: 820px; display: flex; flex-direction: column; gap: 14px; transform-origin: 0 0;
+  transform: translate(0, 0) scale(1); }
+.argon-cam > img, .argon-p14 { display: block; flex: none; width: 820px; height: 1160.4px; background: #fff; }
+.argon-p14 { position: relative; }
+.argon-p14 img { display: block; width: 100%; height: 100%; }
+/* The crop is page 14 from x 40 to 555 pt and y 505 to 705 pt (from the top), as shares of the page. */
+.argon-sharp { position: absolute; left: 6.723%; top: 59.976%; width: 86.555%; height: 23.753%; opacity: 0; }
+/* One box per line of "a single Claude Opus 5 agent ... (AI Bengineering, 2026)", from the PDF's own character boxes with a
+   point of margin, as shares of the crop. */
+.argon-hl { position: absolute; background: #ffe45c; mix-blend-mode: multiply; transform-origin: left center; transform: scaleX(0); }
+.argon-hl.l1 { left: 75.650%; top: 41.25%; width: 20.194%; height: 6.5%; }
+.argon-hl.l2 { left: 4.175%; top: 48.05%; width: 86.699%; height: 6.5%; }
+.slide:has(.k-scroll.shown) .argon-win { width: 1420px; height: 520px; }
+.slide:has(.k-scroll.shown) .argon-cam { transform: translate(-134.4px, -32842.5px) scale(2.056); }
+.slide:has(.k-scroll.shown) .argon-sharp { opacity: 1; }
+.slide:has(.k-scroll.shown) .argon-hl { transform: none; }
+@media screen and (prefers-reduced-motion: no-preference) {
+  .argon-play .argon { animation: argon-fade .3s ease both; }
+  .argon-play .argon-win { animation: argon-pop .3s cubic-bezier(.2, .9, .3, 1.15) both; }
+  .argon-scrolling .argon-win { animation: argon-widen .9s cubic-bezier(.45, 0, .2, 1) 3.2s both; }
+  .argon-scrolling .argon-cam { animation: argon-cam 4.1s both, argon-blur 3.1s both; }
+  .argon-scrolling .argon-sharp { animation: argon-fade .3s ease 3.1s both; }
+  .argon-scrolling .argon-hl { animation: argon-mark .3s ease-out both; }
+  .argon-scrolling .argon-hl.l1 { animation-delay: 4.2s; } .argon-scrolling .argon-hl.l2 { animation-delay: 4.48s; }
+  .argon-wait :is(.argon-win, .argon-cam, .argon-sharp, .argon-hl) { animation-play-state: paused; }
+  .argon-closing .argon { display: block; animation: argon-fade-out .3s ease both; }
+  .argon-closing .argon-win { animation: argon-pop-out .3s ease-in both; }
+}
+@keyframes argon-fade { from { opacity: 0; } }
+@keyframes argon-fade-out { to { opacity: 0; } }
+@keyframes argon-pop { from { opacity: 0; scale: .9; } }
+@keyframes argon-pop-out { to { opacity: 0; scale: .9; } }
+@keyframes argon-widen { from { width: 820px; height: 760px; } }
+/* Scroll 3.1 s to the foot of page 14 (accelerating, then easing in), wait 0.1 s, then zoom 0.9 s. */
+@keyframes argon-cam {
+  0% { transform: translate(0, 0) scale(1); animation-timing-function: cubic-bezier(.75, 0, .2, 1); }
+  75.61% { transform: translate(0, -15667.6px) scale(1); }
+  78.05% { transform: translate(0, -15667.6px) scale(1); animation-timing-function: cubic-bezier(.45, 0, .2, 1); }
+  100% { transform: translate(-134.4px, -32842.5px) scale(2.056); }
+}
+@keyframes argon-blur { 0%, 100% { filter: blur(0); } 50% { filter: blur(2.5px); } }
+@keyframes argon-mark { from { transform: scaleX(0); } to { transform: none; } }
+@media print { .argon { display: none !important; } }
 .toasts .toast.step { transform: translateX(80px); transition: opacity .2s ease, transform .2s ease; }
 .toasts .toast.step.shown { transform: none; }
 @media (prefers-reduced-motion: reduce) { .toasts .toast.step { transform: none; } }
@@ -519,10 +589,11 @@ pre.prompt::before { content: "> "; color: var(--accent); }
 .compare .fact { gap: 2px; padding-top: 12px; }
 .compare .fact b { font-size: 46px; }
 .compare .fact span { font-size: 26px; }
-.compare:not(.duo) .card { gap: 9px; padding: 18px 36px 20px; }
+.compare:not(.duo) .card { gap: 9px; padding: 18px 36px 12px; } /* 12px at the bottom since the two-line clock row (17 November) */
 .compare:not(.duo) .fact { padding-top: 9px; }
 .compare:not(.duo) .fact b { font-size: 40px; }
 .compare:not(.duo) .fact span { font-size: 24px; }
+.compare:not(.duo) .fact.clock span { min-height: 2lh; } /* both clock rows two lines tall, so the rows line up (17 November) */
 /* A badge on each row, sitting over the gap between the two cards: likewise for both, or harder in Minecraft. It is
    in the Minecraft card's row and reaches left: 84px is the card's padding and border plus half the gap. The colour
    never stands alone; each has its sign and its word. A harder one lands just after its row fades in. */
@@ -567,6 +638,9 @@ pre.prompt::before { content: "> "; color: var(--accent); }
 .ideas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 34px; }
 .ideas .card { gap: 16px; padding: 30px 32px 36px; font-size: 32px; line-height: 1.3; color: var(--text-2); }
 .ideas .card h3 { font-size: 44px; margin-top: 12px; }
+/* 17 November: each idea card is one sentence, its first words in the old head's style. */
+.ideas .card .idea-h { font: 400 44px/1.1 var(--term); color: var(--accent); }
+.ideas .card:has(.idea-h) p { margin-top: 12px; }
 .ideas .card.step { transform: translateY(28px); transition: opacity .2s ease, transform .25s cubic-bezier(.2, .8, .2, 1); }
 .ideas .card.step.shown { transform: none; }
 @media (prefers-reduced-motion: reduce) { .ideas .card.step { transform: none; } }
@@ -574,18 +648,24 @@ pre.prompt::before { content: "> "; color: var(--accent); }
    bought (Model, Harness), the one thing built (Tools, Actions, Client: the MCP server) and what was left alone. */
 .idb-layers { display: flex; gap: 40px; }
 .idb-g { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
-.idb-buy { flex: 2; } .idb-build { flex: 3; } .idb-keep { flex: 1; }
+.idb-buy { flex: 2; } .idb-build { flex: 3; } .idb-keep { flex: 1.3; } /* 1.3: room for "What I didn't touch" (17 November) */
 .idb-g ol { list-style: none; margin: 0; padding: 0; display: flex; gap: 12px; }
 .idb-g li { flex: 1; min-width: 0; text-align: center; font: 400 26px/1 var(--term); padding: 14px 8px; border: 4px solid var(--line); background: var(--surface); color: var(--text-2);
   transition: border-color .3s ease, background-color .3s ease, color .3s ease; }
 .idb-g p, .idb-g small { margin: 0; font: 400 22px/1.2 var(--term); white-space: nowrap; transition: opacity .3s ease, color .3s ease; }
 .idb-g p { color: var(--text); }
 .idb-g small { color: var(--text-3); }
-.idb .ideas .card { padding: 24px 32px 28px; }
+.idb .ideas .card { padding: 18px 32px 20px; } /* 24/28 until the cross-out's two lines came in (17 November) */
 .idb:not(:has(.k-idb.shown)) .idb-g :is(p, small) { opacity: 0; }
 .idb:has(.k-idb.shown) .idb-build li { border-color: var(--accent); background: var(--ok-dim); color: var(--text); }
 .idb:has(.k-idb.shown) .idb-build p { color: var(--accent); }
 .idb:has(.k-idb.shown) .idb-buy li { border-style: dashed; color: var(--text-3); }
+/* Its first click (k-idb-drop, 17 November): the home-made harness from the six layers, "Vercel AI SDK", is struck out
+   and the subscription caption comes in under it, both large enough to read from the back of the room. */
+.idb-was { font: 400 28px/1.1 var(--term); color: var(--text-2); text-decoration: line-through 3px var(--gap); transition: text-decoration-color .3s ease; }
+.idb:not(:has(.k-idb-drop.shown)) .idb-was { text-decoration-color: transparent; }
+.idb-g.idb-buy small { font-size: 28px; line-height: 1.1; color: var(--text); white-space: normal; }
+.idb:has(.k-idb-drop.shown) .idb-buy small { opacity: 1; }
 
 /* A switch on a quote: which way the model had just flicked a reflex. Amber and to the left is off, green and to the
    right is on, and the word says so too. The on switch slides across as its quote comes in. */
@@ -607,7 +687,7 @@ blockquote.quote { position: relative; }
 .qr figcaption { font: 400 22px/1.2 var(--term); letter-spacing: .06em; text-transform: uppercase; color: #15121c; }
 
 /* Appendix credits: who made what, and under which licence. */
-.credits { display: grid; grid-template-columns: max-content 1fr; gap: 12px 44px; font-size: 26px; line-height: 1.35; align-items: baseline; }
+.credits { display: grid; grid-template-columns: max-content 1fr; gap: 4px 44px; /* 4px and 1.3 since the paper's row, 17 November */ font-size: 26px; line-height: 1.3; align-items: baseline; }
 .credits dt { font: 400 22px/1.2 var(--term); letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
 .credits dd { margin: 0; color: var(--text-2); }
 .credits dd b { color: var(--text); }
@@ -809,10 +889,13 @@ aside.notes { display: none; }
 /* ---------- Playing Minecraft: from a person playing to the six layers (prefix mcb-) ----------
    Scene A is the two rows, their timings, the creeper and System 1. Scene B, laid over it, is the six layers: a .stack,
    which is where deck.js's pop clips look for their boxes. Hidden key steps after the scenes drive scene B, in order:
-   k-strip, k-key, k-packet, k-snap, k-mf, k-mfpacket, k-actions, k-tools, k-harness, k-model (k-phys and k-code merged into k-key and
-   k-mf on 16 November: one click each for pressing W and for Mineflayer). Then come the six layers'
-   own steps, as they were on their own slide until 13 November: key-ok, key-gap, the two pop clips (bug-drown into
-   Actions, bug-stair into Client), k-stair (why it couldn't get up the step) and key-rule, which shows the rule (.mcb-rule) and the trace. Every change is a CSS transition, so ← plays it
+   k-strip, k-key, k-packet, k-snap, k-mf, k-mfcode, k-mfpacket, k-actions, k-tools, k-harness, k-model (k-phys merged into k-key on
+   16 November; k-mfcode split back out of k-mf on 17 November, so Ben can stop on the Mineflayer card and ask the room
+   about Andrew Kelley before the physics and the code come up). Then come the six layers'
+   own steps: key-gap (the red beat; Model and Harness stay neutral since 17 November, no key-ok), the two pop clips
+   (bug-drown into Actions, bug-stair into Client), key-rule, which shows the rule (.mcb-rule) and the trace. The harness cross-out
+   (the last click here for part of 17 November) opens "The idea" instead. The stair
+   bug's cause and fix (k-stair until 17 November) are the next slide, .stb. Every change is a CSS transition, so ← plays it
    backwards; deck.js gives the slide .mcb-instant for two frames when it is arrived at or jumped more than one step,
    so those land at once.
    The boxes you see as the AI row's Java client and Java server are the faces (.mcb-face) of the stack's Client and
@@ -917,7 +1000,7 @@ aside.notes { display: none; }
 .mcb-code .mcb-fn, .mcb-hi { color: var(--accent); }
 .mcb-code .mcb-str { color: var(--warn); }
 .mcb-cap { display: grid; }
-.mcb-cap > span { grid-area: 1 / 1; transition: opacity .25s ease; }
+.mcb-cap > span { grid-area: 1 / 1; align-self: center; transition: opacity .25s ease; }
 .mcb-cap-b { opacity: 0; color: var(--accent); }
 @supports (width: calc(sin(rem(3, 2) * 1rad) * 1px)) {
   .mcb-packet { --lift: sin(rem(var(--mcb-p), 1) * 180deg); translate: 0 calc(var(--lift) * -6px);
@@ -1076,13 +1159,13 @@ aside.notes { display: none; }
   .mcb:has(.k-actions.shown) .mcb-b .mcb-java { transition: none; }
   .mcb:has(.k-mf.shown) .mcb-check, .mcb:has(.k-mf.shown) .mcb-down::before, .mcb:has(.k-mf.shown) .mcb-down::after { opacity: 0; }
   .mcb:has(.k-mf.shown) .mcb-packet { opacity: 0; transform: translateY(20px); transition: opacity .3s ease, transform .4s ease; }
-  /* Mineflayer's side of the same beat. The call, and half a second later the same physics; then the same card goes
-     back to the client end out of sight and flies the same lane again, captioned as the same packet, and lights green
-     as it lands. */
-  .mcb:not(:has(.k-mf.shown)) .mcb-code { opacity: 0; transform: translateY(-50%) translateX(-24px) scale(.9); }
-  .mcb:not(:has(.k-mf.shown)) .mcb-mf .mcb-phys { opacity: 0; transform: translateY(14px) scale(.9); }
-  .mcb:has(.k-mf.shown):not(:has(.k-mfpacket.shown)) .mcb-code { transition-delay: 1.1s; }
-  .mcb:has(.k-mf.shown):not(:has(.k-actions.shown)) .mcb-mf .mcb-phys { transition-delay: 1.6s; }
+  /* Mineflayer's side of the same beat, on its own click (k-mfcode) after the card has landed: the call, and half a
+     second later the same physics; then the same card goes back to the client end out of sight and flies the same lane
+     again, captioned as the same packet, and lights green as it lands. */
+  .mcb:not(:has(.k-mfcode.shown)) .mcb-code { opacity: 0; transform: translateY(-50%) translateX(-24px) scale(.9); }
+  .mcb:not(:has(.k-mfcode.shown)) .mcb-mf .mcb-phys { opacity: 0; transform: translateY(14px) scale(.9); }
+  .mcb:has(.k-mfcode.shown):not(:has(.k-mfpacket.shown)) .mcb-code { transition-delay: .1s; }
+  .mcb:has(.k-mfcode.shown):not(:has(.k-actions.shown)) .mcb-mf .mcb-phys { transition-delay: .6s; }
   /* The panels belong to the packet beat: when the build moves on they fade and give their room back (the code card
      sinks with the wire). */
   .mcb:has(.k-actions.shown) .mcb-phys { opacity: 0; max-height: 0; margin: 0; }
@@ -1100,14 +1183,13 @@ aside.notes { display: none; }
   /* Then the six layers' own steps: the verdicts and the pop clips use the deck's .stack rules; the rule is ours. */
   .mcb:not(:has(.key-rule.shown)) .mcb-rule { opacity: 0; }
   .mcb:has(.k-model.shown):not(:has(.key-rule.shown)) .mcb-first { opacity: 1; transition-delay: .6s; }
-  /* k-stair (16 November): why the bot couldn't get up the step, said once, where the clip is. The number comes up on
-     the right and stays beside the rule; the cause and the fix sit where the rule goes, until the rule takes over. */
-  .mcb:not(:has(.k-stair.shown)) :is(.mcb-stair-why, .mcb-stair-num), .mcb:has(.key-rule.shown) .mcb-stair-why { opacity: 0; }
 }
 .mcb-end { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 48px; align-items: start; }
 .mcb-end > .mcb-rule, .mcb-stair-why { grid-area: 1 / 1; }
-/* The rule shares its row with the number from 16 November, so it wraps to two lines in the left column. */
+/* The rule has the row to itself since the number moved to its own slide (17 November). */
 .mcb-end > .mcb-rule { margin: 0; text-wrap: balance; }
+/* Model and Harness have no verdict: an invisible one keeps their labels level with the other boxes'. */
+.stack .mcb-blank { visibility: hidden; }
 .mcb-stair-why { display: flex; flex-direction: column; gap: 10px; font-size: 29px; line-height: 1.3; color: var(--text-2); transition: opacity .25s ease; }
 .mcb-stair-why p { margin: 0; }
 .mcb-stair-why b { color: var(--text); font-weight: 600; }
@@ -1116,7 +1198,161 @@ aside.notes { display: none; }
 .mcb-stair-q { margin-right: 18px; font: 400 22px/1.2 var(--term); color: var(--text-2); text-shadow: none; }
 .mcb-stair-eq code { font: 400 36px/1.2 var(--term); color: var(--text); background: none; padding: 0; }
 .mcb-stair-ans { display: flex; align-items: baseline; font: 400 64px/1 var(--term); color: var(--gap); text-shadow: .0625em .0625em 0 var(--shadow); }
-@media print { .mcb-stair-why { display: none; } }
+/* ---------- Why it couldn't get up the step (prefix stb-, 17 November) ----------
+   The staircase bug told as a jump, in slide 15's packet picture (Ben: "doesn't read as a story"). Mineflayer's box holds
+   a side-on drawing of the clip's own course (the field note, ticks 152-155). To climb a step the bot jumps; while its
+   feet are below the top the step holds it back, so it goes up the face, then forward over the top: the faint L path and
+   the faint box on the step. k-stb-check: rounding put its edge a hair inside the face (3.9999999999999996), the
+   collision test (aabb.js: other.minX >= this.maxX) is false, so partway up the jump Mineflayer moves it forward, into
+   the block (the red corner-cut; the overlap drawn larger), says ✓ and sends Set Player Position. k-stb-loop: the server
+   says ✗ and sends it back, it drops to the foot of the step, and on a single → the loop goes round three times.
+   k-stb-fix: with the 1e-7 tolerance the test is true, so it rises up the face, then goes over onto the step; both ✓.
+   Scale: 90px a block, shown at 1.6x (144px); the box is 0.6 by 1.8 blocks; the cut-in is 0.75 of a block up (tick 154), its feet below the top.
+   The opening loops the working jump while at step 0; click 1 blinks back to the foot and cuts in.
+   One caption at a time. The base rules are the fixed end state (print shows it); the earlier beats are under
+   @media screen. deck.js gives the slide .mcb-instant on arrival or a jump, and .stb-play for a single → (the loop). */
+.stb { --mcb-fly: cubic-bezier(.5, 0, .25, 1.08); }
+/* Ben's one point, on screen for the whole slide (17 November). The slide sits higher than others (60px top, 12px
+   gaps) so the line fits with the drawing at full size; it is one line at 34px, the captions 28px. */
+.slide.stb { padding-top: 60px; gap: 12px; }
+.stb-key { margin: 0; font: 400 34px/1.25 var(--sans); color: var(--text); white-space: nowrap; }
+.stb-flow { display: grid; grid-template-columns: 640px 460px 240px; grid-template-rows: auto 1fr; column-gap: 30px; row-gap: 34px; margin-top: 0; }
+.stb-client { grid-row: 1 / 3; position: relative; }
+.stb-link { grid-column: 2; grid-row: 1; }
+.stb-server { grid-column: 3; grid-row: 1; }
+.stb-box { background: var(--surface-2); border: 4px solid; border-color: var(--edge-light) var(--edge-dark) var(--edge-dark) var(--edge-light);
+  box-shadow: 0 0 0 4px var(--edge-dark); padding: 14px 18px 14px; display: flex; flex-direction: column; gap: 14px; }
+.stb-box > b { font: 400 24px/1.15 var(--term); color: var(--text); }
+/* The drawing: its geometry is laid out at 90px a block in a 520x288 layer and scaled 1.6x as one piece (17 November:
+   it was too small to carry the slide), so the step, the box, both paths and the motion keep their proportions. Its
+   labels sit outside that layer at 20-22px, at the scaled positions. */
+.stb-draw { position: relative; width: 596px; height: 461px; flex: none; overflow: hidden; }
+.stb-geo { position: absolute; left: 0; top: 0; width: 520px; height: 288px; transform: scale(1.6); transform-origin: 0 0; }
+.stb-draw p { position: absolute; z-index: 3; margin: 0; font: 400 21px/1.25 var(--term); color: var(--text-2); white-space: nowrap; transition: opacity .25s ease; }
+.stb-draw p span { color: var(--text); }
+.stb-block { position: absolute; left: 0; top: 166px; width: 150px; height: 90px; box-sizing: border-box; border: 3px solid #8e8e98;
+  background: linear-gradient(90deg, transparent 57px, #55555e 57px, #55555e 60px, transparent 60px), #6c6c76; }
+.stb-face { position: absolute; z-index: 1; left: 149px; top: 6px; height: 256px; border-left: 2px dashed var(--text-2); }
+.stb-face-l { left: 254px; top: 422px; font-size: 22px !important; }
+.stb-west { left: 12px; top: 424px; font-size: 20px !important; color: var(--text-2) !important; }
+/* The sum that made the number (17 November): the field note's two steps, 4 + 0.3005 = 4.3004999999999995 and
+   minus 0.3005 = 3.9999999999999996 (setPositionToBB then getPlayerBB), stacked to fit beside the box, with tags. */
+.stb-edge-l { left: 340px; top: 140px; opacity: .35; }
+.stb-sum { font-size: 19px !important; line-height: 1.3 !important; }
+.stb-sum > span { display: block; }
+.stb-draw .stb-sum .stb-sum-h { color: var(--text-2); }
+.stb-draw .stb-sum .stb-sum-row { color: var(--text); margin-bottom: 16px; }
+.stb-draw .stb-sum .stb-sum-r { color: var(--text); }
+.stb-t { position: relative; display: inline-block; }
+.stb-t i { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); font: normal 400 13px/1.1 var(--term); color: var(--text-3); white-space: nowrap; }
+.stb-ov-l { left: 340px; top: 262px; font-size: 20px !important; color: var(--gap) !important; opacity: 0; }
+.stb-path { position: absolute; inset: 0; z-index: 1; width: 520px; height: 288px; }
+.stb-want { fill: none; stroke: var(--text-3); stroke-width: 3; stroke-dasharray: 9 7; }
+.stb-want-head { fill: var(--text-3); }
+/* The corner it cut, traced by its feet (below the box, in front of the face): up a little, then forward into the block. */
+.stb-wrong { opacity: 0; transition: opacity .25s ease; }
+.stb-wrong path { fill: none; stroke: var(--gap); stroke-width: 3; stroke-dasharray: 7 6; }
+.stb-wrong .stb-wrong-head { fill: var(--gap); stroke: none; }
+.stb-ghost { position: absolute; left: 60px; top: 4px; width: 54px; height: 162px; box-sizing: border-box; border: 3px dashed var(--text-3); opacity: 0; transition: opacity .25s ease; }
+.stb-bot { position: absolute; z-index: 2; top: 4px; left: 60px; width: 54px; height: 162px; box-sizing: border-box; border: 3px dashed var(--text);
+  background: rgb(255 255 255 / .08); transition: top .45s ease, left .45s ease .45s; }
+.stb-ov { position: absolute; z-index: 2; left: 126px; top: 166px; width: 24px; height: 22px; background: var(--gap); opacity: 0; transition: opacity .2s ease; }
+/* "A hair inside": on a single → onto click 1, before the box moves, its edge slides a hair (drawn larger) past the
+   face and this sliver marks the part inside the step, under the same "overlap drawn larger" label. */
+.stb-hair { position: absolute; z-index: 2; left: 144px; top: 166px; width: 6px; height: 90px; background: var(--gap); opacity: 0; }
+.stb-floor { position: absolute; left: 0; right: 0; top: 256px; bottom: 0; background: #2b2437; border-top: 4px solid var(--line); }
+.stb .mcb-stair-num { align-items: flex-start; margin: 0; gap: 0; }
+.stb .mcb-stair-eq code { font-size: 20px; }
+.stb .mcb-stair-ans { font-size: 40px; }
+.stb .mcb-stair-q { font-size: 18px; margin-right: 14px; }
+.stb-eps { color: var(--accent); transition: opacity .25s ease; }
+.stb-ans { display: grid; }
+.stb-ans > span { grid-area: 1 / 1; transition: opacity .25s ease; }
+.stb-false { opacity: 0; }
+.stb-true { color: var(--accent); }
+.stb-link { position: relative; display: flex; flex-direction: column; justify-content: center; gap: 22px; opacity: .3; transition: opacity .3s ease; }
+.stb .mcb-lane::before { transform: none; }
+.stb .mcb-packet { width: auto; }
+.stb .mcb-ph b, .stb .mcb-ph code { font-size: 19px; }
+.stb-dot { position: absolute; top: 50%; left: 20px; z-index: 2; width: 14px; height: 14px; margin-top: -7px; background: var(--text); opacity: 0; }
+.mcb-down .stb-dot { background: var(--gap); }
+/* The two verdicts: the server's chip asks on click 1, refuses (✗) on the loop and accepts (✓) after the fix; Mineflayer's
+   own chip says ✓ from click 1 on. Mineflayer's sits top right of its box, out of the flow, without the server's sub-line. */
+.stb .mcb-check { border-color: var(--accent); transition: opacity .25s ease, border-color .25s ease; }
+.stb .mcb-check .mcb-mark { border-color: var(--accent); color: var(--accent); }
+.stb .mcb-check .mcb-mark::before { content: "✓"; }
+.stb-mf-chip { position: absolute; top: 12px; right: 18px; margin: 0; border-color: var(--accent); transition: opacity .25s ease; }
+.stb-mf-chip .mcb-mark { border-color: var(--accent); color: var(--accent); }
+.stb-mf-chip .mcb-mark::before { content: "✓"; }
+.stb-tick { margin: -6px 0 0; text-align: center; font: 400 20px/1.2 var(--term); color: var(--gap); transition: opacity .25s ease; }
+/* One caption a beat, each in the same place. */
+.stb-caps { grid-column: 2 / 4; grid-row: 2; align-self: start; display: grid; font-size: 28px; line-height: 1.3; color: var(--text); }
+.stb-caps p { grid-area: 1 / 1; margin: 0; opacity: 0; transition: opacity .3s ease; }
+.stb-caps b { font-weight: 600; }
+.stb-caps .stb-cap-3 { opacity: 1; }
+@keyframes stb-climb { 0%, 10% { top: 94px; left: 150px; opacity: 1; } 30% { top: 4px; left: 150px; } 46%, 70% { top: 4px; left: 60px; opacity: 1; }
+  74% { top: 4px; left: 60px; opacity: 0; } 75% { top: 94px; left: 150px; opacity: 0; } 81%, 100% { top: 94px; left: 150px; opacity: 1; } }
+@keyframes stb-cut { 0% { top: 4px; left: 60px; opacity: 1; } 5% { top: 4px; left: 60px; opacity: 0; } 6% { top: 94px; left: 150px; opacity: 0; }
+  12% { top: 94px; left: 150px; opacity: 1; } 20%, 45% { top: 94px; left: 144px; } 62% { top: 58px; left: 142px; } 80%, 100% { top: 26px; left: 126px; opacity: 1; } }
+@keyframes stb-hair { 0%, 17% { opacity: 0; } 21%, 47% { opacity: 1; } 52%, 100% { opacity: 0; } }
+@keyframes stb-hop { 0%, 100% { top: 94px; left: 150px; } 12% { top: 60px; left: 150px; } 22%, 45% { top: 26px; left: 126px; } 65% { top: 94px; left: 150px; } }
+@keyframes stb-flash { 0%, 18%, 49%, 100% { opacity: 0; } 22%, 45% { opacity: 1; } }
+@keyframes stb-up { 0%, 22% { left: 20px; opacity: 0; } 24%, 42% { opacity: 1; } 42% { left: calc(100% - 34px); } 44%, 100% { left: calc(100% - 34px); opacity: 0; } }
+@keyframes stb-down { 0%, 44% { left: calc(100% - 34px); opacity: 0; } 46%, 63% { opacity: 1; } 63% { left: 20px; } 65%, 100% { left: 20px; opacity: 0; } }
+@media screen {
+  /* Before the fix: the box rests at the foot of the step against the face; the jump it meant is drawn faint. */
+  .stb:not(:has(.k-stb-fix.shown)) .stb-bot { top: 94px; left: 150px; transition: left .2s ease, top .3s ease .15s; }
+  .stb:not(:has(.k-stb-fix.shown)) :is(.stb-eps, .stb-true, .stb-cap-3) { opacity: 0; }
+  .stb:not(:has(.k-stb-fix.shown)) :is(.stb-false, .stb-link, .stb-edge-l) { opacity: 1; }
+  .stb:not(:has(.k-stb-fix.shown)) .stb-ghost { opacity: .55; }
+  .stb:has(.k-stb-check.shown):not(:has(.k-stb-fix.shown)) .stb-wrong { opacity: 1; }
+  /* The opening (17 November, Ben: show the good case first, on a loop he can talk over): while the slide is at
+     step 0 the working jump repeats, however it was reached: up the face, over, a second on the step, a quick fade
+     back to the foot, a short pause, again. The box rests on the step when it isn't running (print, thumbnails). */
+  .stb:not(:has(.k-stb-check.shown)) .stb-bot { top: 4px; left: 60px; transition: none; animation: stb-climb 4.6s ease-in-out .3s infinite; }
+  .stb:not(:has(.k-stb-check.shown)) :is(.stb-check, .mcb-out, .mcb-chip, .stb-edge-l) { opacity: 0; }
+  .stb:not(:has(.k-stb-check.shown)) .stb-cap-0 { opacity: 1; }
+  .stb:not(:has(.k-stb-check.shown)) .mcb-out { transform: translateX(calc(100% - 420px)) scale(.4); }
+  .stb:not(:has(.k-stb-check.shown)) .mcb-up::before { transform: scaleX(0); }
+  .stb:not(:has(.k-stb-check.shown)) .mcb-up::after { opacity: 0; }
+  /* k-stb-check: partway up the jump it cuts forward into the block; then the cause; Mineflayer's ✓; the position goes. */
+  .stb:has(.k-stb-check.shown):not(:has(.k-stb-loop.shown)) .stb-bot { top: 26px; left: 126px; transition: top .55s ease-out, left .3s ease-in .25s; }
+  /* On a single → it first blinks back to the foot of the step, then makes the wrong jump. */
+  .stb.stb-play:has(.k-stb-check.shown):not(:has(.k-stb-loop.shown)) .stb-bot { animation: stb-cut 2s ease both; }
+  .stb.stb-play:has(.k-stb-check.shown):not(:has(.k-stb-loop.shown)) .stb-hair { animation: stb-hair 2s linear both; }
+  .stb:has(.k-stb-check.shown):not(:has(.k-stb-loop.shown)) :is(.stb-ov, .stb-ov-l, .stb-cap-1) { opacity: 1; }
+  .stb:has(.k-stb-check.shown):not(:has(.k-stb-loop.shown)) :is(.stb-ov-l, .stb-edge-l) { transition: opacity .2s ease .45s; }
+  .stb:has(.k-stb-check.shown):not(:has(.k-stb-loop.shown)) :is(.stb-ov, .stb-wrong) { transition: opacity .2s ease 1.6s; }
+  .stb:has(.k-stb-check.shown):not(:has(.k-stb-loop.shown)) .stb-check { transition: opacity .25s ease 1.75s; }
+  .stb:has(.k-stb-check.shown):not(:has(.k-stb-loop.shown)) .stb-mf-chip { transition: opacity .25s ease 1.85s; }
+  .stb:has(.k-stb-check.shown):not(:has(.k-stb-loop.shown)) .mcb-out { transition: transform .9s var(--mcb-fly) 1.95s, opacity .2s ease 1.95s; }
+  .stb:has(.k-stb-check.shown):not(:has(.k-stb-loop.shown)) .mcb-up::before { transition: transform .9s cubic-bezier(.45, 0, .25, 1) 1.95s; }
+  .stb:has(.k-stb-check.shown):not(:has(.k-stb-loop.shown)) .mcb-check { transition: opacity .25s ease 2.75s; }
+  .stb:has(.k-stb-check.shown):not(:has(.k-stb-loop.shown)) .mcb-up::after { transition: opacity .2s ease 2.6s; }
+  /* Until the reply: the server's chip asks, nothing has come back. */
+  .stb:not(:has(.k-stb-loop.shown)) :is(.mcb-in, .stb-tick) { opacity: 0; }
+  .stb:not(:has(.k-stb-loop.shown)) .mcb-in { transform: translateX(calc(420px - 100%)) scale(.4); }
+  .stb:not(:has(.k-stb-loop.shown)) .mcb-down::before { transform: scaleX(0); }
+  .stb:not(:has(.k-stb-loop.shown)) .mcb-down::after { opacity: 0; }
+  .stb:not(:has(.k-stb-loop.shown)) .mcb-check { border-color: var(--line); }
+  .stb:not(:has(.k-stb-loop.shown)) .mcb-check .mcb-mark { border-color: var(--text-3); color: var(--text); }
+  .stb:not(:has(.k-stb-loop.shown)) .mcb-check .mcb-mark::before { content: "?"; }
+  /* k-stb-loop: ✗, the correction comes back, the box drops to the foot of the step as it lands; on a single → the loop
+     then goes round three times: up, cut in, the position out, the correction back, dropped back. */
+  .stb:has(.k-stb-loop.shown):not(:has(.k-stb-fix.shown)) .mcb-check { border-color: var(--gap); }
+  .stb:has(.k-stb-loop.shown):not(:has(.k-stb-fix.shown)) .mcb-check .mcb-mark { border-color: var(--gap); color: var(--gap); }
+  .stb:has(.k-stb-loop.shown):not(:has(.k-stb-fix.shown)) .mcb-check .mcb-mark::before { content: "✗"; }
+  .stb:has(.k-stb-loop.shown):not(:has(.k-stb-fix.shown)) .stb-cap-2 { opacity: 1; }
+  .stb:has(.k-stb-loop.shown):not(:has(.k-stb-fix.shown)) .mcb-in { transition: transform .9s var(--mcb-fly) .3s, opacity .2s ease .3s; }
+  .stb:has(.k-stb-loop.shown):not(:has(.k-stb-fix.shown)) .mcb-down::before { transition: transform .9s cubic-bezier(.45, 0, .25, 1) .3s; }
+  .stb:has(.k-stb-loop.shown):not(:has(.k-stb-fix.shown)) .stb-bot { transition: left .15s ease 1.15s, top .25s ease 1.2s; }
+  .stb:has(.k-stb-loop.shown):not(:has(.k-stb-fix.shown)) .stb-tick { transition: opacity .3s ease 1.3s; }
+  .stb.stb-play:has(.k-stb-loop.shown):not(:has(.k-stb-fix.shown)) .stb-bot { animation: stb-hop 1.6s ease-in-out 1.9s 3; }
+  .stb.stb-play:has(.k-stb-loop.shown):not(:has(.k-stb-fix.shown)) .stb-ov { animation: stb-flash 1.6s linear 1.9s 3; }
+  .stb.stb-play:has(.k-stb-loop.shown):not(:has(.k-stb-fix.shown)) .mcb-up .stb-dot { animation: stb-up 1.6s linear 1.9s 3; }
+  .stb.stb-play:has(.k-stb-loop.shown):not(:has(.k-stb-fix.shown)) .mcb-down .stb-dot { animation: stb-down 1.6s linear 1.9s 3; }
+}
+@media (prefers-reduced-motion: reduce) { .stb, .stb * { transition-duration: 0s !important; animation: none !important; } }
 .mcb-instant, .mcb-instant *, .mcb-instant *::before, .mcb-instant *::after { transition: none !important; }
 @media (prefers-reduced-motion: reduce) { .mcb, .mcb *, .mcb *::before, .mcb *::after { transition-duration: 0s !important; animation: none !important; } }
 @media print { .mcb-a, .mcb-face, .mcb-link, .mcb-h-was { display: none; } }
@@ -1125,8 +1361,8 @@ aside.notes { display: none; }
    "A third of its calls went wrong" as one slide ---------- */
 .run-merged .tile.wrong .value { color: var(--series-4); }
 .run-merged .tile.won { border-color: var(--accent); }
-.run-merged .tile.won .value { display: flex; align-items: center; gap: 14px; font-size: 46px; }
-.run-merged .tile.won .dragon-head { width: 48px; }
+.run-merged .tile.won .value { display: flex; align-items: center; gap: 12px; font-size: 38px; white-space: nowrap; }
+.run-merged .tile.won .dragon-head { width: 44px; }
 
 /* ---------- Flow (15 November): the Pokémon help slide folded into the headlines (prefix extras). One click puts a
    sticker on each run's card, the extras its harness gave it, and the line under the 2025 cards says what they mean.
@@ -1350,7 +1586,7 @@ aside.notes { display: none; }
   background: var(--surface-2); border: 4px solid; border-color: var(--edge-light) var(--edge-dark) var(--edge-dark) var(--edge-light); box-shadow: 0 0 0 4px var(--edge-dark); }
 .p5-nav-plan li::before { content: "0" counter(plan); position: absolute; left: 24px; top: 16px; font: 400 33px/1 var(--term); color: var(--accent); }
 .p5-nav-plan b { font: 400 33px/1.2 var(--term); color: var(--text); }
-.p5-race { font-size: 30px; row-gap: 22px; }
+.p5-race { font-size: 30px; row-gap: 16px; }
 .p5-race .name { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; line-height: 1.15; }
 .p5-race .name small { font-size: 22px; color: var(--text-3); }
 .p5-race .bar { height: 34px; }
@@ -1360,12 +1596,12 @@ aside.notes { display: none; }
 .p5-race .val { font: 400 33px/1 var(--term); }
 .p5-race .note { font-size: 24px; }
 .p5-race .val { white-space: nowrap; }
-.p5-race-walk { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; padding: 14px 28px 16px; background: var(--surface-2);
+.p5-race-walk { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; padding: 14px 28px 16px; background: var(--surface-2);
   border: 4px solid; border-color: var(--edge-light) var(--edge-dark) var(--edge-dark) var(--edge-light); box-shadow: 0 0 0 4px var(--edge-dark); }
-.p5-race-pair { display: flex; align-items: center; gap: 64px; }
+.p5-race-pair { display: flex; flex-wrap: wrap; align-items: center; column-gap: 64px; row-gap: 10px; }
 .p5-race-pair > p { display: flex; flex-direction: column; gap: 6px; font-size: 24px; color: var(--text-2); }
 .p5-race-pair b { font: 400 44px/1 var(--term); white-space: nowrap; color: var(--text); text-shadow: .0909em .0909em 0 var(--shadow); }
-.p5-race-pair .p5-race-say { margin-left: auto; max-width: 440px; font: 400 30px/1.25 var(--term); color: var(--accent); }
+.p5-race-pair .p5-race-say { flex-basis: 100%; font: 400 30px/1.25 var(--term); color: var(--accent); }
 /* Part 6 as a ladder (16 November, second pass): each slide's headline is a failure in the words it was written
    down in, the green line under it is what was added. The rung strip at the top says where in the ladder we are. */
 .p5-rung { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: -12px; }
@@ -1380,6 +1616,32 @@ h2.p5-wrong { font-size: 46px; line-height: 1.22; }
 .p5-fix { display: flex; align-items: baseline; gap: 18px; font-size: 32px; line-height: 1.3; color: var(--text); }
 .p5-fix b { flex: none; font: 400 30px/1.3 var(--term); color: var(--accent); }
 .p5-fix2 { display: flex; flex-direction: column; gap: 6px; }
+.p5-fix, .p5-deaths .p5-label { text-wrap: balance; }
+/* "We died…" ladder (17 November): the headline is how we died, then what happened with its date, the words it was
+   written down in, and "✓ So we added". Prefixed p5- like the rest of this section. */
+.p5-card-note { margin-top: -22px; font-size: 26px; color: var(--text-3); text-wrap: balance; }
+.p5-ev { display: flex; flex-direction: column; gap: 6px; margin-top: -10px; }
+.p5-what { font-size: 28px; line-height: 1.3; color: var(--text-2); text-wrap: balance; }
+.p5-what2 { margin-top: 6px; font-size: 24px; line-height: 1.3; color: var(--text-3); }
+.p5-quote { font: 400 32px/1.25 var(--term); color: var(--text); text-wrap: balance; }
+.p5-ev .p5-err { font-size: 22px; }
+.p5-fixwhen { font: 400 24px/1 var(--term); color: var(--text-3); white-space: nowrap; }
+.p5-fight { display: flex; flex-direction: column; gap: 16px; padding: 16px 24px 20px; background: var(--inset); border: 2px solid var(--gap); }
+.p5-fight p { font-size: 26px; line-height: 1.3; color: var(--text); }
+.p5-fight .p5-fight-small { font-size: 22px; color: var(--text-2); }
+.p5-proof { display: flex; flex-direction: column; gap: 12px; }
+.p5-proof-head { font-size: 26px; line-height: 1.3; color: var(--text-2); }
+.p5-proof-head q { color: var(--text); }
+.p5-ev + .p5-slow { margin-top: -12px; }
+.p5-ev ~ .p5-job .p5-job-steps { gap: 6px; }
+.slide .p5-refl { grid-template-columns: minmax(0, 1fr) 540px; }
+.slide .p5-refl { row-gap: 14px; }
+.p5-refl > .chart-title { grid-column: 1 / -1; font-size: 26px; }
+.p5-refl .p5-pol-bars { row-gap: 6px; }
+.slide .p5-refl .p5-handoff li { padding: 8px 16px 10px; }
+.slide .p5-refl-main { gap: 16px; }
+.p5-pcalls .p5-after { grid-column: 1 / -1; }
+.p5-proof .p5-pcalls { row-gap: 10px; }
 .p5-slow { display: flex; gap: 72px; }
 .p5-slow p { display: flex; align-items: baseline; gap: 18px; font-size: 30px; color: var(--text-2); }
 .p5-slow b { font: 400 66px/1 var(--term); word-spacing: -.25em; color: var(--text); text-shadow: .0909em .0909em 0 var(--shadow); }
@@ -1421,9 +1683,9 @@ h2.p5-wrong { font-size: 46px; line-height: 1.22; }
 .bld-label span { margin-left: 14px; letter-spacing: 0; text-transform: none; color: var(--text-3); white-space: nowrap; }
 
 /* An integration test: the question and then the trimmed YAML on the left, the clip (played on Space) on the right. */
-.bld-test { display: grid; grid-template-columns: 760px minmax(0, 1fr); gap: 44px; align-items: start; margin-top: -4px; }
+.bld-test { display: grid; grid-template-columns: 800px minmax(0, 1fr); gap: 44px; align-items: start; margin-top: -4px; }
 .bld-left, .bld-right { display: flex; flex-direction: column; gap: 20px; }
-.bld-ask { margin: 0; padding: 18px 26px 20px; font-size: 33px; line-height: 1.3; color: var(--text-2); background: var(--surface-2); border-left: 8px solid var(--warn); }
+.bld-ask { margin: 0; padding: 18px 26px 20px; font-size: 32px; line-height: 1.3; color: var(--text-2); background: var(--surface-2); border-left: 8px solid var(--warn); }
 .bld-ask b { display: block; margin-top: 6px; font-weight: 400; font-family: var(--term); color: var(--text); }
 .bld-yaml { display: flex; flex-direction: column; gap: 8px; }
 .bld-code { display: flex; flex-direction: column; gap: 8px; padding: 10px 0 12px; background: var(--inset); border: 2px solid var(--accent-dim); }
@@ -1432,8 +1694,18 @@ h2.p5-wrong { font-size: 46px; line-height: 1.22; }
 .bld-part pre .k { color: var(--accent); }
 .bld-part pre i { font-style: normal; color: var(--text-3); }
 .bld-tag { position: absolute; right: 12px; top: 3px; padding: 2px 10px 4px; font: 400 22px/1 var(--term); color: var(--surface); background: var(--accent); }
-.bld-right .clip { outline: 4px solid var(--edge-dark); }
-.bld-right .clip .hint { white-space: nowrap; font-size: 30px; }
+/* Two held pops share .bld-clip (deck.js, data-hold): at rest the thumbnail shows the course, undimmed, with "▶ Space to
+   play"; Space grows the stock run over the slide and it holds, Space cuts to ours and it holds, Space lands it back here.
+   The stock caption keeps the pop's red; ours (.bld-pop) is a pass, green. */
+.bld-clip .pop-thumb { outline: 4px solid var(--edge-dark); }
+.bld-clip .pop-thumb:not(.landed) canvas { filter: none; }
+.bld-clip .pop-thumb.out { outline: 4px dashed var(--text-3); }
+.bld-clip .pop-thumb .pop-mark { width: auto; height: auto; margin: 0; transform: translate(-50%, -50%); padding: 16px 26px; white-space: nowrap;
+  background: rgba(0, 0, 0, .7); border: 4px solid; border-color: var(--edge-light) var(--edge-dark) var(--edge-dark) var(--edge-light); font-size: 30px; }
+.bld-clip .pop-thumb .pop-mark::before { content: "▶ Space to play"; margin: 0; }
+.clip.pop[data-box="bld-clip"] figcaption { font-size: 24px; white-space: nowrap; }
+.clip.pop.bld-pop figcaption { border-top-color: var(--accent); }
+.clip.pop.bld-pop figcaption b { color: var(--accent); }
 .bld-strap { display: flex; flex-direction: column; gap: 14px; }
 .bld-strap p, .bld-steer { margin: 0; display: flex; flex-direction: column; gap: 4px; padding-left: 22px; border-left: 8px solid var(--accent); }
 .bld-strap b, .bld-steer b { font: 400 33px/1.2 var(--term); color: var(--text); }
@@ -1455,7 +1727,8 @@ h2.p5-wrong { font-size: 46px; line-height: 1.22; }
 .bld-authors { display: flex; flex-direction: column; gap: 10px; }
 .bld-share { display: flex; height: 30px; gap: 3px; }
 .bld-share .cc, .bld-key i.cc { background: var(--claude); }
-.bld-share .cx, .bld-key i.cx { background: repeating-linear-gradient(135deg, var(--series-mute) 0 6px, #4a4659 6px 12px); }
+/* Solid since 17 November: the hatching meant "most likely Codex", and Ben knows it was Codex. */
+.bld-share .cx, .bld-key i.cx { background: var(--series-1); }
 .bld-key { display: flex; gap: 30px; }
 .bld-key p { margin: 0; display: flex; align-items: baseline; gap: 12px; font-size: 26px; white-space: nowrap; color: var(--text-2); }
 .bld-key i { width: 20px; height: 20px; align-self: center; border: 2px solid var(--line); }
@@ -1465,6 +1738,7 @@ h2.p5-wrong { font-size: 46px; line-height: 1.22; }
 .bld-rule .px { width: 52px; height: 52px; }
 
 /* The harness grew: one SVG, two panels on one date axis. The bottom panel waits for its click. */
+.slide:has(.bld-chart) h2 { font-size: 52px; }
 .bld-before { margin: -12px 0 0; font: 400 27px/1.2 var(--term); color: var(--text-2); }
 .bld-chart { width: 1170px; height: 455px; overflow: visible; font-family: var(--sans); }
 .bld-chart text { fill: var(--text-2); font-size: 22px; }

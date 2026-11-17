@@ -3,7 +3,8 @@
 //
 //   → / PageDown / Enter   next step or slide        ← / PageUp   back
 //   Space                  on a clip you play (or the route): start or pause it, and move on once it has finished.
-//                          If the next step is a pop clip, Space plays it; → reaches it without playing.
+//                          If the next step is a pop clip, Space plays it; → reaches it without playing. A pop
+//                          marked data-hold stays up on its last frame; the next Space or → lands it and moves on.
 //                          Everywhere else it is the same as →. The arrows always move, so → skips a clip.
 //   Shift + → / ←          the next or previous slide, past any steps left on this one
 //   Home / End             first / last slide        F            fullscreen
@@ -150,6 +151,10 @@ function show(nextIndex, nextStep, fromRemote = false, playPop = false) {
 }
 
 function next() {
+  // A → while the paper on "Who I am" is still scrolling (or waiting for its pages) lands it on its end instead of moving
+  // on. show() again at the same step takes the motion off here and in the other window.
+  const now = slides[index].classList;
+  if (now.contains('argon-wait') || (now.contains('argon-scrolling') && performance.now() - argonStart < ARGON_MOTION)) return show(index, step);
   if (step < stepsOf(slides[index]).length) return show(index, step + 1);
   if (index < slides.length - 1) {
     if (!localStorage.getItem(START_KEY)) localStorage.setItem(START_KEY, String(Date.now()));
@@ -214,7 +219,7 @@ function buildClip(figure) {
   video.addEventListener('play', () => figure.classList.add('started'));
   video.addEventListener('loadeddata', () => syncCue());
   ['play', 'pause', 'ended'].forEach(type => video.addEventListener(type, () => syncPaused(figure)));
-  if (figure.dataset.mode === 'pop') { video.addEventListener('ended', () => landPop(figure)); buildPopThumb(figure, video); }
+  if (figure.dataset.mode === 'pop') { video.addEventListener('ended', () => { if (!('hold' in figure.dataset)) landPop(figure); }); buildPopThumb(figure, video); }
 
   const placeholder = document.createElement('div');
   placeholder.className = 'placeholder';
@@ -292,15 +297,22 @@ function syncCue() {
 // the step before it plays it: it grows out of its thumbnail in the .stack box or .compare card named by data-box, and when
 // it ends it shrinks back into the thumbnail and fades, and the box lights (.landed, in the CSS). → reaches it without
 // playing, so it lands straight away; → while it plays lands it and moves on. ← takes it back off.
+// With data-hold (the before and after on "An integration test, in a 3D world") it doesn't land when it ends: it stays up
+// on its last frame, R replays it there, and the next Space or → lands it and moves on. Its box is in a .pop-home. Two
+// held pops in a row share one box and cut from the first to the second.
 // The thumbnail (.pop-thumb) shows where each clip lives: its first frame with a ▶ while it waits, an empty slot while it
 // plays, and the frame it stopped on once it has landed. In a .stack box it sits above the small line; in a .compare
 // card, at the end of the heading.
 
-const popBox = figure => figure.popThumb || figure.closest('.slide').querySelector(`:is(.stack, .compare) .${figure.dataset.box}`);
+const popBox = figure => figure.popThumb || figure.closest('.slide').querySelector(`:is(.stack, .compare, .pop-home) .${figure.dataset.box}`);
 
 function buildPopThumb(figure, video) {
-  const box = figure.closest('.slide').querySelector(`:is(.stack, .compare) .${figure.dataset.box}`);
+  const box = figure.closest('.slide').querySelector(`:is(.stack, .compare, .pop-home) .${figure.dataset.box}`);
   if (!box) return;
+  // Two pops can share one box (the before and after on "An integration test, in a 3D world"): the first builds the
+  // thumbnail with its first frame, the next one reuses it.
+  const shared = box.querySelector('.pop-thumb');
+  if (shared) { figure.popThumb = shared; return; }
   const thumb = document.createElement('div');
   thumb.className = 'pop-thumb';
   thumb.innerHTML = '<canvas class="first" width="320" height="180"></canvas><canvas class="last" width="320" height="180"></canvas><i class="pop-mark"></i>';
@@ -310,6 +322,8 @@ function buildPopThumb(figure, video) {
   figure.popThumb = thumb;
   video.addEventListener('loadeddata', () => {
     if (video.videoWidth) thumb.style.aspectRatio = `${video.videoWidth} / ${video.videoHeight}`;
+    // Up to 640 px wide, so a thumbnail shown large (the lava course's) stays sharp.
+    if (video.videoWidth) thumb.querySelectorAll('canvas').forEach(c => { c.width = Math.min(640, video.videoWidth); c.height = Math.round(c.width * video.videoHeight / video.videoWidth); });
     drawFrame(thumb.querySelector('.first'), video);
   }, { once: true });
 }
@@ -331,13 +345,14 @@ function popToBox(figure) {
   return `translate(${(to.left - from.left) / scale}px, ${(to.top - from.top) / scale}px) scale(${to.width / from.width}, ${to.height / from.height})`;
 }
 
-function playPop(figure) {
+function playPop(figure, cut = false) {
   const video = figure.querySelector('video');
   figure.classList.remove('landed', 'landing');
   figure.popThumb?.classList.remove('landed');
   figure.popThumb?.classList.add('out');
   figure.style.transition = 'none';
-  figure.style.transform = reducedMotion ? 'none' : popToBox(figure);
+  // A cut (another pop was up) starts it at full size, so the dimmed slide never shows between the two.
+  figure.style.transform = reducedMotion || cut ? 'none' : popToBox(figure);
   figure.getBoundingClientRect();
   figure.style.transition = '';
   figure.classList.add('playing');
@@ -366,16 +381,21 @@ function landPop(figure, animate = true) {
 }
 
 function syncPops(play) {
-  for (const figure of document.querySelectorAll('.clip.pop')) {
-    const onSlide = figure.closest('.slide') === slides[index];
-    if (!onSlide || !figure.classList.contains('shown')) {
-      const video = figure.querySelector('video');
-      if (video) { video.pause(); video.currentTime = 0; }
-      figure.classList.remove('playing', 'landing', 'landed', 'paused', 'ended', 'started');
-      figure.popThumb?.classList.remove('out', 'landed', 'has-last');
-      figure.style.transform = '';
-    } else if (figure === play) playPop(figure);
-    else landPop(figure, figure.classList.contains('playing'));
+  const pops = [...document.querySelectorAll('.clip.pop')];
+  const here = figure => figure.closest('.slide') === slides[index] && figure.classList.contains('shown');
+  // Playing one pop while another is still up on the slide (a held one) is a cut: the old one goes at once.
+  const cut = Boolean(play) && pops.some(figure => figure !== play && here(figure) && figure.classList.contains('playing') && !figure.classList.contains('landing'));
+  // Resets first, so a thumbnail two pops share ends up in the state of the one still shown.
+  for (const figure of pops.filter(figure => !here(figure))) {
+    const video = figure.querySelector('video');
+    if (video) { video.pause(); video.currentTime = 0; }
+    figure.classList.remove('playing', 'landing', 'landed', 'paused', 'ended', 'started');
+    figure.popThumb?.classList.remove('out', 'landed', 'has-last');
+    figure.style.transform = '';
+  }
+  for (const figure of pops.filter(here)) {
+    if (figure === play) playPop(figure, cut);
+    else landPop(figure, !cut && figure.classList.contains('playing'));
   }
 }
 
@@ -529,7 +549,7 @@ function space() {
   const upNext = stepsOf(slides[index])[step];
   const pausedLoop = slides[index].querySelector('.clip.paused[data-mode="loop"]');
   if (pausedLoop) clipCommand('play');
-  else if (popping) clipCommand(popping.paused ? 'play' : 'pause');
+  else if (popping && !popping.ended) clipCommand(popping.paused ? 'play' : 'pause');
   else if (upNext?.classList.contains('pop')) show(index, step + 1, false, true);
   else if (clip && !clip.ended) clipCommand(clip.paused ? 'play' : 'pause');
   else next();
@@ -586,7 +606,7 @@ addEventListener('hashchange', () => show((Number(location.hash.slice(1)) || 1) 
 let mcbLast = { index: -1, step: -1 };
 function mcbInstant() {
   const slide = slides[index];
-  if (slide.classList.contains('mcb') && (mcbLast.index !== index || Math.abs(mcbLast.step - step) > 1)) {
+  if (slide.matches('.mcb, .stb') && (mcbLast.index !== index || Math.abs(mcbLast.step - step) > 1)) {
     slide.classList.add('mcb-instant');
     requestAnimationFrame(() => requestAnimationFrame(() => slide.classList.remove('mcb-instant')));
   }
@@ -597,8 +617,54 @@ function mcbInstant() {
     slide.classList.toggle('mcb-boom-play', step > fuse && onestep);
     slide.classList.toggle('mcb-boom-done', step > fuse && !onestep);
   }
+  // The paper on "Who I am" (.argon, 17 November): .k-paper pops it up on its title, .k-scroll runs the scroll and zoom,
+  // and the Cited tile (.k-paper-x) pops it away. Each motion plays only for a single → onto its click; arriving any other
+  // way (←, a jump, the other window catching up) shows that click's resting state. If the pages aren't decoded when the
+  // scroll is asked for, .argon-wait holds its start until they are.
+  const paper = slide.querySelector('.k-paper');
+  if (paper) {
+    const steps = stepsOf(slide);
+    const [open, scroll, close] = [paper, slide.querySelector('.k-scroll'), slide.querySelector('.k-paper-x')].map(el => steps.indexOf(el));
+    const from = mcbLast.index === index ? mcbLast.step : -1;
+    slide.classList.toggle('argon-play', step === open + 1 && from === open);
+    const scrolling = step === scroll + 1 && from === scroll;
+    slide.classList.toggle('argon-scrolling', scrolling);
+    if (scrolling) argonStart = performance.now();
+    slide.classList.toggle('argon-closing', step === close + 1 && from === close);
+    clearTimeout(argonClose);
+    if (slide.classList.contains('argon-closing')) argonClose = setTimeout(() => slide.classList.remove('argon-closing'), 320);
+    if (scrolling && !argonDecoded) {
+      slide.classList.add('argon-wait');
+      argonLoad().then(() => { slide.classList.remove('argon-wait'); argonStart = performance.now(); });
+    } else slide.classList.remove('argon-wait');
+    if (step > open - 2) argonLoad();
+  }
+  // The staircase bug (.stb, 17 November): its loop goes round only for a single → onto that click; arriving any
+  // other way (←, a jump, the other window catching up) shows the beat's resting state.
+  if (slide.classList.contains('stb')) slide.classList.toggle('stb-play', mcbLast.index === index && step === mcbLast.step + 1);
   mcbLast = { index, step };
 }
+
+// ---------- the paper on "Who I am" ----------
+// Its page renders (.argon img[data-src], under 1 MB) load once the deck has painted, so slide 1 never waits on them:
+// page 1 first, so the popup's title is ready soonest, then the rest of the strip.
+const argonImgs = [...document.querySelectorAll('.argon img[data-src]')];
+let argonReady = null;
+let argonDecoded = false;
+let argonClose = 0;
+let argonStart = 0;
+const ARGON_MOTION = 4900; // ms: the scroll, the zoom and the second line of highlight
+function argonLoad() {
+  const get = img => { img.src = img.dataset.src; return img.decode().catch(() => {}); };
+  argonReady ||= (async () => {
+    const [first, ...rest] = argonImgs;
+    if (first) await get(first);
+    await Promise.all(rest.map(get));
+    argonDecoded = true;
+  })();
+  return argonReady;
+}
+if (argonImgs.length) addEventListener('load', () => setTimeout(argonLoad, 300));
 
 // ---------- start ----------
 document.querySelectorAll('.clip').forEach(buildClip);
