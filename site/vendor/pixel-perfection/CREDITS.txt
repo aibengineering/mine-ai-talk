@@ -20,6 +20,9 @@ Adapted from the pack: ../../art/ender-dragon.png and ../../art/dragon-head.png 
 wearing dragon.png, rendered by tools/render-dragon.mjs (Ben, aibengineering, November 2026). They are
 shared under the same licence, CC BY-SA 4.0.
 
+Also adapted from the pack: ../../favicon.png, the browser tab icon, is ender_eye.png cropped to the eye and
+scaled up without smoothing to 64 by 64 pixels. It is shared under the same licence, CC BY-SA 4.0.
+
 Not from the pack: ../../art/pikachu.png, drawn for the talk by tools/draw-pikachu.py. It is not a sprite from the
 games. Pikachu is a character of Nintendo, Creatures Inc. and GAME FREAK inc.
 
