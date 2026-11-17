@@ -1652,6 +1652,12 @@ h2.p5-wrong { font-size: 46px; line-height: 1.22; }
    drawn: the tried squares tinted and the route marked. .arrive-play (deck.js, data-arrive: a single → onto the slide) replays it. */
 .ast { --step: 80ms; --search: calc(121 * var(--step)); --draw: calc(var(--search) + 300ms); display: grid; grid-template-columns: 702px minmax(0, 1fr); gap: 52px; align-items: start; margin-top: -6px; }
 .ast-map { display: flex; flex-direction: column; gap: 12px; }
+/* Evening of 17 November: pathfinder3d.js draws the same run as raised blocks on a canvas after the grid, and marks the map
+   .has-3d. The flat grid stays as its data, and is what prints. */
+.ast-3d { display: none; width: 702px; height: 372px; margin: -14px 0 -6px; }
+.ast-map.has-3d .ast-3d { display: block; }
+.ast-map.has-3d .ast-grid { display: none; }
+@media print { .ast-map.has-3d .ast-3d { display: none; } .ast-map.has-3d .ast-grid { display: grid; } }
 .ast-grid { display: grid; grid-template-columns: repeat(22, 30px); grid-auto-rows: 30px; gap: 2px; }
 .ast-grid i { position: relative; display: block; background: #2f5a2c; font: 400 22px/30px var(--term); font-style: normal; text-align: center; color: var(--inset); }
 .ast-grid i.hi { background: #4f8a3c; box-shadow: inset 0 -5px 0 #2a4a22; }
@@ -1751,6 +1757,9 @@ h2.p5-wrong-long { font-size: 44px; }
 .p5-seq-big code, .p5-seq-big span { font-size: 26px; }
 /* The Waiting rung, 17 November: a wider right column so each call's outcome stays on one line. */
 .p5-seq-wide li { grid-template-columns: 72px minmax(0, 1fr) 760px; }
+/* What happened after the quote on the Waiting rung, one sentence. */
+.p5-after { margin: 0; font-size: 25px; line-height: 1.3; color: var(--text-2); text-wrap: balance; }
+.p5-quote.p5-quote-one { font-size: 27px; white-space: nowrap; }
 .p5-pcalls { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
 .p5-pcalls .p5-args { font-size: 24px; }
 .p5-pcalls .p5-said { font-size: 26px; }

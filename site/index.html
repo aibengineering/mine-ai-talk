@@ -513,7 +513,7 @@
     <li>Space: the client. Stream 7, 21 July, my first stream with the bot, on a stone staircase test course. It walks up the stairs fine, then stops one step below the finish and just stands there. What I said live: "He could just jump up here and get to the end, but he doesn't." → skips either clip and just turns the box red.</li>
     <li>→ So get each layer right starting from the game end, then look at the one before it. Otherwise you end up rewriting prompts to fix a physics bug. Next: what was going on with that step, in three clicks.</li>
     <li>This is the map for part 6. The missing tools layer is the MCP server I built, and its actions and reflexes fill the actions layer. Part 6 also answers the timing problem from the Minecraft slide: one lap through the model takes about 3 seconds and the game ticks 20 times a second, so the reacting has to happen at the game end, in the actions, without waiting for the model.</li>
-    <li>The other half of the timing problem: some actions take minutes, which is too long for a tool call to sit and wait. Part 6 answers that half on "We were locked out while a job was running", and the too-fast half on "The model asks for one whole job at a time" and "We died in the middle of a job".</li>
+    <li>The other half of the timing problem: some actions take minutes, which is too long for a tool call to sit and wait. Part 6 answers that half on "One stuck job locked us out for good", and the too-fast half on "The model asks for one whole job at a time" and "We died in the middle of a job".</li>
     <li>Sources, if asked: the packet is "Set Player Position", id 0x1C, for Minecraft 1.21.4 (protocol 769), the version Mine AI MCP runs: X, Feet Y and Z as doubles, then a flags byte, 0x01 on the ground (Minecraft Wiki, Java Edition protocol, the 1.21.4 revision). The values are made up; the bytes are what they encode to. Mineflayer's JavaScript version starts with Andrew Kelley's commits of 2 January 2013; the repo goes back to a C++ version he began in January 2011. It's in the PrismarineJS organisation on GitHub now and sits on node-minecraft-protocol, which reads and writes the packets.</li>
   </ul></aside>
 </section>
@@ -925,6 +925,7 @@
     <li>→ Baritone prices every move in game ticks, so the cheapest route is also the quickest one to walk, where mineflayer-pathfinder counts plain units, one to walk and two to jump. Baritone has separate code to walk each kind of move, where mineflayer-pathfinder walks them all with one shared routine. It opens doors, where the stock one has that switched off, and ours used to break the door down. And it will take a twenty-block fall by putting a water bucket down under itself, where the stock one stops at four blocks.</li>
     <li>→ The catch is that Baritone is a mod that runs inside the Java game client, and my bot is a Node.js program that never opens the game, so I couldn’t just use it.</li>
     <li>→ So we rebuilt navigation in TypeScript, following Baritone's design, running natively inside the bot, and credit to leijurv and Baritone's contributors.</li>
+    <li>The map is drawn as raised blocks (pathfinder3d.js, since the evening of 17 November, after the look of the August “pathfinding in 3D” page): the square being tried lifts and glows, tried squares stay lighter, and the route rises in gold over the ridge and across the river. It is the same recorded run as before.</li>
     <li>The animation plays once when you arrive with →, about 13 seconds: 121 squares tried, then the route. Arriving any other way shows the finished route. It's a real A* run on this little map with Baritone's costs (walk 4.6 ticks, jump up 6.6, drop one block 9.3, swim 9.1): 27 moves, 141 ticks.</li>
     <li>Careful: say "rebuilt" or "followed", never "ported": it's new TypeScript written to Baritone's design, not translated Java. Don't say it's faster than mineflayer-pathfinder: the only matched comparison, 26 August, found the same speed within about 6%; ours passed a door course the old one failed 0 of 2, because the old one broke the door.</li>
     <li>If asked how mineflayer-pathfinder differs: its costs are plain units, 1 to walk, 2 to jump up, the square root of 2 diagonally and 1 more in water (lib/movements.js in 2.4.5), not ticks; and it plans each kind of move separately but walks them all with one shared routine (monitorMovement in index.js). It also walks a partial route while it keeps searching, so the third point isn't a difference.</li>
@@ -936,13 +937,14 @@
   </ul></aside>
 </section>
 
-<section class="slide top" data-section="6 · What did I build?" data-by="32" data-title="We were locked out while a job was running">
+<section class="slide top" data-section="6 · What did I build?" data-by="32" data-title="One stuck job locked us out for good">
   <div class="p5-rung"><ol class="p5-ladder"><li class="done">Controls</li><li class="done">Reflexes</li><li class="done">Reporting</li><li class="done">Navigation</li><li class="on">Waiting</li><li>Policy</li></ol><span class="p5-when">✗ 24 Aug</span></div>
-  <h2 class="p5-wrong">We were locked out while a job was running</h2>
+  <h2 class="p5-wrong">One stuck job locked us out for good</h2>
   <div class="p5-ev">
-    <p class="p5-quote">“[ACTION_BUSY] simple_navigate has been running since …; no new action started.”</p>
+    <p class="p5-quote p5-quote-one">“[ACTION_BUSY] simple_navigate has been running since …; no new action started.”</p>
+    <p class="p5-after">The next five calls got the same reply, even reads of its own database, until we killed the server.</p>
   </div>
-  <p class="p5-fix"><b>✓ So now</b><span>a job runs in the background, and the model can wait a set time, check progress or cancel <small class="p5-fixwhen">· 13 Sep</small></span></p>
+  <p class="p5-fix"><b>✓ So now</b><span>a job runs in the background while the model waits, checks in or cancels <small class="p5-fixwhen">· 13 Sep</small></span></p>
   <div class="p5-async">
     <p class="p5-label">Walking back to the Nether portal in the winning run: one call, 5 min 38 s</p>
     <ol class="p5-seq p5-seq-big p5-seq-wide">
@@ -959,12 +961,14 @@
   </div>
   <aside class="notes"><ul>
     <li>Once the bot could get where it was going, jobs ran for minutes, and while one was running the model could only sit there and wait.</li>
-    <li>A tool call used to hold the model until the job finished, so if a walk across the world took fifteen minutes the model waited fifteen minutes, and if the job got stuck the model was stuck with it. This is what it got back on 24 August when a navigate never returned: every call after it, even one to read its own status, was refused.</li>
+    <li>A tool call used to hold the model until the job finished, so if a walk across the world took fifteen minutes the model waited fifteen minutes, and if the job got stuck the model was stuck with it.</li>
+    <li>On 24 August that’s what happened: the model asked the bot to climb out of a cave, the call was accepted and never came back, and for the next two minutes every call got this reply, five in a row, even ones that only wanted to read its own database. Three minutes in, the bot dropped off the server, and the stuck process was still sitting there most of an hour later when we killed it.</li>
     <li>So now every action is async by default, and I think of it like async and await in JavaScript: the model asks for a job and says how long it’s willing to wait, and when that time is up the job keeps running and the model gets control back.</li>
     <li>Here’s the walk back to the Nether portal in the winning run. It’s one navigate call that took five and a half minutes, and the model checked in every two minutes, saw 254 blocks to go and then 91, and chose to keep waiting both times.</li>
     <li>While a job runs it can still look at blocks, query its database or read its status, and the body still does one job at a time.</li>
     <li>→ And when it changes its mind it can cancel: an hour in, it stopped a blaze hunt because nine rods was already enough and ender pearls had become the bottleneck.</li>
-    <li>Careful: no death on this slide. The 24 August lock-out was a pathfinder hang that was fixed the same day; async actions came on 13 September (2685082). The handover is logic, not order. Before 13 September the model could already cancel a job once the chat client had given up on the call, so don’t say it had no way out at all.</li>
+    <li>Careful: no death on this slide. The 24 August lock-out was a pathfinder call that never settled, patched the same day; async actions came on 13 September (2685082). The handover is logic, not order. What async changed for this case: reads, status and cancel are admitted while a job runs (the design’s decision 4, “Information and control calls admitted independently of the foreground slot”), and its stated purpose is “Let the model decide when to reassess ongoing work”. Before 13 September the model could already cancel a job once the chat client had given up on the call, so don’t say it had no way out at all.</li>
+    <li>The 24 August timeline (field note investigation-simple-navigate-host-stall-2026-08-24.md, times local): request 452, simple_navigate up from (-14, 2, -43) to the surface, accepted 16:45:59 and never answered; requests 453 to 457 refused with ACTION_BUSY at 16:47:05, 16:47:30, 16:48:01, 16:48:26 and 16:48:58 (three query_bot_data, two read_recent_events); the bot disconnected at 16:49:14; two host processes from the incident were still alive at the shutdown check at 17:33:15 and were terminated. The note’s words: the host “was bricked” and the call “could retain the action lock effectively forever”. That request ran with the caller deadline extended to 24 hours, which is why nothing timed it out.</li>
     <li>If asked for a death: on 7 September, in a practice run that wasn’t streamed, the model asked for obsidian, the chat client gave up on the call after five minutes, and the model checked the status six times in a minute and a half and then cancelled because “…the collect has stopped progressing, so the time is better spent on the portal.” Thirteen seconds later the bot was in lava, because that job was what kept it out of the lava it stood next to. The run’s write-up: “Patience worked; the cancel killed the bot.” This was the slide’s headline, “We died of boredom”, until the evening of 17 November.</li>
     <li>If asked for another long call: 16 obsidian in the winning run was one collect_block call that took 7 minutes 7 seconds, with waits that saw 2 of 16 and then 14 of 16 (requests 49 to 52). That table was on this slide until 17 November.</li>
     <li>If asked: each time a wait ran out, 59 times in the winning run, the model chose to keep waiting, look at something first, or cancel. Earlier, on 2 September, we had already removed our own 60-second deadline after the bot began splitting a smelt into "timeout-safe batches" (b2510ed6). Async actions are 2685082 (13 Sep 00:08); the tools are wait_for_action and cancel_foreground_action, and the body still does one task at a time.</li>
@@ -1124,18 +1128,19 @@
   <p class="kicker">Part 7 of 7 · what I'd take from this</p>
   <h2>The fine print</h2>
   <ul class="points">
-    <li>The prompt came with strategy tips</li>
-    <li>4 tools only exist for the dragon fight</li>
-    <li>One recorded win <span class="todo">TODO: reruns of the winning commit, if any</span></li>
-    <li>One model family <span class="todo">TODO: Gemini attempt, if you run one</span></li>
-    <li>It still can't carve a pumpkin <span class="cube inline"><img class="t" src="vendor/pixel-perfection/pumpkin_top.png" alt=""><img class="l" src="vendor/pixel-perfection/carved_pumpkin.png" alt=""><img class="r" src="vendor/pixel-perfection/pumpkin_side.png" alt=""></span></li>
+    <li>It called 34 different tools, and 4 of them only exist for the dragon fight</li>
+    <li>The prompt came with a lot of strategy</li>
+    <li>It’s one win by one model, and I haven’t measured how reliably it wins or tried other models</li>
+    <li>Plenty of the game is still missing, and it still can’t carve a pumpkin <span class="cube inline"><img class="t" src="vendor/pixel-perfection/pumpkin_top.png" alt=""><img class="l" src="vendor/pixel-perfection/carved_pumpkin.png" alt=""><img class="r" src="vendor/pixel-perfection/pumpkin_side.png" alt=""></span></li>
   </ul>
   <aside class="notes"><ul>
-    <li>Part 7, the last one. No card: the rail just moves to 7. The honest limits first, then what I'd take from it.</li>
-    <li>Say these before anyone asks.</li>
-    <li>The model called the four dragon tools 47 times. The hardest fight got the most programmed help, which is the whole idea pushed as far as it goes.</li>
-    <li>The pumpkin: it wanted a carved pumpkin and there's no "use shears on a block" action. It also wanted a full stack of arrows and went into the End with 38.</li>
-    <li>Then → to the takeaways: what I'd take from all this.</li>
+    <li>Part 7, the last one. No card: the rail just moves to 7. The honest limits first, then what I take from it. Keep this to a minute: one sentence a line.</li>
+    <li>We beat the game with a lot of tools. The model called 34 different ones in that run, and four of them only exist for the dragon fight, which it called 47 times. The hardest fight got the most programmed help.</li>
+    <li>The prompt came with a lot of strategy, so the model wasn’t working out how to beat Minecraft from nothing.</li>
+    <li>It’s one win by one model. I haven’t rerun it to see how reliably one model wins, and I haven’t tried other model families, so it isn’t a benchmark yet. That’s on my list.</li>
+    <li>And plenty of the game is still missing if you just wanted to play with it. It wanted a carved pumpkin, because endermen leave you alone if you wear one, and there’s no action for using shears on a block. It still can’t carve a pumpkin.</li>
+    <li>Then → to the takeaways: what I take from all this.</li>
+    <li>Facts: the 34 is the count of distinct tools called in the winning run’s database (action_requests); the four dragon tools are prepare_dragon_perch 15, destroy_end_crystal 15, attack_dragon_perch 13 and shoot_dragon 4, 47 calls. It also wanted a full stack of arrows and went into the End with 38. The two TODO chips (reruns, a Gemini attempt) came off the slide on the evening of 17 November; the line now says plainly that neither has been done.</li>
   </ul></aside>
 </section>
 
@@ -1144,17 +1149,20 @@
 <section class="slide" data-section="7 · What I'd take from this" data-by="43" data-title="Takeaways">
   <h2>What I'd take from this</h2>
   <ul class="poll takeaways">
-    <li><span class="slot"><img class="px" src="vendor/pixel-perfection/shears.png" alt=""></span><span><strong>If you can program and test something,</strong> do that instead of asking the AI.</span></li>
-    <li><span class="slot"><img class="px" src="vendor/pixel-perfection/repeater.png" alt=""></span><span><strong>Turn each failure into a test,</strong> fix it, and keep the test.</span></li>
-    <li><span class="slot"><img class="px" src="vendor/pixel-perfection/filled_map.png" alt=""></span><span><strong>Borrow from what's already out there,</strong> like Mineflayer and Baritone.</span></li>
+    <li><span class="slot"><img class="px" src="vendor/pixel-perfection/shears.png" alt=""></span><span><strong>Many tasks still need strong, code-first primitives</strong> that the AI can then use.</span></li>
+    <li><span class="slot"><img class="px" src="vendor/pixel-perfection/repeater.png" alt=""></span><span><strong>AI keeps getting better at building and testing them,</strong> as long as it has a scenario that accurately reflects reality.</span></li>
+    <li><span class="slot"><img class="px" src="vendor/pixel-perfection/filled_map.png" alt=""></span><span><strong>A lot of hard-won ingenuity is already out there</strong> in papers and open-source projects, and AI is very good at finding and reusing it.</span></li>
   </ul>
-  <p class="lede step">The model's decisions were already good enough, and most of my work went into carrying them out.</p>
+  <p class="lede step">The next challenge is to beat Minecraft with fewer tools, which takes fast, low-latency decisions, and that starts to carry over into robotics and the real world.</p>
   <aside class="notes"><ul>
-    <li>This is the ending. There's no card for it any more, so say it: "So, what I'd take from all this."</li>
-    <li>It answers part 4's question, model or tools? Tools. Most of the work in that run was the code, and that was the plan.</li>
-    <li>Same three cards, same three icons as "The idea" at the end of part 4: shears, repeater, map. That's the bookend. The idea I started from is what I'd take away.</li>
-    <li>→ The last line. The model already made good enough calls; most of the work was carrying them out.</li>
-    <li>None of this is really about Minecraft. It's how you give a slow, smart model a body that works, for any agent that has to keep running for hours after the demo's over.</li>
+    <li>This is the ending. There’s no card for it, so say it: “So, what I take from all this.” Three points, then one click, then stop.</li>
+    <li>Many tasks still need really strong, code-first primitives that the AI can then use. That’s what the whole ladder was.</li>
+    <li>AI is getting better and better at building and testing those primitives itself, as long as it can accurately express a scenario that reflects reality, so it can test against it and improve on it. That was Mine Labs.</li>
+    <li>And there is a lot of value in problems we’ve already solved. It’s in papers and in open-source community projects, like Mineflayer and Baritone here, and people won it with blood, sweat and tears. We don’t need AI to solve everything from scratch yet, because it’s very good at finding and reusing good solutions to hard problems.</li>
+    <li>→ The last line, and the end of the talk: the next challenge for Minecraft is to beat it with fewer tools. That means the model making fast, low-latency decisions itself, and once you can do that, it starts to translate cleanly into robotics and the real world. Then stop, and → to links and questions.</li>
+    <li>Same three icons as “The idea” at the end of part 4: shears, repeater, map. That’s the bookend: program it, test it, borrow it.</li>
+    <li>Only if there’s time, and before the click: the Argon paper’s agent did in about a day, with its own scripts and four bots, what took me two months. Don’t start this with under two minutes left; in the run-through it’s where the ending drifted.</li>
+    <li>Until the evening of 17 November the cards read “If you can program and test something, do that instead of asking the AI”, “Turn each failure into a test, fix it, and keep the test” and “Borrow from what’s already out there, like Mineflayer and Baritone”, and the last line was “The model’s decisions were already good enough, and most of my work went into carrying them out.” Ben dictated the new wording.</li>
   </ul></aside>
 </section>
 
@@ -1284,5 +1292,6 @@
 
 <script src="deck.js"></script>
 <script src="explorer.js"></script>
+<script src="pathfinder3d.js"></script>
 </body>
 </html>
