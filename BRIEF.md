@@ -31,11 +31,11 @@ deliver every part of it.
 |---|---|---|
 | "What does it take" to beat it | The question (14), the six layers (17), the idea (18) | Strong. Slide 14 is nearly the abstract's first sentence. |
 | Empty world to the Ender Dragon | The route and its clips (5), the dragon clip (12), What happened in the run (its timeline) | Strong |
-| Observe, choose actions, respond to what actually happened | We died while the model was still thinking, we died again and again and nobody told the model (part 6) | Strong |
+| Observe, choose actions, respond to what actually happened | The model asks for one whole job at a time, we died again and again and nobody told the model (part 6) | Strong |
 | Reliable | The rule on slide 17, how it got reliable (29) | Strong |
 | Long-horizon | One prompt then hands off (13), the async design (We died of boredom, part 6), the timeline on What happened in the run | There, but no slide uses the word since the title's subtitle changed (17 November). Say it on slide 13. |
-| Navigation | Part 6: We died on the way home (the 24 Aug trip home and hang, the rebuild following Baritone, 24 km walked) and Racing Baritone (the benchmark chart) | Strong |
-| Resource gathering | We died while the model was still thinking (part 6): the run's first collect_block on screen, smelting and crafting in its notes; the gear-up phase and the 0:23 tile on What happened in the run | Thinner since 16 November: one gathering call on screen, the rest in notes. |
+| Navigation | Part 6: We got stuck under the ocean and couldn't get out (the Stream 11 clip, 5 Aug; 24 km walked), then How a pathfinder finds the way (an A* run, three things Baritone does well, the rebuild following it); Racing Baritone is in the appendix | Strong |
+| Resource gathering | The model asks for one whole job at a time (part 6): the run's first collect_block on screen, smelting and crafting in its notes; the gear-up phase and the 0:23 tile on What happened in the run | Thinner since 16 November: one gathering call on screen, the rest in notes. |
 | Combat | We died in the middle of a job (part 6): the six reflexes, the shared fighting engine, Dragon dodges; and the override, We died because a reflex wouldn't let us leave | Strong |
 | Failure and recovery | The "1 in 3 calls went wrong" and "Still won" tiles on What happened in the run (one slide since 14 November), the creeper death, then respawning and walking back for its gear (a line under the creeper marker since 16 November) | Fine. Recovery is mostly spoken. |
 | Lessons for building agents | Takeaways | Strong |
@@ -544,59 +544,79 @@ lays out everything between the model and the game, left to right, and marks wha
   sit inside layers 3 to 5: server and session are the tools layer, action and world are the actions layer,
   physical is the client. Don't put the five on a slide; it's a different cut of the same thing.
 
-## Part 6: What did I build? (the "We died…" ladder since 17 November; a ladder of failures from 16 November; part 5 until 16 November)
+## Part 6: What did I build? (the ladder rebuilt on 17 November after the timed run; the "We died…" ladder from 17 November; a ladder of failures from 16 November; part 5 until 16 November)
 
-Ben, 17 November: "I can turn this into a pattern, like we died doing X, Y, Z. That can be the motto to tie each slide
-together." So every rung opens the same way. The headline is how we died; under it one sentence of what happened, with
-its date; then the words it was written down in (the bot's, the model's, the server log's or the record's); then the
-fix, labelled "✓ So we added" (or "So we rebuilt", "So we removed", "So the model sets the policy"), with its date as a
-small grey tag at the end of the line. The red label top right is the date of the death. The six-rung strip stays.
-The six moments are not in date order (1 Aug, 28 Aug, 3 Aug, 24 Aug, 2 Sep, 6 Sep), so the notes tell Ben not to
-say "and then" between rungs. Ben's standing rule: one natural sentence on screen, no clipped punchline pairs, no
-"X, not Y", no slogans. Sources for every line are in "Verified facts", "Part 6 ladder sources". 22.5 to 34.5 min,
-21 clicks with the race slide.
+Ben's timed run on 17 November took 54 minutes against 45, and the ladder 17:21 against 12:30. His words: "they're
+very text heavy... It doesn't flow. I start tripping over my words", and the first rung "doesn't motivate collect
+block". He read each slide's dated paragraph aloud almost word for word. So each rung now shows only the headline, one
+quote from the record, the fix line and the one picture or chart it already had; the dated paragraph moved into the
+speaker notes, which open with a three-or-four-sentence script in Ben's voice whose first sentence is the handover from
+the rung before. The story: each fix is what lets the bot get far enough to fail the next way. The handovers are logic,
+never chronology (the fix dates are 21 Jul, 2 Sep, 4 Aug, 26 Aug, 13 Sep, 12 Sep), so the notes tell Ben not to say "and
+then" or "next". The red label top right is the date of the failure; the fix's date is the small grey tag. Ben's standing
+rule: one natural sentence on screen, no clipped punchline pairs, no "X, not Y", no slogans. Sources for every line are
+in "Verified facts", "Part 6 ladder sources". 22.5 to 34 min, 11 clicks. Since 17 November (Ben: "Yes, appendix")
+the Baritone race is the first appendix slide, and an A* explainer follows the navigation rung (Ben: "a nice quick
+visualisation on what A* pathfinding looks like and does briefly and then call out the things baritone does really
+nicely"). The deck is 37 slides.
 
 - **Part 6: What did I build?** (card, 22.5). Lede "We died at least 312 times during development", small print "bot
   deaths in real play, 29 Jul to 15 Sep, counted from the server logs". The cause split and the count's scope are in
   its notes.
-- **We died while the model was still thinking** (24, 1 click). Rung 1, "✗ From the start". "On 1 August the server
-  handed control back with the bot in water, and it drowned 21 seconds later while the model was still taking its
-  turns." The model's words at the handback. ~3 s a turn and 60 game ticks. Click: "So we added an MCP server: it does
-  the fast part, and the model asks for one whole job at a time", with the run's first collect_block. The death is an
-  example of the problem; one job at a time was in the first version (21 Jul), hence "From the start".
-- **We died in the middle of a job** (26, 2 clicks). Rung 2, 28 Aug. "On 28 August a skeleton shot the bot 3 min 44 s
-  into a diamond-mining job, and the job kept running for two more minutes." "I died during the diamond run and
-  respawned empty". "So we added reflexes: the server interrupts the job, deals with the danger, then picks the job
-  back up · 2 Sep". The chart "The six reflexes in the code today, by how often each fired in the winning run" (293).
-  Click 1: the creeper handoff at 2:31. Click 2: "One fighting engine handles everything except the End: a mob that
-  comes at us triggers it as a reflex, and a hunt walks into range and hands it the target." and "The 7 Dragon firings
-  are dodges. The model fights the dragon with its own End actions." The "Every reflex was added after a death" box
-  (lava, drowning) went to the notes for room. The 3 Aug "no legal move" material left this slide.
-- **We died again and again, and nobody told the model** (27.5, 1 click). Rung 3, 3 Aug. "On 3 August a bot died 7
-  times in 98 seconds. The model was told about 2 of those deaths and blamed the world:" "…the builder's position
-  resets". "So we added its status now says where it died and what it was carrying · 4 Aug". Click: the run's reply
-  and "Where replies grew to". The "36 blocks away… gear gone" quote is in the notes.
-- **We died on the way home** (29.5, 1 click). Rung 4, 24 Aug. "On 24 August a trip home ran for two minutes, ended
-  farther from home and was cancelled. 24 seconds later:" "AIVolunteer was slain by Zombie". A smaller line: "Later
-  that day a navigate call never came back, and every action after it got this:" and the ACTION_BUSY text. "So we
-  rebuilt navigation in TypeScript, following Baritone; it was the default that night · 26 Aug". The Baritone credit;
-  click: 24 km, 135 of 239.
-- **Racing Baritone: from 60× slower to 3×** (31, 4 clicks). Unchanged.
-- **We died of boredom** (32.5, 1 click). Rung 5, 2 Sep. "A 60-second client timer cancelled an eight-item smelt. The
-  bot" "began splitting work into 'timeout-safe batches'". "So we removed the client deadlines · 2 Sep"; "Then an action
-  runs in the background, and the model can wait a set time, check progress or cancel · 13 Sep". Click: the obsidian
-  call. Nobody died of this one; the notes say "no timeout killed us", never "nobody died while waiting".
-- **We died because a reflex wouldn't let us leave** (34.5, 2 clicks). Rung 6, 6 Sep. "On 6 September, in the Nether,
-  the model ordered a retreat and the hostile reflex kept hold of the bot for three minutes, until it died." "The agent
-  had the right plan and no way to execute it." "So the model sets the policy with a reason and an expiry · 12 Sep".
-  Click 1: "In the winning run, 3:09 in the ocean monument:" with the monument quote and the 3:09 call. Click 2: the
-  3:11 call and "It changed its own policy 9 times in the run." The 3 Aug lockout is in its notes as an earlier case.
-  Its last note leads into the run breakdown that follows the section.
+- **The model asks for one whole job at a time** (24, no clicks). Rung 1, the starting point, label "Since 21 Jul" (one
+  job at a time is in the first version in git). No death on this slide: it picks up where Part 4 ended. "The first call
+  of the winning run": collect_block logs × 16 with the model's rationale, "Wood is the base of all early tools; I have
+  an empty inventory and need a crafting table and pickaxe.", and the steps to "16 of 16 in 1 min 17 s". The 1 August
+  drowning, the ~3 s and the 60 ticks left this slide (Part 4 has the numbers; the drowning is a callback on rung 2).
+- **We died in the middle of a job** (26, 1 click). Rung 2, 28 Aug. "I died during the diamond run and respawned
+  empty". "So we added reflexes: the server interrupts the job, deals with the danger, then picks the job back up · 2
+  Sep". The chart "The six reflexes in the code today, by how often each fired in the winning run" (293). Click: the
+  creeper handoff at 2:31. The fighting-engine box and the 1 August drowning callback are in the notes.
+- **We died again and again, and nobody told the model** (27.5, 1 click). Rung 3, 3 Aug. On arrival by a single →
+  (data-arrive), the seven death lines from the server log come up like Minecraft chat, each with its time, over about six
+  seconds: "CodexBuilder was slain by Spider" at 14:49:24, 14:49:42, 14:50:03 and 14:50:14, "… by Zombie" at 14:50:37,
+  14:50:53 and 14:51:02. The two the model got a PLAYER_DIED result for (14:49:24 and 14:50:37) carry a green "✓ told".
+  The quote "…the builder’s position resets" lands larger, with "the model, 14:50:18", after the fourth death because
+  that is when the model said it; then the last three deaths, then the fix line "So we added its status now says where
+  it died and what it was carrying · 4 Aug" at about 7 s. Any other arrival and reduced motion show it finished. The
+  3 Aug footage exists but is unusable (night, rain, an inventory window, 2 fps), so this is built from the log. Click:
+  the death lines give way to the run's reply and "Where replies grew to".
+- **We got stuck under the ocean and couldn't get out** (29, 1 click). Rung 4, 5 Aug, Stream 11: CodexWarrior trapped in
+  an air pocket under the sea floor for over an hour while the other two bots failed to reach it. "Safe route to shaft
+  failed again: noPath/timeout after 58k nodes". Under it, the clip `media/ladder-under-the-ocean.mp4` (loop, silent,
+  13 s; open sea, so "ocean") with the caption "On stream on 5 August, one bot couldn’t find a way down and the other
+  was stuck under the sea floor." Click: 24 km, 135 of 239, beside the clip. No fix line here: it lands on the
+  next slide, after the explainer. The 24 Aug trip home and hang are in the notes. Not a death headline: the trapped bot
+  didn't die.
+- **How a pathfinder finds the way** (30.5, 4 clicks; slide 26). Navigation, continued. A real A* run (four-way moves,
+  Manhattan heuristic in walk ticks) on a 22 × 11 map: A on the left, a stone wall with a raised ridge at its foot, a
+  two-wide river, B on the right; Baritone's costs in ticks (walk 4.6, jump up 6.6, drop 9.3, swim 9.1). 121 squares
+  tried, then the route: 27 moves (23 walks, a jump up, a drop, two swims), 141 ticks. It plays once, about 13 s, for a
+  single → onto the slide (deck.js `astar-play`); any other arrival, reduced motion and print show the finished route.
+  Clicks 1–3, one callout each: "Every move is priced in game ticks, so the cheapest route is also the quickest one to
+  walk."; "Each kind of move has its own code to plan it and to walk it, so it only plans moves it knows how to make.";
+  "A long trip is planned in pieces, and the next piece is searched while the bot walks this one." Click 4: "So we
+  rebuilt navigation in TypeScript, following Baritone · 26 Aug" with the credit line (Baritone by leijurv and
+  contributors · github.com/cabaletta/baritone · LGPL-3.0). Dropped as unbacked: "it searches many more nodes in the
+  time allowed" (no recorded node-rate comparison with mineflayer-pathfinder; ours is about 3× slower than Baritone).
+  The race result is one line in its notes.
+- **We died of boredom** (32, 1 click). Rung 5, 7 Sep, Eyes run 14: an obsidian job ran over six minutes, the chat
+  client dropped the call at five, the model polled six times and cancelled, and the bot was in lava 13 s later. "…the
+  collect has stopped progressing, so the time is better spent on the portal." (the cancel's rationale). "So we added an
+  now an action runs in the background, and the model can wait a set time, check progress or cancel · 13 Sep" (it read
+  "So we added an action runs…" until 17 November). Click: the
+  winning run's 16-obsidian call. The 2 Sep deadline removal is in the notes only (Ben: "the point of this is not to
+  remove client deadlines"), and so is the 24 Aug ACTION_BUSY lockout.
+- **We died because a reflex wouldn't let us leave** (34, 2 clicks). Rung 6, 6 Sep. "The agent had the right plan and
+  no way to execute it." "So the model sets the policy with a reason and an expiry · 12 Sep". Click 1: "In the winning
+  run, 3:09 in the ocean monument:" with the monument quote and the 3:09 call. Click 2: the 3:11 call. "It changed its
+  own policy 9 times" and the dated paragraph moved to the notes. Its last note leads into the run breakdown.
 
-Before 17 November (16 November, second pass) each headline was the failure in its own words ("two of them sat at
-health 1-7 with no legal move", "Automatic evade keeps seizing the body…"), titled Too slow to hold the controls, No
-legal move, Gear gone no explanation, A navigate call never came back, Timeout-safe batches and Automatic evade keeps
-seizing the body.
+Before the rebuild (17 November, first version) each rung also carried a dated sentence on screen, the first rung was
+"We died while the model was still thinking" (the 1 August drowning), navigation was "We died on the way home" (24 Aug)
+and waiting was the 2 Sep "timeout-safe batches" smelt with two fix lines. Before that (16 November) each headline was
+the failure in its own words: Too slow to hold the controls, No legal move, Gear gone no explanation, A navigate call
+never came back, Timeout-safe batches and Automatic evade keeps seizing the body.
 
 Before the ladder (first pass, 16 November): four control slides plus three navigation slides, 26.5 to 39; before
 that (14 November) nine slides with a small red failure line over each heading; on 12 November Ben went straight to
@@ -760,11 +780,11 @@ products of the respective model providers"); TechRadar, 15 August 2025; Anthrop
 | 10.5 min | Part 3, Can an LLM do it? The card, AltoClef in one line, the dragon clip with sound, then the prompt and the stats | 9–12 |
 | 16.5 min | Part 4, How do you approach it? The question, playing Pokémon, then playing Minecraft, which builds into the six layers and their two bug clips (one slide, 20 clicks since 17 November: the Mineflayer card on its own click for the Andrew Kelley question, no green), then the staircase bug on its own slide in three quick clicks, the thesis, which opens by crossing out the home-made harness; the idea opens on the dial-back before its three cards | 13–17 |
 | 22 min | Part 5, How did I build it? Cut to the card and two slides after the 16 November practice run: an integration test in a 3D world (a lava stepping-stones course: the stock mineflayer-pathfinder bot dies, ours passes), then the loop and who wrote the code (the dolphin drowning, the commit split, review before push) | 18–20 |
-| 34.5 min | Part 6, What did I build? The "We died…" ladder: the card (312 deaths), we died while the model was still thinking, in the middle of a job, again and again and nobody told the model, on the way home, racing Baritone, of boredom, because a reflex wouldn't let us leave | 21–28 |
+| 34 min | Part 6, What did I build? The "We died…" ladder: the card (312 deaths), the model asks for one whole job at a time, we died in the middle of a job, again and again and nobody told the model, we got stuck under the ocean, how a pathfinder finds the way (A*), we died of boredom, because a reflex wouldn't let us leave | 21–28 |
 | 38.5 min | Still part 6, the payoff (both moved here on 16 November): the harness grew and the runs got further (31 attempts), then what happened in the winning run | 29–30 |
 | 40.5 min | Part 7, What I'd take from this: the fine print (it carries the part, no card) | 31 |
 | 45 min | Takeaways, links | 32–33 |
-| Questions | Appendix: the run database explorer, the MCP part is tiny, credits | 34–36 |
+| Questions | Appendix: racing Baritone (moved out of part 6 on 17 November), the run database explorer, the MCP part is tiny, credits | 34–37 |
 
 Each `<section class="slide">` carries its finish-by minute in `data-by`; the speaker view uses it to show pace.
 
@@ -798,7 +818,7 @@ Pokémon section, which does some of its setting up.
 
 **Skipped by default since 14 November:** the route's clip, the Pokémon example clip and AltoClef's clip (each one → past it).
 **If it runs long, cut in this order:** the pearl-hunt detail, the scenario slide down to one line, the
-attempts story. **Never cut:** the dragon clip, the six layers, we died while the model was still thinking, the monument override, the limits slide.
+attempts story. **Never cut:** the dragon clip, the six layers, the model asks for one whole job at a time, the monument override, the limits slide.
 **Questions only:** pathfinding internals, the repo's five code layers, the MCP protocol, the code-size chart (appendix).
 
 ## Verified facts
@@ -1163,12 +1183,17 @@ From the published winning run (Hugging Face dataset `aibengineering/beat-the-ga
     27 Jun to 14 Jul (no logs survive), the July benchmark ladder (20), test-fixture bots in scenarios (563 or more),
     human players. All 31 attempts have a surviving log. The per-death table and the method are in the side-session
     notes folder (`deaths-real-play.csv`, `deaths-SOURCES.md`).
-  - Controls, 1 Aug: Codex session log `~/.codex/sessions/2026/08/01/rollout-2026-08-01T20-01-21-019fbcc5….jsonl.zst`
+  - Controls (rung 1 since the rebuild): the published run database, request 3, `collect_block` logs × 16 at 0:00:04,
+    rationale "Wood is the base of all early tools; I have an empty inventory and need a crafting table and pickaxe.",
+    succeeded in 76.7 s. One job at a time is in `86503aa9` (21 Jul 09:43), hence "Since 21 Jul".
+  - The 1 Aug drowning (now a callback in rung 2's notes): Codex session log `~/.codex/sessions/2026/08/01/rollout-2026-08-01T20-01-21-019fbcc5….jsonl.zst`
     (zstd; Node 24's `zlib.zstdDecompressSync` opens it): navigate returned `suspended` with `EMERGENCY_AIR` at 10:10:13Z;
     at 10:10:19Z the model: "Because the action has returned and survival takes priority, I'm inspecting immediately
     before deciding whether a separate recovery action is necessary."; a recovery navigate started 10:10:26Z and
     returned at 10:10:34Z. Server log `[20:10:34] CodexMCP drowned` (`server.out.log:454`), 21 s after the handback.
-    Turns then took 5 to 25 s. One job at a time is in `86503aa9` (21 Jul 09:43), so the label stays "From the start".
+    Turns then took 5 to 25 s. In the code that won, breathing and the hostile reflex also run between jobs
+    (`reflexes/breath.ts`: "while another action or idle buoyancy owns movement"; `hostile.test.ts`: "claims an idle
+    body").
   - Reflexes, 28 Aug: `.local-server/logs/2026-08-28-6.log.gz`: `[21:49:27] TestBot was shot by Skeleton`; `[21:52:24]
     <TestBot> I died during the diamond run and respawned empty; I need to recover a pickaxe from the chest before mining
     again.` The job, `simple_collect_block` for 21 diamond_ore, started 21:45:43 and returned partial at 21:51:39 (Codex
@@ -1188,23 +1213,60 @@ From the published winning run (Hugging Face dataset `aibengineering/beat-the-ga
     model-called actions (`attack_dragon_perch`, `shoot_dragon`, `destroy_end_crystal`, `prepare_dragon_perch`), and the
     hostile reflex filters the dragon out (`control/combat/observation.ts:64`).
   - Replies, 3 Aug: `server.out.log:4129–4135`, CodexBuilder slain by Spider ×4 and Zombie ×3 from 14:49:24 to 14:51:02.
-    Codex session `rollout-2026-08-03T13-07-34-019fc597….zst`: two `[PLAYER_DIED]` results (04:49:25Z, 04:50:37Z); at
+    Codex session `rollout-2026-08-03T13-07-34-019fc597….zst`: two `[PLAYER_DIED]` results (04:49:25Z, 04:50:37Z; their `completedAt` 04:49:25.067Z and 04:50:37.721Z, so the deaths
+    at 14:49:24 and 14:50:37 AEST, marked "✓ told" on the slide); at
     04:50:18Z the model: "The drop cluster is unstable: exact entity IDs vanish between fresh inspections and the
     builder's position resets, so repeated pickup attempts are no longer safe or reliable." A death during a running
     action was already reported; deaths between calls were not. Fix `1d829c39` (4 Aug 02:01): "The next check-in showed a
     bot standing 36 blocks away at full health with its gear gone and no explanation anywhere." … "surface it as
     lastDeath on the check-in, the environment snapshot and session status". Later steps without an incident: `fa47e1c8`
     and `3c479f67` (20–21 Aug), `ab52bc0e` and `5348ddbe` (23 Aug).
-  - Navigation, 24 Aug: `docs/field-notes/investigation-simple-navigate-host-stall-2026-08-24.md`: request 192,
-    `simple_navigate` home, started 15:29:34, "Cancelled after 120,009 ms", by then "farther from home"; `.local-server/
-    logs/2026-08-24-4.log.gz`: `[15:31:58] AIVolunteer was slain by Zombie`. The same note: request 451 "Took to long to
-    decide path to goal!", request 452 accepted at 06:45:59Z and never answered, then "[ACTION_BUSY] simple_navigate has
-    been running since 2026-08-24T06:45:59.235Z; no new action started." The rebuild spec (`pathfinder-rewrite/README.md`,
-    25 Aug) cites the stall. New navigation `dd5b37a6` (26 Aug 12:21), default `8c7826bc` (22:55).
-  - Waiting, 2 Sep: `b2510ed6` (12:36): "The live bot hit the 60 s one on an eight-item smelt and began splitting work into
-    \"timeout-safe batches\"." `2685082` (old `mine-ai-mcp`, 13 Sep 00:08). No death was caused by a timeout; on 24 Aug
-    the bot died 24 s after the 120 s client deadline cancelled its trip home, killed by a zombie ("the timed-out return
-    did not preserve the 2 raw iron").
+  - Navigation, 5 Aug (rung 4 since the rebuild): Stream 11 (`AIBengineering/2026-08-05 - Stream 11/Source Recordings/
+    2026-08-05_14-48-03.mp4`, 3 h 21 min from 14:48; no transcript). World "world", bots CodexWarrior, CodexBuilder and
+    CodexGatherer. `mine_ai/.local-server/logs/2026-08-05-6.log.gz`: `[16:46:12] <CodexWarrior> I am stranded underground
+    at -314,35,-261`; `[17:07:18] <CodexWarrior> Under water shaft: air y49, water y52-62`; `[17:04:01] <CodexGatherer>
+    Water blocked descent; emergency-air failed`; `[17:09:33] <CodexWarrior> Safe route to shaft failed again:
+    noPath/timeout after 58k nodes`; `[17:24:33] <CodexGatherer> Handoff waypoint is water over no support; I logged the
+    navigation defect`; the rescue column was still being built at 18:20. No death of the trapped bot; the rescuers died
+    three times (CodexBuilder by zombies 17:31:02 and 17:53:36, CodexGatherer by a fall 17:52:36). This was three weeks
+    before the rebuild, and the new navigation didn't swim at first (Stream 14, 29 Aug). Ben's reason, Stream 14
+    (`Post Stream/transcripts/stream_combined.srt` 00:10:26–00:11:08): "none of them have I've seen have been that
+    reliable. They all like fail at some point." … "it made more sense to rebuild the best state of the art in
+    JavaScript". Against mineflayer-pathfinder there is no speed multiplier: `docs/pathfinder-rewrite/baseline-
+    comparison-2026-08-26.md` (`4cf5afea`): "The timing gap is gone" (within about 6%); the door course 0/2 for the old
+    one (it breaks the oak door), 2/2 ours; the 12-block lava-pillar descent 1 search against 12, 13 nodes against 275.
+  - How a pathfinder finds the way (17 November). Baritone, github.com/cabaletta/baritone, master, read 17 November:
+    `ActionCosts.java` ("These costs are measured roughly in ticks"; WALK_ONE_BLOCK_COST 20/4.317 = 4.633, WALK_ONE_IN_WATER
+    20/2.2 = 9.091, JUMP_ONE_BLOCK_COST and FALL_N_BLOCKS_COST from its gravity formula); `MovementAscend.java` (max(jump,
+    walk) + `jumpPenalty`, 2 in `Settings.java`: 6.63); `MovementDescend.java` (WALK_OFF_BLOCK_COST + max(FALL_N_BLOCKS_COST[1],
+    CENTER_AFTER_FALL_COST): 9.32). Every movement class has its own `calculateCost` and `updateState` (`Movement.java`).
+    `PathingBehavior.java` plans the next path in a new thread while the current one is walked ("Continuing on to planned
+    next path"), starting when fewer than `planningTickLookahead` (150) ticks remain; `AStarPathFinder.java` stops at
+    `primaryTimeoutMS` (500 ms) and returns the best partial path (`bestSoFar`). Ours (tag beat-the-game):
+    `src/navigation/movements/catalogue.ts` ("The movement's total cost in ticks"), `execution/movement-controller.ts`,
+    `execution/water-movement-controller.ts`, `orchestration/navigation-run.ts` ("Baritone plans its next segment while
+    walking the current one"; "The plan-ahead search: started from the end of a partial segment while that segment is
+    walked"). mineflayer-pathfinder 2.4.5 (`lib/movements.js`): walk 1, jump up 2, diagonal √2, `liquidCost` 1, so its
+    costs aren't ticks; it executes every move through one `monitorMovement` (`index.js`); it does keep computing a
+    partial path while walking, so the third callout claims no difference.
+  - The 24 Aug trip home and hang (notes only since the rebuild): `docs/field-notes/investigation-simple-navigate-host-
+    stall-2026-08-24.md`: request 192, `simple_navigate` home, started 15:29:34, "Cancelled after 120,009 ms", by then
+    "farther from home"; `.local-server/logs/2026-08-24-4.log.gz`: `[15:31:58] AIVolunteer was slain by Zombie`. The same
+    note: request 451 "Took to long to decide path to goal!", request 452 accepted at 06:45:59Z and never answered, then
+    "[ACTION_BUSY] simple_navigate has been running since 2026-08-24T06:45:59.235Z; no new action started." The rebuild
+    spec (`pathfinder-rewrite/README.md`, 25 Aug) cites the stall. New navigation `dd5b37a6` (26 Aug 12:21), default
+    `8c7826bc` (22:55).
+  - Waiting, 7 Sep (rung 5 since the rebuild): the bot database for world `eyes-of-ender-20260907n` (EnderSeeker):
+    request 67, `simple_collect_block` obsidian at 16:44:11 ("A nether portal frame needs fourteen obsidian…"); request
+    68 at 16:49:22: "The obsidian collect exceeded the client idle timeout but keeps running server-side; status shows
+    whether it has settled."; six `simple_view_status` calls, 68 to 73; request 74, `simple_cancel_foreground_action` at
+    16:50:54: "The requested frame material is already carried and the collect has stopped progressing, so the time is
+    better spent on the portal." Server log `2026-09-07-1.log.gz`: `[16:51:08] EnderSeeker tried to swim in lava`, 13 s
+    later. Write-up `tools/playthrough/summaries/eyes-run-14-summary.md`, "Death 1": "Cancelling returns the body in
+    place, with no owner and no safe settlement" and "Patience worked; the cancel killed the bot."; the 300 s idle timeout
+    is the chat client's. Earlier, `b2510ed6` (2 Sep 12:36) removed our 60 s deadline after the bot "began splitting work
+    into \"timeout-safe batches\"". Async actions `2685082` (old `mine-ai-mcp`, 13 Sep 00:08); the design is
+    `docs/mcp/async-actions-design.md` (12 Sep) in the async-actions branch.
   - Policy, 6 Sep: `mine_ai/tools/playthrough/summaries/eyes-run-13-summary.md`, bug 19 "reflex lockout (killed the
     run)": "every retry for three minutes returned `[ACTION_BUSY] hostile_reflex has been running since …; no new action
     started` while the reflex re-engaged the same cubes. The bot died inside that loop. The agent had the right plan and
@@ -1290,6 +1352,7 @@ sound. A missing file shows a labelled placeholder.
 | `dragon-kill.mp4` | 12 with `?silent` | play (Space) | The silent fallback: 28 s of the screen recording, ending on the dragon's death. Run time 3:55:35–3:56:15. |
 | `pokemon-example.mp4` | Minecraft is a harder problem | pop (Space), optional | 18 s of the Claude Plays Pokémon stream (Anthropic's, on Twitch, the one the first headline is about), the early 2025 layout: the model's thinking and tool calls on the left, Pokémon Red on the right, the buttons pressed along the top, step count 27,973. It tries three times to walk up to someone outside the Cerulean gym and talk to them. Cut from 0.5 s to 18.5 s of the Twitch clip "Claude jumps back to Cerulean city" (twitch.tv/claudeplayspokemon/clip/DiligentWildVampireWoofer-7QnY4Da4FuDgFKiM, 25 s, listed as two years old on 10 November 2026), scaled from 1080p to 720p with the sound dropped. Viewers' emotes drift across it; they're part of the stream. The model is Claude 3.7 Sonnet, the one the stream launched with in late February 2025, and the moment is the one GamesRadar wrote up on 10 March 2025 (gamesradar.com, "after escaping Cerulean City after tens of hours, it went right on back"): after dozens of hours trying to leave the city it got through the house, then jumped down a ledge back into the city to talk to someone outside the gym. The clip shows it walking up to that person, not the jump. It's the channel's most watched clip (29,242 views on 10 November 2026). The date and model are from the article and the stream's history, not from the clip page, which only says "2 years ago". How it was got: the clip page opened in the installed Chromium and the MP4 the player asks for fetched with curl; no downloader was run. The raw clip and two others ("Claude Plays Pokemon", 30 s, stuck against a fence in a forest; "ESCAPE", 40 s, the later Opus 4.7 layout leaving a cave) were in `/tmp/mine_talk/clip/raw/`, which won't outlast a reboot. Someone else's footage: see the rules under "Why this problem". |
 | `how-to-win.mp4` | 5 | route (Space plays it through) | 48 s, 24 hard-cut shots across the eight steps, for people who have never played. All first-person shots from two YouTube guides (CC BY), because the bot crafts without opening a screen and its run can't show most steps clearly. Ben talks over it. |
+| `ladder-under-the-ocean.mp4` | 25 | loop, silent | The navigation rung. 13 s, 1280×720, game window only, cut from Stream 11 (5 August) by the coordinating session: CodexGatherer bobbing on the surface, then the camera dives to the sea floor and ends on the "CodexWarrior" nametag showing through the stone. Open sea with tropical fish and seagrass. Chat on screen in that stretch includes "<CodexWarrior> I am stranded underground at -314,35,-261" and "The reachable shaft is water … above my cavity". |
 | `bug-drown.mp4` | 17 | pop (Space) | The actions example. 13.5 s, Stream 10 (1 August), about 0:38:38 on stream: Ben asks the bot to keep navigating to new areas to find animals; the navigate action walks it out into the sea, it sinks to the seabed and stands there until chat reads "HandsFreeBot drowned" (the observer, off-frame, shows NAVIGATION_FAILED and the hearts falling). Ben, live: "And drowning... you're drowning, so quickly just navigate somewhere so it swims. Ah, you're dead." Three shots from the 4K display recording, game window only, below the voice HUD: 2341.5–2346.5 s (walking out to sea), 2368–2374 s (on the seabed), 2386.5–2390 s (the death line in chat; seagrass hides the bot by then). The water-safety reflex was added later that stream. Runner-up: the bot tunnelling out of its sand shelter into water and flooding the shaft (same stream, 1:35:44; `bugsctions-shelter-flood.mp4`). Previous pick, kept in `site/media/bug-sand.mp4`: 10.9 s of the sand collect action filtering out blocks with sand on top (Stream 13, 3:38), which shows the action thinking, not failing. |
 | `bug-stair.mp4` | 17 | pop (Space) | The client example. 13 s, Stream 7 (21 July), Ben's first stream with the bot, test course "westbound_switchback_regression": a stone staircase in the sky with a glowstone finish pad at the top. The bot walks up the stairs (first 4 s), then stops one step below the pad and stands there for the rest. One take from the display recording, 1274.4–1287.4 s; the camera drifts a little twice. The game's chat line naming the course shows bottom left for the first 9 s. Ben, live, about 0:21:22 on the stream: "You see him sitting right there, not moving… He could just jump up here and get to the end, but he doesn't." The cause, traced later that stream: the bot's idea of its own width was a hair under the server's, so the server kept correcting it off the step. Fixed on 23–24 July as a contact rounding fix in prismarine-physics (pathfinder fork commits 9db0cde to 2598cd7). The same course was still stuck at 3:00 on that stream. Alternative kept in `bugs\` as `client-stair-bounce.mp4`: 8.6 s of the bot jumping again and again at a one-block step in a dark corridor ("alternating_two_drop_pillars", same stream, 0:22:36). |
 | `minelabs-lava-steps-stock.mp4` | 19 | pop (Space), held | The before. 6.9 s, real time, silent: the stock mineflayer-pathfinder bot (written 17 November for this) on the lava stepping-stones course. It clips the lava on each hop, catches fire and dies in the lava after the fifth stone; it ends on the chat lines "Runner tried to swim in lava", "Runner left the game". One fixed spectator camera, cropped below the Mine Labs overlay and letterboxed to 1280x720. Raw, cut script, course and stock bot in `Google Talk Clips/minelabs/lava-steps/` (`take-course-2.mkv`, 24.1–31.0 s). |

@@ -642,6 +642,17 @@ function mcbInstant() {
   // The staircase bug (.stb, 17 November): its loop goes round only for a single → onto that click; arriving any
   // other way (←, a jump, the other window catching up) shows the beat's resting state.
   if (slide.classList.contains('stb')) slide.classList.toggle('stb-play', mcbLast.index === index && step === mcbLast.step + 1);
+  // A slide marked data-arrive plays its entrance once, for a single → onto it from the slide before (17 November: the A*
+  // search on "How a pathfinder finds the way", the death lines on the Replies rung). Arriving any other way (←, a jump, the
+  // other window catching up) shows the finished state; clicks on the slide leave it running. .arrive-play is the switch.
+  document.querySelectorAll('.arrive-play').forEach(other => { if (other !== slide) other.classList.remove('arrive-play'); });
+  if (slide.hasAttribute('data-arrive')) {
+    if (mcbLast.index === index - 1 && step === 0 && !reducedMotion) {
+      slide.classList.remove('arrive-play');
+      void slide.offsetWidth;
+      slide.classList.add('arrive-play');
+    } else if (mcbLast.index !== index) slide.classList.remove('arrive-play');
+  }
   mcbLast = { index, step };
 }
 
